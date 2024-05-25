@@ -57,6 +57,18 @@ CONSTRAINT Username_Epixeirisis FOREIGN KEY (username_epixeirisis) REFERENCES us
 CONSTRAINT Epix_Username_Logisti FOREIGN KEY (epix_username_logisti) REFERENCES logistis(username_logisti) ON DELETE SET NULL ON UPDATE CASCADE
 ) ;
 
+DROP TABLE IF EXISTS ypallilos;
+CREATE TABLE ypallilos (  
+yp_afm CHAR(11) NOT NULL,
+yp_onoma VARCHAR(30) NOT NULL,
+yp_eponimo VARCHAR(30) NOT NULL,
+meikta INT(20) DEFAULT 0,
+asfalisi INT(20) DEFAULT 0,
+yp_username_epixeirisis VARCHAR(30) NOT NULL,
+PRIMARY KEY (yp_afm),
+CONSTRAINT Yp_Username_Epixeirisis FOREIGN KEY (yp_username_epixeirisis) REFERENCES epixeirisi(username_epixeirisis) ON DELETE CASCADE ON UPDATE CASCADE
+) ;
+
 DROP TABLE IF EXISTS oxima;
 CREATE TABLE oxima (  
 ox_onoma VARCHAR(30) NOT NULL,
@@ -79,38 +91,42 @@ ait_pinakida CHAR(7) DEFAULT 'empty',
 ait_username_logisti VARCHAR(30) NOT NULL,
 PRIMARY KEY (ait_id),
 CONSTRAINT Ait_Username_Pelati FOREIGN KEY (ait_username_pelati) REFERENCES user(username) ON DELETE CASCADE ON UPDATE CASCADE,
-CONSTRAINT Ait_Pinakida FOREIGN KEY (ait_pinakida) REFERENCES oxima(pinakida) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT Ait_Pinakida FOREIGN KEY (ait_pinakida) REFERENCES oxima(pinakida) ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT Ait_Username_Logisti FOREIGN KEY (ait_username_logisti) REFERENCES logistis(username_logisti) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
-DROP TABLE IF EXISTS ypallilos;
-CREATE TABLE ypallilos (  
-yp_afm: CHAR(11)
-yp_onoma: VARCHAR(30)
-yp_eponimo: VARCHAR(30)
-meikta: INT(20)
-asfalisi: INT(20)
-yp_username_epixeirisis: VARCHAR(30)
-
-
-
-
-PRIMARY KEY (username_epixeirisis , afm_epixeirisis),
-CONSTRAINT Username_Epixeirisis FOREIGN KEY (username_epixeirisis) REFERENCES user(username) ON DELETE CASCADE ON UPDATE CASCADE,
-CONSTRAINT Epix_Username_Logisti FOREIGN KEY (epix_username_logisti) REFERENCES logistis(username_logisti) ON DELETE SET NULL ON UPDATE CASCADE
+DROP TABLE IF EXISTS ofeili;
+CREATE TABLE ofeili (  
+ofeili_id INT(20) NOT NULL AUTO_INCREMENT,
+ofeili_poso INT(20) DEFAULT 0,
+ofeili_username_pelati VARCHAR(30) NOT NULL,
+PRIMARY KEY (ofeili_id),
+CONSTRAINT Ofeili_Username_Pelati FOREIGN KEY (ofeili_username_pelati) REFERENCES user(username) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
+DROP TABLE IF EXISTS forologiki_dilosi;
+CREATE TABLE forologiki_dilosi (  
+for_dil_id INT(20) NOT NULL AUTO_INCREMENT,
+forologiki_dilosi BLOB NOT NULL,
+for_dil_username_idioti VARCHAR(30) NOT NULL,
+PRIMARY KEY (for_dil_id),
+CONSTRAINT For_Dil_Username_Idioti FOREIGN KEY (for_dil_username_idioti) REFERENCES idiotis(username_idioti) ON DELETE CASCADE ON UPDATE CASCADE
+) ;
 
+DROP TABLE IF EXISTS ekkatharistiko;
+CREATE TABLE ekkatharistiko (  
+ek_id INT(20) NOT NULL AUTO_INCREMENT,
+ekkatharistiko BLOB NOT NULL,
+ek_username_idioti VARCHAR(30) NOT NULL,
+PRIMARY KEY (ek_id),
+CONSTRAINT Ek_Username_Idioti FOREIGN KEY (ek_username_idioti) REFERENCES idiotis(username_idioti) ON DELETE CASCADE ON UPDATE CASCADE
+) ;
 
-
-
-
-
-
-
-
-
-
-
-
-
+DROP TABLE IF EXISTS bebaiosi_mi_ofeilis_telon;
+CREATE TABLE bebaiosi_mi_ofeilis_telon (  
+bebaiosi_id INT(20) NOT NULL AUTO_INCREMENT,
+bebaiosi_mi_ofeilis_telon BLOB NOT NULL,
+bebaiosi_username_pelati VARCHAR(30) NOT NULL,
+PRIMARY KEY (bebaiosi_id),
+CONSTRAINT Bebaiosi_Username_Pelati FOREIGN KEY (bebaiosi_username_pelati) REFERENCES user(username) ON DELETE CASCADE ON UPDATE CASCADE
+) ;
