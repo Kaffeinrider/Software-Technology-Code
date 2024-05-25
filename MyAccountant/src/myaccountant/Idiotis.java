@@ -123,11 +123,7 @@ public class Idiotis extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       Epilogi_Logisti epilogi_logisti = new Epilogi_Logisti();
-        //center the window
-        epilogi_logisti.setLocationRelativeTo(null);
-        // Show the login window
-        epilogi_logisti.setVisible(true);
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
