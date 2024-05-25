@@ -10,7 +10,9 @@ public class MyAccountant {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Hello yoooooooo");
+        Login login = new Login();
+        login.setLocationRelativeTo(null);
+        login.setVisible(true);
     }
     
 }
