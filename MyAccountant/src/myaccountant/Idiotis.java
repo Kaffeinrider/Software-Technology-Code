@@ -123,32 +123,45 @@ public class Idiotis extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+<<<<<<< HEAD
        
+=======
+        this.dispose();
+        Epilogi_Logisti epilogi_logisti = new Epilogi_Logisti();
+        //center the window
+        epilogi_logisti.setLocationRelativeTo(null);
+        // Show the login window
+        epilogi_logisti.setVisible(true);
+>>>>>>> 1f1cfec25ee9c461a85a1665f86046625d28aceb
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-Portofoli portofoli = new Portofoli();
+        this.dispose();
+        Portofoli portofoli = new Portofoli();
         //center the window
         portofoli.setLocationRelativeTo(null);
         // Show the login window
         portofoli.setVisible(true);    }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-YpovoliDilosewnEkkatharistikwn ypov_ekkath = new YpovoliDilosewnEkkatharistikwn();
+        this.dispose();
+        YpovoliDilosewnEkkatharistikwn ypov_ekkath = new YpovoliDilosewnEkkatharistikwn();
         //center the window
         ypov_ekkath.setLocationRelativeTo(null);
         // Show the login window
         ypov_ekkath.setVisible(true);     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-Oxima oxima = new Oxima();
+        this.dispose();
+        Oxima oxima = new Oxima();
         //center the window
         oxima.setLocationRelativeTo(null);
         // Show the login window
         oxima.setVisible(true);    }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-Provoli_Ofeilon provoli_ofeilon = new Provoli_Ofeilon();
+        this.dispose();
+        Provoli_Ofeilon provoli_ofeilon = new Provoli_Ofeilon();
         //center the window
         provoli_ofeilon.setLocationRelativeTo(null);
         // Show the login window

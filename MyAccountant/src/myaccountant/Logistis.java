@@ -56,9 +56,19 @@ public class Logistis extends javax.swing.JFrame {
 
         jButton8.setBackground(new java.awt.Color(0, 204, 255));
         jButton8.setText("Ρύθμιση Οφειλών");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setBackground(new java.awt.Color(0, 204, 255));
         jButton9.setText("Υποβολή Δηλώσεων και Εκκαθαριστικών");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setBackground(new java.awt.Color(51, 51, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 36)); // NOI18N
@@ -110,21 +120,19 @@ public class Logistis extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton12))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61)
-                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(82, 82, 82)
-                                .addComponent(jButton6))
-                            .addGroup(layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(jButton12)
                                 .addGap(36, 36, 36)
-                                .addComponent(jButton11)))
+                                .addComponent(jButton11))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(72, 72, 72)
+                                .addComponent(jButton6)))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(54, 54, 54)
@@ -163,28 +171,75 @@ public class Logistis extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        DiaxeirisiOximatwn diaxeirisioximatwn = new DiaxeirisiOximatwn();
+        //center the window
+        diaxeirisioximatwn.setLocationRelativeTo(null);
+        // Show the login window
+        diaxeirisioximatwn.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        ProsthikiYpallilwn prosthikiupallilwn = new ProsthikiYpallilwn();
+        //center the window
+        prosthikiupallilwn.setLocationRelativeTo(null);
+        // Show the login window
+        prosthikiupallilwn.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        EpeksergasiaYpallilwn epeksergasiaupallilwn = new EpeksergasiaYpallilwn();
+        //center the window
+        epeksergasiaupallilwn.setLocationRelativeTo(null);
+        // Show the login window
+        epeksergasiaupallilwn.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+        this.dispose();
+        EkdosiVevaiosisMiOfeilis ekdosivevaiosismiofeilis = new EkdosiVevaiosisMiOfeilis();
+        //center the window
+        ekdosivevaiosismiofeilis.setLocationRelativeTo(null);
+        // Show the login window
+        ekdosivevaiosismiofeilis.setVisible(true);    }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        DiaxeirisiAitimatwn diaxeirisiaitimatwn = new DiaxeirisiAitimatwn();
+        //center the window
+        diaxeirisiaitimatwn.setLocationRelativeTo(null);
+        // Show the login window
+        diaxeirisiaitimatwn.setVisible(true);
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        EnimerosiEsodwnEksodwn enimerosiesodwneksodwn = new EnimerosiEsodwnEksodwn();
+        //center the window
+        enimerosiesodwneksodwn.setLocationRelativeTo(null);
+        // Show the login window
+        enimerosiesodwneksodwn.setVisible(true);
     }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        this.dispose();
+        YpovoliDilosewnEkkatharistikwn upovolidilosewnekkatharistikwn = new YpovoliDilosewnEkkatharistikwn();
+        //center the window
+        upovolidilosewnekkatharistikwn.setLocationRelativeTo(null);
+        // Show the login window
+        upovolidilosewnekkatharistikwn.setVisible(true);
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        this.dispose();
+        RithmisiOfeilwn rithmisiofeilwn = new RithmisiOfeilwn();
+        //center the window
+        rithmisiofeilwn.setLocationRelativeTo(null);
+        // Show the login window
+        rithmisiofeilwn.setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments

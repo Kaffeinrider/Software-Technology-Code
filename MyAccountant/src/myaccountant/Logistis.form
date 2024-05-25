@@ -33,25 +33,21 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jButton13" min="-2" pref="265" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jButton12" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="jButton9" min="-2" pref="265" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-                              <Component id="jButton8" min="-2" pref="135" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jButton9" max="32767" attributes="0"/>
+                          <Component id="jButton13" pref="275" max="32767" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
-                              <Component id="jButton6" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="jButton12" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                               <Component id="jButton11" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                              <Component id="jButton8" min="-2" pref="145" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                              <Component id="jButton6" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -130,6 +126,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&#x3a1;&#x3cd;&#x3b8;&#x3bc;&#x3b9;&#x3c3;&#x3b7; &#x39f;&#x3c6;&#x3b5;&#x3b9;&#x3bb;&#x3ce;&#x3bd;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton9">
       <Properties>
@@ -138,6 +137,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&#x3a5;&#x3c0;&#x3bf;&#x3b2;&#x3bf;&#x3bb;&#x3ae; &#x394;&#x3b7;&#x3bb;&#x3ce;&#x3c3;&#x3b5;&#x3c9;&#x3bd; &#x3ba;&#x3b1;&#x3b9; &#x395;&#x3ba;&#x3ba;&#x3b1;&#x3b8;&#x3b1;&#x3c1;&#x3b9;&#x3c3;&#x3c4;&#x3b9;&#x3ba;&#x3ce;&#x3bd;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
