@@ -66,6 +66,11 @@ public class Idiotis extends javax.swing.JFrame {
 
         jButton8.setBackground(new java.awt.Color(0, 204, 255));
         jButton8.setText("Προβολή Οφειλών");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setBackground(new java.awt.Color(0, 204, 255));
         jButton9.setText("Υποβολή Δηλώσεων και Εκκαθαριστικών");
@@ -114,16 +119,26 @@ public class Idiotis extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        Epilogi_Logisti epilogi_logisti  = new Epilogi_Logisti();
+        //center the window
+        epilogi_logisti.setLocationRelativeTo(null);
+        // Show the login window
+        epilogi_logisti.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+          Portofoli portofoli  = new Portofoli();
+        //center the window
+        portofoli.setLocationRelativeTo(null);
+        // Show the login window
+        portofoli.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments

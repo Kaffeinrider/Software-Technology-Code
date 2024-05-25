@@ -66,6 +66,11 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
 
         jButton8.setBackground(new java.awt.Color(255, 0, 0));
         jButton8.setText("Επιστροφή");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setBackground(new java.awt.Color(255, 0, 0));
         jButton9.setText("Τερματισμός τωρινού Λογιστή");
@@ -157,6 +162,10 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
