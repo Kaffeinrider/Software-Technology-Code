@@ -45,7 +45,7 @@ public class Oxima extends javax.swing.JFrame {
         jButton8.setText("Επιστροφή");
 
         jButton9.setBackground(new java.awt.Color(0, 204, 255));
-        jButton9.setText("Αίτημα Αλλαγής Κατάσταςης Οχήματος");
+        jButton9.setText("Αίτημα Αλλαγής Κατάστασης Οχήματος");
 
         jButton10.setBackground(new java.awt.Color(0, 204, 255));
         jButton10.setText("Αίτημα Ενημέρωσης Οχήματος");
@@ -79,7 +79,7 @@ public class Oxima extends javax.swing.JFrame {
                     .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
