@@ -58,6 +58,11 @@ public class Idiotis extends javax.swing.JFrame {
 
         jButton8.setBackground(new java.awt.Color(0, 204, 255));
         jButton8.setText("Προβολή Οφειλών");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton6.setBackground(new java.awt.Color(0, 204, 255));
         jButton6.setText("Υποβολή Δηλώσεων και Εκκαθαριστικών");
@@ -118,20 +123,40 @@ public class Idiotis extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+       Epilogi_Logisti epilogi_logisti = new Epilogi_Logisti();
+        //center the window
+        epilogi_logisti.setLocationRelativeTo(null);
+        // Show the login window
+        epilogi_logisti.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+Portofoli portofoli = new Portofoli();
+        //center the window
+        portofoli.setLocationRelativeTo(null);
+        // Show the login window
+        portofoli.setVisible(true);    }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+YpovoliDilosewnEkkatharistikwn ypov_ekkath = new YpovoliDilosewnEkkatharistikwn();
+        //center the window
+        ypov_ekkath.setLocationRelativeTo(null);
+        // Show the login window
+        ypov_ekkath.setVisible(true);     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+Oxima oxima = new Oxima();
+        //center the window
+        oxima.setLocationRelativeTo(null);
+        // Show the login window
+        oxima.setVisible(true);    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+Provoli_Ofeilon provoli_ofeilon = new Provoli_Ofeilon();
+        //center the window
+        provoli_ofeilon.setLocationRelativeTo(null);
+        // Show the login window
+        provoli_ofeilon.setVisible(true);     }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
