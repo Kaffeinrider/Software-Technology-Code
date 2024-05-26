@@ -16,7 +16,53 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
     public Provoli_stoixeion_Epixeirisis() {
         initComponents();
     }
-
+    public Provoli_Ofeilon() {
+        initComponents();
+    }
+    
+     private void getEpixeirisi()
+    {
+       
+         String =onoma_epixeirisis.getText();
+           try {
+           /** Class.forName("java.sql.Driver");
+            con1 = DriverManager.getConnection("jdbc:mysql://localhost/e_lawyer?useUnicode=yes&characterEncoding=UTF-8","root","");
+            pst = con1.prepareStatement("select * from ypothesi where ar_prwtokollou =? ");
+            pst.setString(1, ar_ptr); 1*/
+            
+            
+            rs = pst.executeQuery();
+              
+            while(rs.next())
+           {
+            txt_onoma_epixeirisis.setText(rs.getString("onoma_epixeirisis"));
+           txt_poli.setText(rs.getString("poli"));
+           txt_dieuyhinsi.setText(rs.getString("dieuthinsi"));
+           txt_afm_epixeirisis.setText(rs.getString("afm_epixeirisis"));
+           txt_username_epixeirisis.setText(rs.getString("username_epixeirisi"));
+           txt_password_epixeirisis.setText(rs.getString("password_epixeirisis"));
+           txt_email_epixeirisis.setText(rs.getString("email_epixeirisis"));
+           txt_portofoli_epixeirisis.setText(rs.getString("portofoli_epixeirisis"));
+           txt_esoda.setText(rs.getString("esoda"));
+           txt_exoda.setText(rs.getString("exoda"));
+           }
+  }
+         
+                 
+            
+        
+        
+           
+               
+         catch (ClassNotFoundException ex) {
+            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        catch (SQLException ex) {
+            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
+         } 
+           
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
