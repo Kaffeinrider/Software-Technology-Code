@@ -16,6 +16,8 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
     public Epilogi_Logisti() {
         initComponents();
     }
+    
+    //SELECT onoma_logisti, eponimo_logisti FROM logistis; 
 
     /**
      * This method is called from within the constructor to initialize the form.

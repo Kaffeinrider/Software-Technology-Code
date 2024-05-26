@@ -62,6 +62,11 @@ public class EpeksergasiaYpallilwn extends javax.swing.JFrame {
 
         jButton8.setBackground(new java.awt.Color(255, 0, 0));
         jButton8.setText("Ακύρωση");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -166,6 +171,15 @@ public class EpeksergasiaYpallilwn extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        this.dispose();
+            Logistis logistis = new Logistis();
+            //center the window
+            logistis.setLocationRelativeTo(null);
+            // Show the login window
+            logistis.setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments

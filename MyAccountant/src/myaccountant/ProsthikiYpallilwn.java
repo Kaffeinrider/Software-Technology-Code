@@ -58,6 +58,12 @@ public class ProsthikiYpallilwn extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(jTable2);
 
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
+
         jLabel4.setText("Όνομα Υπαλλήλου");
 
         jLabel7.setText("Μεικτά");
@@ -67,13 +73,41 @@ public class ProsthikiYpallilwn extends javax.swing.JFrame {
         jLabel1.setText("Προσθήκη στοιχείων Υπάλληλου Επιχείρησης");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+
         jLabel5.setText("Ασφάλιση");
 
         jButton2.setBackground(new java.awt.Color(0, 255, 102));
         jButton2.setText("Υποβολή");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton8.setBackground(new java.awt.Color(255, 0, 0));
         jButton8.setText("Ακύρωση");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,6 +182,39 @@ public class ProsthikiYpallilwn extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        this.dispose();
+            Logistis logistis = new Logistis();
+            //center the window
+            logistis.setLocationRelativeTo(null);
+            // Show the login window
+            logistis.setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+            
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        
+    }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //insert stin SQL 
+       String yp_onoma = jTextField2.getText();
+       String yp_eponimo = jTextField2.getText();
+       int meikta = jTextField5.getText();
+       int asfalisi = jTextField3.getText();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

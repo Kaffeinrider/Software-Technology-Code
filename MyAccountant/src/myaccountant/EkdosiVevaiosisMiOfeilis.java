@@ -66,6 +66,11 @@ public class EkdosiVevaiosisMiOfeilis extends javax.swing.JFrame {
 
         jButton8.setBackground(new java.awt.Color(255, 0, 0));
         jButton8.setText("Ακύρωση");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,6 +121,15 @@ public class EkdosiVevaiosisMiOfeilis extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        this.dispose();
+            Logistis logistis = new Logistis();
+            //center the window
+            logistis.setLocationRelativeTo(null);
+            // Show the login window
+            logistis.setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments

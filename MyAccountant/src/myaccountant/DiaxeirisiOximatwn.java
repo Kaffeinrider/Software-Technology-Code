@@ -60,6 +60,11 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame {
 
         jButton8.setBackground(new java.awt.Color(255, 0, 0));
         jButton8.setText("Επιστροφή");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setBackground(new java.awt.Color(51, 51, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 36)); // NOI18N
@@ -124,8 +129,7 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame {
                                             .addComponent(jLabel7)
                                             .addGap(18, 18, 18)
                                             .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -168,6 +172,15 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        this.dispose();
+            Logistis logistis = new Logistis();
+            //center the window
+            logistis.setLocationRelativeTo(null);
+            // Show the login window
+            logistis.setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments

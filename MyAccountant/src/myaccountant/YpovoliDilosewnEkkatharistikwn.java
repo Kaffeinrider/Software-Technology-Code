@@ -129,6 +129,11 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame {
 
         jButton10.setBackground(new java.awt.Color(255, 0, 0));
         jButton10.setText("Επιστροφή");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -246,6 +251,15 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        this.dispose();
+            Logistis logistis = new Logistis();
+            //center the window
+            logistis.setLocationRelativeTo(null);
+            // Show the login window
+            logistis.setVisible(true);
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
      * @param args the command line arguments
