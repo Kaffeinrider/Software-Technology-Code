@@ -1,8 +1,8 @@
 /*Database creation*/
 
-DROP DATABASE IF EXISTS MyAccountant;
-CREATE DATABASE MyAccountant;
-USE MyAccountant;
+DROP DATABASE IF EXISTS myaccountant;
+CREATE DATABASE myaccountant;
+USE myaccountant;
 
 /*Create Tables*/
 
