@@ -24,7 +24,7 @@ private void getOfeiliPelati()
            /** Class.forName("java.sql.Driver");
             con1 = DriverManager.getConnection("jdbc:mysql://localhost/e_lawyer?useUnicode=yes&characterEncoding=UTF-8","root","");
             pst = con1.prepareStatement("select * from ypothesi where ar_prwtokollou =? ");
-            pst.setString(1, ar_ptr); */
+            pst.setString(1, ar_ptr); 1*/
             
             
             rs = pst.executeQuery();
