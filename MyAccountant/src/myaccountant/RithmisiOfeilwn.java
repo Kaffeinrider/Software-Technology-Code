@@ -16,7 +16,83 @@ public class RithmisiOfeilwn extends javax.swing.JFrame {
     public RithmisiOfeilwn() {
         initComponents();
     }
-
+private void getOfeiliPelati()
+    {
+       
+         String ar_ptr=ofeili.getText();
+           try {
+           /** Class.forName("java.sql.Driver");
+            con1 = DriverManager.getConnection("jdbc:mysql://localhost/e_lawyer?useUnicode=yes&characterEncoding=UTF-8","root","");
+            pst = con1.prepareStatement("select * from ypothesi where ar_prwtokollou =? ");
+            pst.setString(1, ar_ptr); */
+            
+            
+            rs = pst.executeQuery();
+              
+            while(rs.next())
+           {
+           txt_ofeili_id.setText(rs.getString("ofeili_id"));
+           txt_ofeili_poso.setText(rs.getString("ofeili_poso"));
+          txt_ofeili_username_pelati.setText(rs.getString("ofeili_username_pelati"));
+         
+           }
+  }
+         
+                 
+            
+        
+        
+           
+               
+         catch (ClassNotFoundException ex) {
+            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        catch (SQLException ex) {
+            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
+         } 
+           
+    }
+   
+           
+    }
+   private void getProvoliOfeilon()
+    {
+       
+         String ar_ptr=ofeili.getText();
+           try {
+           /** Class.forName("java.sql.Driver");
+            con1 = DriverManager.getConnection("jdbc:mysql://localhost/e_lawyer?useUnicode=yes&characterEncoding=UTF-8","root","");
+            pst = con1.prepareStatement("select * from ypothesi where ar_prwtokollou =? ");
+            pst.setString(1, ar_ptr); */
+            
+            
+            rs = pst.executeQuery();
+              
+            while(rs.next())
+           {
+            txt_ofeili_id.setText(rs.getString("ofeili_id"));
+           txt_ofeili_poso.setText(rs.getString("ofeili_poso"));
+          txt_ofeili_username_pelati.setText(rs.getString("ofeili_username_pelati"));
+         
+           }
+  }
+         
+                 
+            
+        
+        
+           
+               
+         catch (ClassNotFoundException ex) {
+            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        catch (SQLException ex) {
+            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
+         } 
+           
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

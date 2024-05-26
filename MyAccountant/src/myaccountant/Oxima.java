@@ -15,6 +15,47 @@ public class Oxima extends javax.swing.JFrame {
      */
     public Oxima() {
         initComponents();
+    }    public Provoli_Ofeilon() {
+        initComponents();
+    }
+    
+     private void getProvoliOximaton()
+    {
+       
+         String ar_ptr=user.getText();
+           try {
+           /** Class.forName("java.sql.Driver");
+            con1 = DriverManager.getConnection("jdbc:mysql://localhost/e_lawyer?useUnicode=yes&characterEncoding=UTF-8","root","");
+            pst = con1.prepareStatement("select * from ypothesi where ar_prwtokollou =? ");
+            pst.setString(1, ar_ptr); */
+            
+            
+            rs = pst.executeQuery();
+              
+            while(rs.next())
+           {
+            txt_ox_onoma.setText(rs.getString("ox_onoma"));
+           txt_pinakida.setText(rs.getString("pinakida"));
+          txt_kostos_telon.setText(rs.getString("kostos_telon"));
+         txt_katatstasi.setText(rs.getString("katastasasi"));
+         txt_ox_username_pelati.setText(rs.getString("ox_username_pelati"));
+           }
+  }
+         
+                 
+            
+        
+        
+           
+               
+         catch (ClassNotFoundException ex) {
+            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        catch (SQLException ex) {
+            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
+         } 
+           
     }
 
     /**
