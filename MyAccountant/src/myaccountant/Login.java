@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.nio.charset.*;
 
 public class Login extends javax.swing.JFrame 
 {
@@ -68,12 +69,22 @@ public class Login extends javax.swing.JFrame
        
             ResultSet rs = pst.executeQuery();
             
+            System.out.println(username);
+            System.out.println(password);
+            
             if(rs.next())
             {
                 String uname = rs.getString(1);
                 String pass = rs.getString(2);
                 
-                return true;
+                if (username.equals(uname) && password.equals(pass)) 
+                {
+                    return true;
+                } 
+                else 
+                {     
+                    return false;
+                }
             }
             else
             {
@@ -115,6 +126,8 @@ public class Login extends javax.swing.JFrame
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Username:");
+
+        jTextField2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Password:");

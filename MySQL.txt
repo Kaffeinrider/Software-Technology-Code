@@ -139,16 +139,16 @@ INSERT INTO user VALUES
 ('XXXgamerXXX'),
 ('Giota103'),
 ('Sony'),
-('Παπαγεωργίου Λάστιχα');
+('Papageorgiou Lastixa');
 
 INSERT INTO logistis VALUES
-('Ανδρέας', 'Νικολάου', '10923949501', 'kappaXD', 'yooo', 'kappas@gmail.com'),
-('Νίκος', 'Αγγελόπουλος', '10823931001', 'SuperMan69', 'drakos_fotia', 'pagman@hotmail.com');
+('Andreas', 'Nikolaou', '10923949501', 'kappaXD', 'yooo', 'kappas@gmail.com'),
+('Nikos', 'Aggelopoulos', '10823931001', 'SuperMan69', 'drakos_fotia', 'pagman@hotmail.com');
 
 INSERT INTO idiotis VALUES
-('Γιώργος', 'Γεωργιάδου', '10123929501', 'XXXgamerXXX', 'yo21', 'theos@gmail.com', DEFAULT, NULL),
-('Γιώτα', 'Πιστολίδου', '97143926501', 'Giota103', 'hihihi', 'giota@gmail.com', DEFAULT, NULL);
+('Giorgos', 'Georgiadou', '10123929501', 'XXXgamerXXX', 'yo21', 'theos@gmail.com', DEFAULT, NULL),
+('Giota', 'Pistolidou', '97143926501', 'Giota103', 'hihihi', 'giota@gmail.com', DEFAULT, NULL);
 
 INSERT INTO epixeirisi VALUES
-('Sony Interactive', 'Αθήνα', 'Αριστοτέλους 65', '10823931185', 'Sony', 'sony1234', 'sony@sony.net', DEFAULT, NULL, DEFAULT, DEFAULT),
-('Παπαγεωργίου Λάστιχα', 'Πάτρα', 'Μαιζώνος 5', '10223931185', 'Παπαγεωργίου Λάστιχα', '5235', 'lastixapapageorgiou@gmail.gr', DEFAULT, NULL, DEFAULT, DEFAULT);
+('Sony Interactive', 'Athens', 'Aristotelous 65', '10823931185', 'Sony', 'sony1234', 'sony@sony.net', DEFAULT, NULL, DEFAULT, DEFAULT),
+('Papageorgiou Lastixa', 'Patra', 'Maizonos 5', '10223931185', 'Papageorgiou Lastixa', '5235', 'lastixapapageorgiou@gmail.gr', DEFAULT, NULL, DEFAULT, DEFAULT);
