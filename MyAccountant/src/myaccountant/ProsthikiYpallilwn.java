@@ -297,12 +297,12 @@ private javax.swing.JTextField BranchField;
         try (
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
-
+      DefaultTableModel tmodel1 = (DefaultTableModel)jTable2.getModel();
             while (rs.next()) {
                 String onoma = rs.getString("onoma_epixeirisis");
                 String poli = rs.getString("poli");
                 String afm = rs.getString("afm_epixeirisis");
-                DefaultTableModel tmodel1 = (DefaultTableModel)jTable2.getModel();
+                
                 tmodel1.addRow(new Object[]{onoma, poli, afm});
             }
         } catch (SQLException e) {
@@ -318,7 +318,7 @@ private javax.swing.JTextField BranchField;
         if (selectedRowIndex == -1) {
             return null;
         }
-        return (String) tmodel1.getValueAt(selectedRow, 0);
+        return (String) tmodel1.getValueAt(selectedRowIndex, 0);
     }
     
    
