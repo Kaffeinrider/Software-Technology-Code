@@ -17,26 +17,28 @@ import javax.swing.JOptionPane;
  * @author vasil
  */
 public class Login extends javax.swing.JFrame {
-    
-    private final String DB_URL = "jdbc:mysql://localhost:3306/myaccounant?allowPublicKeyRetrieval=true";
-    private final String DB_USER = "root";
-    private final String DB_PASSWORD = "Vasilis2001!";
-    /**
-     * Creates new form Login
-     */
+    public static Connection conn;
+    public String username;
+    public String password;
+    private final String DB_URL = "jdbc:mysql://localhost:3306/myaccountant";
+    private final String DB_USER = "accountant";
+    private final String DB_PASSWORD = "money";
+  
     public Login() {
         initComponents();
+        connect();
     }
     
-    private Connection connect() {
-        try {
-            return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-        } 
-        
-        catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            return null;
+    private boolean connect(){
+        try{
+            //connect to the database 
+            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
         }
+        return true;
     }
     
     private boolean checkCredentials(String username, String password, String userType) {
