@@ -1,7 +1,7 @@
 package myaccountant;
 
 import java.sql.PreparedStatement;
-import static myaccountant.Login.conn;
+import static myaccountant.Login.*;
 
 public class Portofoli extends javax.swing.JFrame {
 
