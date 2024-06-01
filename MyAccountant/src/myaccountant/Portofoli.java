@@ -1,20 +1,41 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package myaccountant;
 
-/**
- *
- * @author vasil
- */
+import java.sql.PreparedStatement;
+import static myaccountant.Login.conn;
+
 public class Portofoli extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Portofoli
-     */
     public Portofoli() {
         initComponents();
+    }
+    
+    private void load_Ypoloipo(String username_idioti, String afm_idioti)
+    {
+          try 
+          {
+              PreparedStatement pst = conn.prepareStatement("select * from idiotis where username_idioti =? AND afm_idioti =?");
+              pst.setString(1, ar_ptr); 
+              
+              rs = pst.executeQuery();
+              
+              while(rs.next())
+              {
+                  int upoloipo_idioti = String.valueOf(rs.getString("portofoli_idioti"));
+                  
+                  int tbData[] = {upoloipo_idioti};
+                  
+                  DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
+                  tblModel.addRow(tbData); 
+              }
+          }
+          catch (ClassNotFoundException ex) 
+          {
+              Logger.getLogger(Portofoli.class.getName()).log(Level.SEVERE, null, ex);
+          }
+          catch (SQLException ex) 
+          {
+            Logger.getLogger(Portofoli.class.getName()).log(Level.SEVERE, null, ex);
+          } 
     }
 
     /**
@@ -28,11 +49,11 @@ public class Portofoli extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,13 +63,7 @@ public class Portofoli extends javax.swing.JFrame {
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setText("Πληρωμή Υπολοίπου:");
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
+        jLabel3.setText("Ενημέρωση Υπολοίπου:");
 
         jButton1.setBackground(new java.awt.Color(0, 255, 102));
         jButton1.setText("Προσθήκη ποσού");
@@ -66,112 +81,77 @@ public class Portofoli extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null}
-            },
-            new String [] {
-                "Διαθέσιμο Υπόλοιπο"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setText("Διαθέσιμο Υπόλοιπο:");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(286, 286, 286)
-                .addComponent(jLabel1)
-                .addContainerGap(78, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(176, 176, 176)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap())
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(160, 160, 160))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap()))))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(128, 128, 128))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(174, 174, 174))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                         .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)))
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void getYpoloipoPortIdioti(username_idioti, afm_idioti)
-    {
-         String upol_portof_id = idiotis.portofoli_idioti.getText();
-         
-          try {
-           /** Class.forName("java.sql.Driver");
-            con1 = DriverManager.getConnection("jdbc:mysql://localhost/e_lawyer?useUnicode=yes&characterEncoding=UTF-8","root","");
-            pst = con1.prepareStatement("select * from idiotis where username_idioti =? AND afm_idioti =?");
-            pst.setString(1, ar_ptr); */
-         
-         rs = pst.executeQuery();
-         
-             while(rs.next())
-             {
-                int upoloipo_idioti = String.valueOf(rs.getString("portofoli_idioti"));
-
-                
-                
-                int tbData[] = {upoloipo_idioti};
-                
-                DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
-                tblModel.addRow(tbData); 
-      }
-                
-             }
-          }
-          
-          catch (ClassNotFoundException ex) {
-            Logger.getLogger(Portofoli.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-          catch (SQLException ex) {
-            Logger.getLogger(Portofoli.class.getName()).log(Level.SEVERE, null, ex);
-         } 
-
-    }
-         
-        
+           
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        
+        Epixeirisi epixeirisi = new Epixeirisi();
+        //center the window
+        epixeirisi.setLocationRelativeTo(null);
+        // Show the login window
+        epixeirisi.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        int poso_pliromis = textField.getText();
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        portofoli_idioti = upoloipo_idioti + poso_pliromis;
+   
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -213,9 +193,9 @@ public class Portofoli extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
