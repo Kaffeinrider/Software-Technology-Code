@@ -9,6 +9,7 @@ public class Portofoli extends javax.swing.JFrame
     public Portofoli() 
     {
         initComponents();
+        System.out.println(user_type);
     }
     
     private void load_Ypoloipo()

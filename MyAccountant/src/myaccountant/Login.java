@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame 
 {
     public static Connection conn;
-    public String username;
-    public String password;
+    public static String username;
+    public static String password;
     public static String user_type;
     private final String DB_URL = "jdbc:mysql://localhost:3306/myaccountant?allowPublicKeyRetrieval=true&useUnicode=yes&characterEncoding=UTF-8";
     private final String DB_USER = "accountant";
