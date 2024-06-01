@@ -1,19 +1,35 @@
 package myaccountant;
 
 import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 import static myaccountant.Login.*;
 
-public class Portofoli extends javax.swing.JFrame {
-
-    public Portofoli() {
+public class Portofoli extends javax.swing.JFrame 
+{
+    public Portofoli() 
+    {
         initComponents();
     }
     
-    private void load_Ypoloipo(String username_idioti, String afm_idioti)
+    private void load_Ypoloipo()
     {
-          try 
-          {
-              PreparedStatement pst = conn.prepareStatement("select * from idiotis where username_idioti =? AND afm_idioti =?");
+        String query = "";
+        
+        switch (user_type) 
+        {
+            case "epixeirisi":
+                query = "SELECT portofoli_epixeirisis FROM epixeirisi WHERE username_epixeirisis=?";
+                break;
+            case "idiotis":
+                query = "SELECT portofoli_idioti FROM idiotis WHERE username_idioti=?";
+                break;
+            default:
+                break;
+        }
+        
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
               pst.setString(1, ar_ptr); 
               
               rs = pst.executeQuery();
@@ -27,15 +43,11 @@ public class Portofoli extends javax.swing.JFrame {
                   DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
                   tblModel.addRow(tbData); 
               }
-          }
-          catch (ClassNotFoundException ex) 
-          {
-              Logger.getLogger(Portofoli.class.getName()).log(Level.SEVERE, null, ex);
-          }
-          catch (SQLException ex) 
-          {
-            Logger.getLogger(Portofoli.class.getName()).log(Level.SEVERE, null, ex);
-          } 
+        }
+        catch (SQLException ex) 
+        {
+            JOptionPane.showMessageDialog(this, "Invalid credentials for Logistis.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+        } 
     }
 
     /**

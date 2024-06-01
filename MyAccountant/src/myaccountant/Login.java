@@ -12,6 +12,7 @@ public class Login extends javax.swing.JFrame
     public static Connection conn;
     public String username;
     public String password;
+    public static String user_type;
     private final String DB_URL = "jdbc:mysql://localhost:3306/myaccountant?allowPublicKeyRetrieval=true&useUnicode=yes&characterEncoding=UTF-8";
     private final String DB_USER = "accountant";
     private final String DB_PASSWORD = "money";
@@ -219,7 +220,10 @@ public class Login extends javax.swing.JFrame
         
         if (checkCredentials("logistis")) 
         {
+            user_type = "logistis";
+            
             this.dispose();
+            
             Logistis logistis = new Logistis();
             //center the window
             logistis.setLocationRelativeTo(null);
@@ -238,7 +242,10 @@ public class Login extends javax.swing.JFrame
         
         if (checkCredentials("epixeirisi")) 
         {
+            user_type = "epixeirisi";
+            
             this.dispose();
+            
             Epixeirisi epixeirisi = new Epixeirisi();
             //center the window
             epixeirisi.setLocationRelativeTo(null);
@@ -257,7 +264,10 @@ public class Login extends javax.swing.JFrame
         
         if (checkCredentials("idiotis")) 
         {
+            user_type = "idiotis";
+            
             this.dispose();
+            
             Idiotis idiotis = new Idiotis();
             //center the window
             idiotis.setLocationRelativeTo(null);
