@@ -1,57 +1,89 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package myaccountant;
 
-
 import java.sql.Connection;
-import java.awt.*;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-/**
- *
- * @author vasil
- */
-public class Login extends javax.swing.JFrame {
+
+public class Login extends javax.swing.JFrame 
+{
     public static Connection conn;
     public String username;
     public String password;
-    private final String DB_URL = "jdbc:mysql://localhost:3306/myaccountant";
+    private final String DB_URL = "jdbc:mysql://localhost:3306/myaccountant?allowPublicKeyRetrieval=true&useUnicode=yes&characterEncoding=UTF-8";
     private final String DB_USER = "accountant";
     private final String DB_PASSWORD = "money";
   
-    public Login() {
+    public Login() 
+    {
         initComponents();
-        connect();
     }
     
-    private boolean connect(){
-        try{
+    private boolean connect()
+    {
+        try
+        {
             //connect to the database 
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            
-        }catch(SQLException e){
+            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);  
+        }
+        catch(SQLException e)
+        {
             e.printStackTrace();
+            
             return false;
         }
+        
         return true;
     }
     
-    private boolean checkCredentials(String username, String password, String userType) {
-        String query = "SELECT * FROM users WHERE username = ? AND password = ? AND usertype = ?";
-        try (Connection conn = connect(); PreparedStatement pst = conn.prepareStatement(query)) {
+    private boolean checkCredentials(String userType) 
+    {
+        connect();
+        
+        String query = "";
+        
+        switch (userType) 
+        {
+            case "logistis":
+                query = "SELECT username_logisti,password_logisti FROM user INNER JOIN logistis ON username_logisti=username WHERE username_logisti=? AND password_logisti=?";
+                break;
+            case "epixeirisi":
+                query = "SELECT username_epixeirisis,password_epixeirisis FROM user INNER JOIN epixeirisi ON username_epixeirisis=username WHERE username_epixeirisis=? AND password_epixeirisis=?";
+                break;
+            case "idiotis":
+                query = "SELECT username_idioti,password_idioti FROM user INNER JOIN idiotis ON username_idioti=username WHERE username_idioti=? AND password_idioti=?";
+                break;
+            default:
+                break;
+        }
+        
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
+                    
             pst.setString(1, username);
             pst.setString(2, password);
-            pst.setString(3, userType);
-            try (ResultSet rs = pst.executeQuery()) {
-                return rs.next();
+       
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next())
+            {
+                String uname = rs.getString(1);
+                String pass = rs.getString(2);
+                
+                return true;
             }
-        } catch (SQLException e) {
+            else
+            {
+                return false;
+            }
+        } 
+        catch (SQLException e) 
+        {
             JOptionPane.showMessageDialog(this, "Error checking credentials: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            
             return false;
         }
     }
@@ -173,10 +205,11 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        String username = jTextField2.getText();
-        String password = new String(jPasswordField2.getPassword());
+        username = jTextField2.getText();
+        password = String.copyValueOf(jPasswordField2.getPassword());
         
-        if (checkCredentials(username, password, "logistis")) {
+        if (checkCredentials("logistis")) 
+        {
             this.dispose();
             Logistis logistis = new Logistis();
             //center the window
@@ -184,18 +217,18 @@ public class Login extends javax.swing.JFrame {
             // Show the login window
             logistis.setVisible(true);
         }
-        
-        else {
+        else 
+        {
             JOptionPane.showMessageDialog(this, "Invalid credentials for Logistis.", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        String username = jTextField2.getText();
-        String password = new String(jPasswordField2.getPassword());
+        username = jTextField2.getText();
+        password = String.copyValueOf(jPasswordField2.getPassword());
         
-        if (checkCredentials(username, password, "epixeirisi")) {
-        
+        if (checkCredentials("epixeirisi")) 
+        {
             this.dispose();
             Epixeirisi epixeirisi = new Epixeirisi();
             //center the window
@@ -203,29 +236,29 @@ public class Login extends javax.swing.JFrame {
             // Show the login window
             epixeirisi.setVisible(true);
         }
-        
-        else {
+        else 
+        {
             JOptionPane.showMessageDialog(this, "Invalid credentials for Epixeirisi.", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        String username = jTextField2.getText();
-        String password = new String(jPasswordField2.getPassword());
+        username = jTextField2.getText();
+        password = String.copyValueOf(jPasswordField2.getPassword());
         
-        if (checkCredentials(username, password, "idiotis")) {
+        if (checkCredentials("idiotis")) 
+        {
             this.dispose();
             Idiotis idiotis = new Idiotis();
             //center the window
             idiotis.setLocationRelativeTo(null);
             // Show the login window
             idiotis.setVisible(true);
-        }
-        
-        else {
+        }  
+        else 
+        {
             JOptionPane.showMessageDialog(this, "Invalid credentials for Idiotis.", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
