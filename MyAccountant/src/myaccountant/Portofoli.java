@@ -1,28 +1,30 @@
 package myaccountant;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import static myaccountant.Login.*;
+import java.sql.SQLException;
 
 public class Portofoli extends javax.swing.JFrame 
 {
     public Portofoli() 
     {
         initComponents();
-        System.out.println(user_type);
+        load_ypoloipo();
     }
     
-    private void load_Ypoloipo()
+    private void load_ypoloipo()
     {
         String query = "";
         
         switch (user_type) 
         {
             case "epixeirisi":
-                query = "SELECT portofoli_epixeirisis FROM epixeirisi WHERE username_epixeirisis=?";
+                query = "SELECT portofoli_epixeirisis FROM epixeirisi WHERE username_epixeirisis = ?";
                 break;
             case "idiotis":
-                query = "SELECT portofoli_idioti FROM idiotis WHERE username_idioti=?";
+                query = "SELECT portofoli_idioti FROM idiotis WHERE username_idioti = ?";
                 break;
             default:
                 break;
@@ -31,23 +33,19 @@ public class Portofoli extends javax.swing.JFrame
         try 
         {
             PreparedStatement pst = conn.prepareStatement(query);
-              pst.setString(1, ar_ptr); 
-              
-              rs = pst.executeQuery();
-              
-              while(rs.next())
-              {
-                  int upoloipo_idioti = String.valueOf(rs.getString("portofoli_idioti"));
-                  
-                  int tbData[] = {upoloipo_idioti};
-                  
-                  DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
-                  tblModel.addRow(tbData); 
-              }
+            
+            pst.setString(1, username); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next())
+            {
+                jLabel4.setText(rs.getString(1));
+            }
         }
-        catch (SQLException ex) 
+        catch (SQLException e) 
         {
-            JOptionPane.showMessageDialog(this, "Invalid credentials for Logistis.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } 
     }
 
@@ -164,7 +162,46 @@ public class Portofoli extends javax.swing.JFrame
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-   
+        int poso = Integer.parseInt(jTextField2.getText());
+        
+        if(poso<=0)
+        {
+            JOptionPane.showMessageDialog(this, "You must use only positive numbers to add to your wallet!", "Error updating wallet", JOptionPane.ERROR_MESSAGE);
+            
+            return;
+        }
+        
+        String query = "";
+        
+        switch (user_type) 
+        {
+            case "epixeirisi":
+                query = "UPDATE epixeirisi SET portofoli_epixeirisis = portofoli_epixeirisis + ? WHERE username_epixeirisis = ?";
+                break;
+            case "idiotis":
+                query = "UPDATE idiotis SET portofoli_idioti = portofoli_idioti + ? WHERE username_idioti = ?";
+                break;
+            default:
+                break;
+        }
+        
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
+            
+            pst.setInt(1, poso); 
+            pst.setString(2, username);
+            
+            pst.executeUpdate(); 
+            
+            JOptionPane.showMessageDialog(this, "Wallet was updated!", "Update", JOptionPane.INFORMATION_MESSAGE);
+            
+            load_ypoloipo();
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Error updating wallet: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

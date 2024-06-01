@@ -48,13 +48,13 @@ public class Login extends javax.swing.JFrame
         switch (userType) 
         {
             case "logistis":
-                query = "SELECT username_logisti,password_logisti FROM user INNER JOIN logistis ON username_logisti=username WHERE username_logisti=? AND password_logisti=?";
+                query = "SELECT username_logisti,password_logisti FROM user INNER JOIN logistis ON username_logisti=username WHERE username_logisti = ? AND password_logisti = ?";
                 break;
             case "epixeirisi":
-                query = "SELECT username_epixeirisis,password_epixeirisis FROM user INNER JOIN epixeirisi ON username_epixeirisis=username WHERE username_epixeirisis=? AND password_epixeirisis=?";
+                query = "SELECT username_epixeirisis,password_epixeirisis FROM user INNER JOIN epixeirisi ON username_epixeirisis=username WHERE username_epixeirisis = ? AND password_epixeirisis = ?";
                 break;
             case "idiotis":
-                query = "SELECT username_idioti,password_idioti FROM user INNER JOIN idiotis ON username_idioti=username WHERE username_idioti=? AND password_idioti=?";
+                query = "SELECT username_idioti,password_idioti FROM user INNER JOIN idiotis ON username_idioti=username WHERE username_idioti = ? AND password_idioti = ?";
                 break;
             default:
                 break;
