@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import java.nio.charset.*;
 
 public class Login extends javax.swing.JFrame 
 {
@@ -68,9 +67,6 @@ public class Login extends javax.swing.JFrame
             pst.setString(2, password);
        
             ResultSet rs = pst.executeQuery();
-            
-            System.out.println(username);
-            System.out.println(password);
             
             if(rs.next())
             {
