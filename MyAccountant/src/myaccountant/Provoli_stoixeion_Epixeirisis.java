@@ -22,14 +22,16 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
      */
     public Provoli_stoixeion_Epixeirisis() {
         initComponents();
+        load_Stoixeia_Epixeirisis();
+        load_Esoda_Exoda();
     }
     
-    private void Stoixeia_Epixeirisis()
+    private void load_Stoixeia_Epixeirisis()
     {
         String query = "";
 
         query = "SELECT yp_onoma AS 'Όνομα', yp_eponimo AS 'Επώνυμο', meikta AS 'Μεικτά Κέρδη', (meikta - asfalisi) AS 'Καθαρά Κέρδη', asfalisi AS 'Ασφάλιση', "
-           + "FROM ypallilos WHERE yp_username_epixeirisis = ?";
+           + "FROM ypallilos INNER JOIN epixeirisi ON username_epixeirisis = yp_username_epixeirisis AND yp_afm = ? WHERE yp_afm IS NULL";
         
 
         try 
@@ -57,11 +59,49 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
                 tblModel.addRow(tbData); 
             }
         }
+        
         catch (SQLException e) 
         {
             JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+           }
+    }
+    
+    private void load_Esoda_Exoda()
+    {
+        String query = "";
+
+        query = "SELECT esoda, exoda FROM epixeirisi WHERE username_epixeirisis = ?";
+        
+
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
+            
+            pst.setString(1, username); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            DefaultTableModel tblModel = (DefaultTableModel) jTable2.getModel();
+            
+            tblModel.setRowCount(0); 
+            
+            while(rs.next())
+            {
+                String esoda = rs.getString("esoda");
+                String exoda = rs.getString("exoda");
+                
+
+                String tbData[] = {esoda , exoda};
+          
+                tblModel.addRow(tbData); 
+            }
         }
-        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }    
+    
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -133,20 +173,20 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 104, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(146, 146, 146)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(119, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(185, 185, 185)
                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,7 +197,7 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(13, Short.MAX_VALUE))
