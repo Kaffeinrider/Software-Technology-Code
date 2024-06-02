@@ -1,19 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package myaccountant;
 
-/**
- *
- * @author vasil
- */
-public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame {
-
-    /**
-     * Creates new form YpovoliDilosewnEkkatharistikwn
-     */
-    public YpovoliDilosewnEkkatharistikwn() {
+public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame 
+{
+    public YpovoliDilosewnEkkatharistikwn() 
+    {
         initComponents();
     }
 
@@ -254,11 +244,12 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame {
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         this.dispose();
-            Logistis logistis = new Logistis();
-            //center the window
-            logistis.setLocationRelativeTo(null);
-            // Show the login window
-            logistis.setVisible(true);
+        
+        Idiotis idiotis = new Idiotis();
+        
+        idiotis.setLocationRelativeTo(null); 
+        
+        idiotis.setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
