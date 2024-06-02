@@ -51,22 +51,24 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame {
         // Παίρνουμε τις τιμές από τα πεδία κειμένου
         String ox_onoma = jTextField2.getText();
         String pinakida = jTextField3.getText();
-        String ox_username_pelati = jTextField4.getText();
+        String Ox_username_pelati = jTextField4.getText();
         String katastasi = jTextField5.getText();
         String kostos_telon = jTextField6.getText();
 
        
        
         int teli = Integer.parseInt(kostos_telon);
-
-        String insertQuery = "INSERT INTO oxima (ox_onoma, pinakida, ox_username_pelati, katastasi, kostos_telon) VALUES (?, ?, ?, ?, ?)";
+ if (!katastasi.equals("ENERGO") && !katastasi.equals("AKINISIA")) {
+            throw new IllegalArgumentException("Invalid value for katastasi: " + katastasi);
+        }
+        String insertQuery = "INSERT INTO oxima (ox_onoma, pinakida, Ox_username_pelati, katastasi, kostos_telon) VALUES (?, ?, ?, ?, ?)";
 
         try (
              PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
           
             pstmt.setString(1, ox_onoma);
             pstmt.setString(2, pinakida);
-            pstmt.setString(3, ox_username_pelati);
+            pstmt.setString(3, Ox_username_pelati);
             pstmt.setString(4, katastasi);
             pstmt.setInt(5, teli);
         

@@ -4,6 +4,13 @@
  */
 package myaccountant;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static myaccountant.Login.conn;
+
 /**
  *
  * @author vasil
@@ -15,49 +22,32 @@ public class Oxima extends javax.swing.JFrame {
      */
     public Oxima() {
         initComponents();
-    }    public Provoli_Ofeilon() {
-        initComponents();
-    }
-    
-     private void getProvoliOximaton()
-    {
-       
-         String ar_ptr=user.getText();
-           try {
-           /** Class.forName("java.sql.Driver");
-            con1 = DriverManager.getConnection("jdbc:mysql://localhost/e_lawyer?useUnicode=yes&characterEncoding=UTF-8","root","");
-            pst = con1.prepareStatement("select * from ypothesi where ar_prwtokollou =? ");
-            pst.setString(1, ar_ptr); */
-            
-            
-            rs = pst.executeQuery();
-              
-            while(rs.next())
-           {
-            txt_ox_onoma.setText(rs.getString("ox_onoma"));
-           txt_pinakida.setText(rs.getString("pinakida"));
-          txt_kostos_telon.setText(rs.getString("kostos_telon"));
-         txt_katatstasi.setText(rs.getString("katastasasi"));
-         txt_ox_username_pelati.setText(rs.getString("ox_username_pelati"));
-           }
-  }
-         
-                 
-            
-        
-        
-           
-               
-         catch (ClassNotFoundException ex) {
-            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
+        loadOximata();
+    }    
+    private void loadOximata() {
+        String query = "SELECT * FROM oxima";
+
+        try (
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+      DefaultTableModel tmodel1 = (DefaultTableModel)jTable3.getModel();
+            while (rs.next()) {
+                String onoma_ox = rs.getString("ox_onoma");
+                String pinakida = rs.getString("pinakida");
+                String kostos_telon = rs.getString("kostos_telon");
+                String katastasi = rs.getString("katastasi");
+                String ox_username_pelati = rs.getString("ox_username_pelati");
+                
+                tmodel1.addRow(new Object[]{onoma_ox, pinakida, kostos_telon,katastasi,ox_username_pelati});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την φόρτωση δεδομένων: " + e.getMessage());
         }
-        
-        catch (SQLException ex) {
-            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
-         } 
-           
     }
 
+    
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -97,13 +87,10 @@ public class Oxima extends javax.swing.JFrame {
         jTable3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
-                "Οχήματα"
+
             }
         ));
         jScrollPane5.setViewportView(jTable3);
