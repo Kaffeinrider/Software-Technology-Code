@@ -13,11 +13,7 @@ public class ProsthikiYpallilwn extends javax.swing.JFrame {
         initComponents();
         loadEpixeiriseis();
     }
-<<<<<<< Updated upstream
-    
-=======
 
->>>>>>> Stashed changes
 
     
     private void ypovoliStoixeion() {
