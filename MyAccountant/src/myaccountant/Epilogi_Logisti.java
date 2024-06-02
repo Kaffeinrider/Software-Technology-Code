@@ -1,23 +1,87 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package myaccountant;
 
-/**
- *
- * @author antsa
- */
-public class Epilogi_Logisti extends javax.swing.JFrame {
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import static myaccountant.Login.*;
 
-    /**
-     * Creates new form Epilogi_Logisti
-     */
-    public Epilogi_Logisti() {
+public class Epilogi_Logisti extends javax.swing.JFrame {
+    public Epilogi_Logisti() 
+    {
         initComponents();
+        load_Torino_Logisti();
+    }  
+    
+    private void load_Torino_Logisti()
+    {
+        String query = "";
+        
+        switch (user_type) 
+        {
+            case "epixeirisi":
+                query = "SELECT onoma_logisti,eponimo_logisti FROM epixeirisi INNER JOIN logistis ON epix_username_logisti = username_logisti WHERE username_epixeirisis = ?";
+                break;
+            case "idiotis":
+                query = "SELECT onoma_logisti,eponimo_logisti FROM idiotis INNER JOIN logistis ON idiotis_username_logisti = username_logisti WHERE username_idioti = ?";
+                break;
+            default:
+                break;
+        }
+        
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
+            
+            pst.setString(1, username); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next())
+            {
+                jLabel4.setText(rs.getString(1));
+            }
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
     }
     
-    //SELECT onoma_logisti, eponimo_logisti FROM logistis; 
+    private void load_Logistes()
+    {
+        String query = "";
+        
+        switch (user_type) 
+        {
+            case "epixeirisi":
+                query = "SELECT onoma_logisti,eponimo_logisti FROM epixeirisi INNER JOIN logistis ON epix_username_logisti = username_logisti WHERE username_epixeirisis = ?";
+                break;
+            case "idiotis":
+                query = "SELECT onoma_logisti,eponimo_logisti FROM idiotis INNER JOIN logistis ON idiotis_username_logisti = username_logisti WHERE username_idioti = ?";
+                break;
+            default:
+                break;
+        }
+        
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
+            
+            pst.setString(1, username); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next())
+            {
+                jLabel4.setText(rs.getString(1));
+            }
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,11 +96,11 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,10 +111,7 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
                 "Διαθέσιμοι Λογιστές"
@@ -59,12 +120,6 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jLabel2.setText("Αίτημα Νέου Λογιστή:");
-
-        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField1ActionPerformed(evt);
-            }
-        });
 
         jButton8.setBackground(new java.awt.Color(255, 0, 0));
         jButton8.setText("Επιστροφή");
@@ -82,6 +137,7 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Τωρινός Λογιστής:");
 
         jButton6.setBackground(new java.awt.Color(0, 153, 255));
@@ -91,6 +147,8 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -108,10 +166,6 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
                 .addGap(63, 63, 63)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton9)
-                        .addGap(93, 93, 93))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(138, 138, 138)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,9 +175,13 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
                                 .addComponent(jButton6))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 65, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 65, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton9)
+                        .addGap(111, 111, 111))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,12 +194,12 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
                         .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(85, 85, 85)
+                        .addGap(77, 77, 77)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -153,12 +211,37 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
-
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+        String query = "";
+        
+        switch (user_type) 
+        {
+            case "epixeirisi":
+                query = "UPDATE epixeirisi SET epix_username_logisti = NULL WHERE username_epixeirisis = ?";
+                break;
+            case "idiotis":
+                query = "UPDATE idiotis SET idiotis_username_logisti = NULL WHERE username_idioti = ?";
+                break;
+            default:
+                break;
+        }
+        
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
+            
+            pst.setString(1, username); 
+            
+            pst.executeUpdate(); 
+            
+            JOptionPane.showMessageDialog(this, "Accountant was terminated!", "Update", JOptionPane.INFORMATION_MESSAGE);
+            
+            load_Torino_Logisti();
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Error updating wallet: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }      
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -166,7 +249,26 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-      
+        if(user_type.equals("epixeirisi"))
+        {
+            this.dispose();
+            
+            Epixeirisi epixeirisi = new Epixeirisi();
+            //center the window
+            epixeirisi.setLocationRelativeTo(null);
+            // Show the login window
+            epixeirisi.setVisible(true);
+        }
+        else
+        {
+            this.dispose();
+            
+            Idiotis idiotis = new Idiotis();
+            //center the window
+            idiotis.setLocationRelativeTo(null);
+            // Show the login window
+            idiotis.setVisible(true);
+        }      
     }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
@@ -208,10 +310,10 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

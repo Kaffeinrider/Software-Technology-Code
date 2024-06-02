@@ -1,37 +1,83 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package myaccountant;
 
-/**
- *
- * @author vasil
- */
 import static myaccountant.Login.conn;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
-import javax.swing.JTable;
-
 
 public class ProsthikiYpallilwn extends javax.swing.JFrame {
-
-    /**
-     * Creates new form ProsthikiYpallilwn
-     */
-    public ProsthikiYpallilwn() {
+    public ProsthikiYpallilwn() 
+    {
         initComponents();
         loadEpixeiriseis();
     }
-private javax.swing.JTextField BranchField;
-
     
+    private javax.swing.JTextField BranchField;
+    
+    private void ypovoliStoixeion() {
+        // Παίρνουμε τις τιμές από τα πεδία κειμένου
+        String yp_afm = jTextField6.getText();
+        String yp_onoma = jTextField2.getText();
+        String yp_eponimo = jTextField4.getText();
+        String meiktaStr = jTextField5.getText();
+        String asfalisiStr = jTextField3.getText();
+       String yp_username_epixeirisis = getSelectedEpixeirisi();
+
+       int afm = Integer.parseInt(yp_afm);
+        int meikta = Integer.parseInt(meiktaStr);
+        int asfalisi = Integer.parseInt(asfalisiStr);
+
+        String insertQuery = "INSERT INTO ypallilos (yp_afm, yp_onoma, yp_eponimo, meikta, asfalisi, yp_username_epixeirisis) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (
+             PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+
+            pstmt.setInt(1, afm);
+            pstmt.setString(2, yp_onoma);
+            pstmt.setString(3, yp_eponimo);
+            pstmt.setInt(4, meikta);
+            pstmt.setInt(5, asfalisi);
+         pstmt.setString(6, yp_username_epixeirisis);
+
+            pstmt.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Η εισαγωγή ήταν επιτυχής!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage());
+        }
+    }
+
+    private void loadEpixeiriseis() {
+        String query = "SELECT onoma_epixeirisis, poli, afm_epixeirisis FROM epixeirisi";
+
+        try (
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+      DefaultTableModel tmodel1 = (DefaultTableModel)jTable2.getModel();
+            while (rs.next()) {
+                String onoma = rs.getString("onoma_epixeirisis");
+                String poli = rs.getString("poli");
+                String afm = rs.getString("afm_epixeirisis");
+                
+                tmodel1.addRow(new Object[]{onoma, poli, afm});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την φόρτωση δεδομένων: " + e.getMessage());
+        }
+    }
+    
+    private String getSelectedEpixeirisi() {
+        int selectedRowIndex = jTable2.getSelectedRow();
+        DefaultTableModel tmodel1 = (DefaultTableModel)jTable2.getModel();
+        BranchField.setText(tmodel1.getValueAt(selectedRowIndex ,0 ).toString());
+        if (selectedRowIndex == -1) {
+            return null;
+        }
+        return (String) tmodel1.getValueAt(selectedRowIndex, 0);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -255,74 +301,6 @@ private javax.swing.JTextField BranchField;
     /**
      * @param args the command line arguments
      */
-    
-    
-
-    private void ypovoliStoixeion() {
-        // Παίρνουμε τις τιμές από τα πεδία κειμένου
-        String yp_afm = jTextField6.getText();
-        String yp_onoma = jTextField2.getText();
-        String yp_eponimo = jTextField4.getText();
-        String meiktaStr = jTextField5.getText();
-        String asfalisiStr = jTextField3.getText();
-       String yp_username_epixeirisis = getSelectedEpixeirisi();
-
-       int afm = Integer.parseInt(yp_afm);
-        int meikta = Integer.parseInt(meiktaStr);
-        int asfalisi = Integer.parseInt(asfalisiStr);
-
-        String insertQuery = "INSERT INTO ypallilos (yp_afm, yp_onoma, yp_eponimo, meikta, asfalisi, yp_username_epixeirisis) VALUES (?, ?, ?, ?, ?, ?)";
-
-        try (
-             PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
-
-            pstmt.setInt(1, afm);
-            pstmt.setString(2, yp_onoma);
-            pstmt.setString(3, yp_eponimo);
-            pstmt.setInt(4, meikta);
-            pstmt.setInt(5, asfalisi);
-         pstmt.setString(6, yp_username_epixeirisis);
-
-            pstmt.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Η εισαγωγή ήταν επιτυχής!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage());
-        }
-    }
-
-    private void loadEpixeiriseis() {
-        String query = "SELECT onoma_epixeirisis, poli, afm_epixeirisis FROM epixeirisi";
-
-        try (
-             PreparedStatement pstmt = conn.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()) {
-      DefaultTableModel tmodel1 = (DefaultTableModel)jTable2.getModel();
-            while (rs.next()) {
-                String onoma = rs.getString("onoma_epixeirisis");
-                String poli = rs.getString("poli");
-                String afm = rs.getString("afm_epixeirisis");
-                
-                tmodel1.addRow(new Object[]{onoma, poli, afm});
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την φόρτωση δεδομένων: " + e.getMessage());
-        }
-    }
-    
-    private String getSelectedEpixeirisi() {
-        int selectedRowIndex = jTable2.getSelectedRow();
-        DefaultTableModel tmodel1 = (DefaultTableModel)jTable2.getModel();
-        BranchField.setText(tmodel1.getValueAt(selectedRowIndex ,0 ).toString());
-        if (selectedRowIndex == -1) {
-            return null;
-        }
-        return (String) tmodel1.getValueAt(selectedRowIndex, 0);
-    }
-    
-   
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -373,5 +351,4 @@ private javax.swing.JTextField BranchField;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
-
 }
