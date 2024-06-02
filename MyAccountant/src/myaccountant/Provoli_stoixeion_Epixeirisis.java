@@ -4,10 +4,12 @@
  */
 package myaccountant;
 
-import static myaccountant.Login.conn;
-import javax.swing.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import static myaccountant.Login.*;
 import javax.swing.table.DefaultTableModel;
-import java.sql.*;
 
 /**
  *
@@ -20,52 +22,46 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
      */
     public Provoli_stoixeion_Epixeirisis() {
         initComponents();
-        conn = Login.conn;
     }
     
-     private void getEpixeirisi()
+    private void Stoixeia_Epixeirisis()
     {
-       
-         String =onoma_epixeirisis.getText();
-           try {
-           /** Class.forName("java.sql.Driver");
-            con1 = DriverManager.getConnection("jdbc:mysql://localhost/e_lawyer?useUnicode=yes&characterEncoding=UTF-8","root","");
-            pst = con1.prepareStatement("select * from ypothesi where ar_prwtokollou =? ");
-            pst.setString(1, ar_ptr); 1*/
+        String query = "";
+
+        query = "SELECT yp_onoma AS 'Όνομα', yp_eponimo AS 'Επώνυμο', meikta AS 'Μεικτά Κέρδη', (meikta - asfalisi) AS 'Καθαρά Κέρδη', asfalisi AS 'Ασφάλιση', "
+           + "FROM ypallilos WHERE yp_username_epixeirisis = ?";
+        
+
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
             
+            pst.setString(1, username); 
             
-            rs = pst.executeQuery();
-              
+            ResultSet rs = pst.executeQuery();
+            
+            DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
+            
+            tblModel.setRowCount(0); 
+            
             while(rs.next())
-           {
-            txt_onoma_epixeirisis.setText(rs.getString("onoma_epixeirisis"));
-           txt_poli.setText(rs.getString("poli"));
-           txt_dieuyhinsi.setText(rs.getString("dieuthinsi"));
-           txt_afm_epixeirisis.setText(rs.getString("afm_epixeirisis"));
-           txt_username_epixeirisis.setText(rs.getString("username_epixeirisi"));
-           txt_password_epixeirisis.setText(rs.getString("password_epixeirisis"));
-           txt_email_epixeirisis.setText(rs.getString("email_epixeirisis"));
-           txt_portofoli_epixeirisis.setText(rs.getString("portofoli_epixeirisis"));
-           txt_esoda.setText(rs.getString("esoda"));
-           txt_exoda.setText(rs.getString("exoda"));
-           }
-  }
-         
-                 
-            
-        
-        
-           
-               
-         catch (ClassNotFoundException ex) {
-            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
+            {
+                String onoma = rs.getString("'Όνομα'");
+                String eponimo = rs.getString("'Επώνυμο'");
+                String meikta = rs.getString("'Μεικτά Κέρδη'");
+                String kathara = String.valueOf(rs.getString("'Καθαρά Κέρδη'"));
+                String asfalisi = String.valueOf(rs.getString("'Ασφάλιση'"));
+
+                String tbData[] = {onoma , eponimo, meikta, kathara, asfalisi};
+          
+                tblModel.addRow(tbData); 
+            }
         }
-        
-        catch (SQLException ex) {
-            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
-         } 
-           
-    }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,13 +88,13 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Ον/επώνυμο", "Μεικτά Κέδη", "Καθαρά Κέρδη", "Ασφάλεια"
+                "Όνομα", "Επώνυμο", "Μεικτά Κέδη", "Καθαρά Κέρδη", "Ασφάλεια"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
