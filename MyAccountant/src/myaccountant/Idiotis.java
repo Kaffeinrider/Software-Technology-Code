@@ -127,7 +127,7 @@ public class Idiotis extends javax.swing.JFrame
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         this.dispose();
         Portofoli portofoli = new Portofoli();
-        //center the windows
+        //center the window
         portofoli.setLocationRelativeTo(null);
         // Show the login window
         portofoli.setVisible(true);    }//GEN-LAST:event_jButton7ActionPerformed
