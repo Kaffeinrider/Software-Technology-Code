@@ -4,6 +4,11 @@
  */
 package myaccountant;
 
+import static myaccountant.Login.conn;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+
 /**
  *
  * @author antsa
@@ -15,9 +20,7 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
      */
     public Provoli_stoixeion_Epixeirisis() {
         initComponents();
-    }
-    public Provoli_Ofeilon() {
-        initComponents();
+        conn = Login.conn;
     }
     
      private void getEpixeirisi()
@@ -173,11 +176,11 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         this.dispose();
-            Logistis logistis = new Logistis();
+            Epixeirisi epixeirisi = new Epixeirisi();
             //center the window
-            logistis.setLocationRelativeTo(null);
+            epixeirisi.setLocationRelativeTo(null);
             // Show the login window
-            logistis.setVisible(true);
+            epixeirisi.setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
