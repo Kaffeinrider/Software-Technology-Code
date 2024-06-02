@@ -84,8 +84,8 @@ DROP TABLE IF EXISTS aitima;
 CREATE TABLE aitima (  
 ait_id INT(20) NOT NULL AUTO_INCREMENT,
 ait_username_pelati VARCHAR(30) NOT NULL,
-eidos ENUM('ΑΙΤΗΜΑ ΦΟΡΟΛΟΓΙΚΗΣ ΔΗΛΩΣΗΣ' ,'ΑΙΤΗΜΑ ΕΚΚΑΘΑΡΙΣΤΙΚΟΥ' ,'ΑΙΤΗΜΑ ΕΝΗΜΕΡΩΣΗΣ ΕΠΙΧΕΙΡΙΣΗΣ' ,'ΑΙΤΗΜΑ ΕΝΗΜΕΡΩΣΗΣ ΟΦΕΙΛΗΣ' ,'ΑΙΤΗΜΑ ΕΝΗΜΕΡΩΣΗΣ ΟΧΗΜΑΤΩΝ' 
-,'ΑΙΤΗΜΑ ΑΛΛΑΓΗΣ ΚΑΤΑΣΤΑΣΗΣ' ,'ΑΙΤΗΜΑ ΒΕΒΑΙΩΣΗΣ ΜΗ ΟΦΕΙΛΗΣ ΤΕΛΩΝ' ,'ΑΙΤΗΜΑ ΛΟΓΙΣΤΗ'),
+eidos ENUM('AITIMA FOLOROGIKIS DILOSIS' ,'AITIMA EKKATHARISTIKOU' ,'AITIMA ENIMEROSIS EPIXEIRISIS' ,'AITIMA ENIMEROSIS OFEILIS' ,'AITIMA ENIMEROSIS OXIMATON' 
+,'AITIMA ALLAGIS KATASTASIS' ,'AITIMA BEBAIOSIS MI OFEILIS TELON' ,'AITIMA LOGISTI'),
 poso_pliromis INT(20) DEFAULT 0,
 ait_pinakida CHAR(7) DEFAULT 'empty',
 ait_username_logisti VARCHAR(30) NOT NULL,

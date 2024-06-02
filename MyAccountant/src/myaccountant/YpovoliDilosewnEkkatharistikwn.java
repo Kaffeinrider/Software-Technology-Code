@@ -8,17 +8,84 @@ import static myaccountant.Login.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Blob;
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 
 public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame 
 {
     private Blob arxeio_forologikis;
-    private String onoma_arxeiou_forologikis;
+    private String onoma_epilegmenou_arxeiou_forologikis;
             
     public YpovoliDilosewnEkkatharistikwn() 
     {
         initComponents();
+    }
+    
+    private void load_forologikes()
+    {
+        String query = "SELECT for_dil_id,for_onoma_arxeiou FROM forologiki_dilosi WHERE for_dil_username_idioti = ?";
+   
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
+            
+            pst.setString(1, username); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            DefaultTableModel tblModel = (DefaultTableModel) jTable2.getModel();
+            
+            jLabel4.setText("Φορολογικές Δηλώσεις");
+            
+            tblModel.setRowCount(0); 
+            
+            while(rs.next())
+            {
+                String id = rs.getString("for_dil_id");
+                String onoma_arxeiou = rs.getString("for_onoma_arxeiou");
+          
+                String tbData[] = {id, onoma_arxeiou};
+          
+                tblModel.addRow(tbData); 
+            }
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+    }
+    
+    private void load_ekkatharistika()
+    {
+        String query = "SELECT ek_id,ek_onoma_arxeiou FROM ekkatharistiko WHERE ek_username_idioti = ?";
+   
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
+            
+            pst.setString(1, username); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            DefaultTableModel tblModel = (DefaultTableModel) jTable2.getModel();
+            
+            jLabel4.setText("Εκκαθαριστικά");
+            
+            tblModel.setRowCount(0); 
+            
+            while(rs.next())
+            {
+                String id = rs.getString("ek_id");
+                String onoma_arxeiou = rs.getString("ek_onoma_arxeiou");
+          
+                String tbData[] = {id, onoma_arxeiou};
+          
+                tblModel.addRow(tbData); 
+            }
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
     }
 
     /**
@@ -97,7 +164,7 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Φορολογικές:");
+        jLabel2.setText("Φορολογικές Δηλώσεις:");
 
         jButton6.setBackground(new java.awt.Color(0, 204, 255));
         jButton6.setText("Λήψη");
@@ -156,17 +223,9 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(61, 61, 61)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -180,14 +239,22 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
                                 .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton8)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(jButton7))
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton7)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                                 .addComponent(jButton4)))
-                        .addGap(53, 53, 53))))
+                        .addGap(53, 53, 53))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,12 +273,11 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton7))
+                                .addComponent(jButton7)
+                                .addComponent(jButton8))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton8)
-                                .addGap(18, 18, 18)))
+                                .addGap(53, 53, 53)))
                         .addGap(40, 40, 40)
                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
@@ -246,7 +312,7 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
             // Get the selected file
             File selectedFile = fileChooser.getSelectedFile();
             
-            onoma_arxeiou_forologikis = selectedFile.getName();
+            onoma_epilegmenou_arxeiou_forologikis = selectedFile.getName();
             
             // Read the file into a byte array
             byte[] fileContent;
@@ -275,39 +341,12 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
                 JOptionPane.showMessageDialog(this, "Σφάλμα ανάθεσης αρχείου: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
 
-            jButton1.setText(onoma_arxeiou_forologikis);
+            jButton1.setText(onoma_epilegmenou_arxeiou_forologikis);
         } 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String query = "SELECT for_dil_id,forologiki_dilosi FROM forologiki_dilosi WHERE for_dil_username_idioti = ?";
-   
-        try 
-        {
-            PreparedStatement pst = conn.prepareStatement(query);
-            
-            pst.setString(1, username); 
-            
-            ResultSet rs = pst.executeQuery();
-            
-            DefaultTableModel tblModel = (DefaultTableModel) jTable2.getModel();
-            
-            tblModel.setRowCount(0); 
-            
-            while(rs.next())
-            {
-                String id = rs.getString("for_dil_id");
-                Blob file_forologiki = rs.getBlob("forologiki_dilosi");
-          
-                String tbData[] = {id, blob};
-          
-                tblModel.addRow(tbData); 
-            }
-        }
-        catch (SQLException e) 
-        {
-            JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } 
+        load_forologikes();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -350,15 +389,163 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        if (!"Φορολογικές Δηλώσεις".equals(jLabel4.getText())) 
+        {
+            JOptionPane.showMessageDialog(this, "Παρακαλώ κάντε προβολή φορολογικών δηλώσεων και επιλέξτε αρχείο πριν το κατέβασμά τους!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Get the selected row index
+        int selectedRow = jTable2.getSelectedRow();
+
+        // Check if a row is selected
+        if (selectedRow == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Παρακαλώ επιλέξτε ένα αρχείο από τον πίνακα.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Get the ID from the selected row
+        String id = jTable2.getValueAt(selectedRow, 0).toString();
+
+        // Execute a query to retrieve the Blob data based on the selected ID
+        String query = "SELECT forologiki_dilosi FROM forologiki_dilosi WHERE for_dil_id = ?";
+        
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {
+            pstmt.setString(1, id);
+            
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) 
+            {
+                // Get the Blob data from the result set
+                Blob fileBlob = rs.getBlob("forologiki_dilosi");
+
+                // Ask the user for the location to save the file
+                JFileChooser fileChooser = new JFileChooser();
+                
+                int result = fileChooser.showSaveDialog(this);
+
+                if (result == JFileChooser.APPROVE_OPTION) 
+                {
+                    File selectedFile = fileChooser.getSelectedFile();
+
+                    try 
+                    {
+                        // Read the Blob data and save it to the selected location
+                        InputStream inputStream = fileBlob.getBinaryStream();
+                        FileOutputStream fileOutputStream = new FileOutputStream(selectedFile);
+
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = inputStream.read(buffer)) != -1) 
+                        {
+                            fileOutputStream.write(buffer, 0, bytesRead);
+                        }
+
+                        fileOutputStream.close();
+                        inputStream.close();
+
+                        JOptionPane.showMessageDialog(this, "Το αρχείο κατέβηκε επιτυχώς.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    } 
+                    catch (IOException e) 
+                    {
+                        JOptionPane.showMessageDialog(this, "Σφάλμα κατά την κατέβαση του αρχείου: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } 
+            else 
+            {
+                JOptionPane.showMessageDialog(this, "Δεν βρέθηκε αρχείο με το συγκεκριμένο ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } 
+        catch(SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ανάκτηση του αρχείου: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        if (!"Εκκαθαριστικά".equals(jLabel4.getText())) 
+        {
+            JOptionPane.showMessageDialog(this, "Παρακαλώ κάντε προβολή εκκαθαριστικών και επιλέξτε αρχείο πριν το κατέβασμά τους!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Get the selected row index
+        int selectedRow = jTable2.getSelectedRow();
+
+        // Check if a row is selected
+        if (selectedRow == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Παρακαλώ επιλέξτε ένα αρχείο από τον πίνακα.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Get the ID from the selected row
+        String id = jTable2.getValueAt(selectedRow, 0).toString();
+
+        // Execute a query to retrieve the Blob data based on the selected ID
+        String query = "SELECT ekkatharistiko FROM ekkatharistiko WHERE ek_id = ?";
+        
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {
+            pstmt.setString(1, id);
+            
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) 
+            {
+                // Get the Blob data from the result set
+                Blob fileBlob = rs.getBlob("ekkatharistiko");
+
+                // Ask the user for the location to save the file
+                JFileChooser fileChooser = new JFileChooser();
+                
+                int result = fileChooser.showSaveDialog(this);
+
+                if (result == JFileChooser.APPROVE_OPTION) 
+                {
+                    File selectedFile = fileChooser.getSelectedFile();
+
+                    try 
+                    {
+                        // Read the Blob data and save it to the selected location
+                        InputStream inputStream = fileBlob.getBinaryStream();
+                        FileOutputStream fileOutputStream = new FileOutputStream(selectedFile);
+
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = inputStream.read(buffer)) != -1) 
+                        {
+                            fileOutputStream.write(buffer, 0, bytesRead);
+                        }
+
+                        fileOutputStream.close();
+                        inputStream.close();
+
+                        JOptionPane.showMessageDialog(this, "Το αρχείο κατέβηκε επιτυχώς.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    } 
+                    catch (IOException e) 
+                    {
+                        JOptionPane.showMessageDialog(this, "Σφάλμα κατά την κατέβαση του αρχείου: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } 
+            else 
+            {
+                JOptionPane.showMessageDialog(this, "Δεν βρέθηκε αρχείο με το συγκεκριμένο ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } 
+        catch(SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ανάκτηση του αρχείου: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        load_ekkatharistika();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -384,11 +571,14 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
         {
             PreparedStatement pstmt = conn.prepareStatement(insertSQL); 
             
-            pstmt.setString(1, onoma_arxeiou_forologikis);
+            pstmt.setString(1, onoma_epilegmenou_arxeiou_forologikis);
             pstmt.setBlob(2, arxeio_forologikis);
             pstmt.setString(3, username);
             
             pstmt.executeUpdate();
+            
+            jButton1.setText("Επιλέξτε Αρχείο");
+            load_forologikes();
             
             JOptionPane.showMessageDialog(this, "Το αρχείο ανέβηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);  
         }

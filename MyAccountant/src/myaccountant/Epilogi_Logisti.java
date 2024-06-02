@@ -55,7 +55,7 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
         }
         catch (SQLException e) 
         {
-            JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } 
     }
     
@@ -101,7 +101,7 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
         }
         catch (SQLException e) 
         {
-            JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } 
     }
     
