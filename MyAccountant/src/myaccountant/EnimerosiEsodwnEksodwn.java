@@ -3,23 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package myaccountant;
-import static myaccountant.Login.conn;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.sql.ResultSet;
-import javax.swing.JTable;
-import static myaccountant.Login.*;
+
 
 /**
  *
  * @author vasil
  */
-port static myaccountant.Login.conn;
+import static myaccountant.Login.conn;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -39,7 +29,6 @@ public class EnimerosiEsodwnEksodwn extends javax.swing.JFrame {
         initComponents();
         loadEpixeiriseis();
     }
-<<<<<<< Updated upstream
 private void loadEpixeiriseis() {
         String query = "SELECT onoma_epixeirisis, poli, afm_epixeirisis FROM epixeirisi";
 
@@ -59,55 +48,32 @@ private void loadEpixeiriseis() {
             JOptionPane.showMessageDialog(this, "Σφάλμα κατά την φόρτωση δεδομένων: " + e.getMessage());
         }
     }
-    private String getSelectedEpixeirisi() {
-    int selectedRowIndex = jTable2.getSelectedRow();
-    if (selectedRowIndex == -1) {
-        return null;
-    }
-    DefaultTableModel tmodel1 = (DefaultTableModel) jTable2.getModel();
-    return tmodel1.getValueAt(selectedRowIndex, 0).toString();
-}
+    
+
     private void ypovoliStoixeion() {
         // Παίρνουμε τις τιμές από τα πεδία κειμένου
       
         String esodaStr = jTextField3.getText();
         String exodaStr = jTextField2.getText();
-       
+       String username_epixeirisis = getSelectedEpixeirisi();
 
     
         int esoda = Integer.parseInt(esodaStr);
         int exoda = Integer.parseInt(exodaStr);
 
-        String insertQuery = "UPDATE INTO epixeirisi (esoda, exoda, username_epixeirisis) VALUES (?, ?, ?)";
-=======
-private void ypovoliStoixeion() {
-        // Παίρνουμε τις τιμές από τα πεδία κειμένου
-        String yp_afm = jTextField4.getText();
-        String esodaStr = jTextField3.getText();
-        String exodaStr = jTextField2.getText();
-        String yp_username_epixeirisis = getSelectedEpixeirisi();
-
-        int esoda = Integer.parseInt(esodaStr);
-        int exoda = Integer.parseInt(exodaStr);
-        
-
-        String insertQuery = "INSERT INTO epixeirisi (yp_afm, esoda, exoda , yp_username_epixeirisis) VALUES (?, ?, ?, ?)";
->>>>>>> Stashed changes
+        String updateQuery = "UPDATE epixeirisi SET esoda = ?, exoda = ? WHERE username_epixeirisis = ?";
+    
 
         try (
-             PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+             PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
 
-<<<<<<< Updated upstream
+
            
             pstmt.setInt(1, esoda);
             pstmt.setInt(2, exoda);
-         pstmt.setString(3, username);
-=======
-            pstmt.setString(1, yp_afm);
-            pstmt.setInt(2, esoda);
-            pstmt.setInt(3, exoda);            
-         pstmt.setString(4, yp_username_epixeirisis);
->>>>>>> Stashed changes
+            pstmt.setString(3, username_epixeirisis);
+
+           
 
             pstmt.executeUpdate();
             JOptionPane.showMessageDialog(this, "Η εισαγωγή ήταν επιτυχής!");
@@ -117,25 +83,7 @@ private void ypovoliStoixeion() {
         }
     }
 
-    private void loadEpixeiriseis() {
-        String query = "SELECT onoma_epixeirisis, poli, afm_epixeirisis FROM epixeirisi";
-
-        try (
-             PreparedStatement pstmt = conn.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()) {
-
-            while (rs.next()) {
-                String onoma = rs.getString("onoma_epixeirisis");
-                String poli = rs.getString("poli");
-                String afm = rs.getString("afm_epixeirisis");
-                DefaultTableModel tmodel1 = (DefaultTableModel)jTable2.getModel();
-                tmodel1.addRow(new Object[]{onoma, poli, afm});
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την φόρτωση δεδομένων: " + e.getMessage());
-        }
-    }
+    
     
     private String getSelectedEpixeirisi() {
     int selectedRowIndex = jTable2.getSelectedRow();
