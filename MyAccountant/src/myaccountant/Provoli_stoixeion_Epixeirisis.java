@@ -1,56 +1,71 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package myaccountant;
 
-import static myaccountant.Login.*;
+import static myaccountant.Login.conn;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
-public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame 
-{
-    public Provoli_stoixeion_Epixeirisis() 
-    {
+/**
+ *
+ * @author antsa
+ */
+public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
+
+    /**
+     * Creates new form Provoli_stoixeion_Epixeirisis
+     */
+    public Provoli_stoixeion_Epixeirisis() {
         initComponents();
+        conn = Login.conn;
     }
     
-    private void Stoixeia_Epixeirisis()
+     private void getEpixeirisi()
     {
-        String query = "";
-
-        query = "SELECT yp_onoma AS 'Όνομα', yp_eponimo AS 'Επώνυμο', meikta AS 'Μεικτά Κέρδη', (meikta - asfalisi) AS 'Καθαρά Κέρδη', asfalisi AS 'Ασφάλιση', "
-           + "FROM ypallilos WHERE yp_username_epixeirisis = ?";
-        
-
-        try 
-        {
-            PreparedStatement pst = conn.prepareStatement(query);
+       
+         String =onoma_epixeirisis.getText();
+           try {
+           /** Class.forName("java.sql.Driver");
+            con1 = DriverManager.getConnection("jdbc:mysql://localhost/e_lawyer?useUnicode=yes&characterEncoding=UTF-8","root","");
+            pst = con1.prepareStatement("select * from ypothesi where ar_prwtokollou =? ");
+            pst.setString(1, ar_ptr); 1*/
             
-            pst.setString(1, username); 
             
-            ResultSet rs = pst.executeQuery();
-            
-            DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
-            
-            tblModel.setRowCount(0); 
-            
+            rs = pst.executeQuery();
+              
             while(rs.next())
-            {
-                String onoma = rs.getString("'Όνομα'");
-                String eponimo = rs.getString("'Επώνυμο'");
-                String meikta = rs.getString("'Μεικτά Κέρδη'");
-                String kathara = String.valueOf(rs.getString("'Καθαρά Κέρδη'"));
-                String asfalisi = String.valueOf(rs.getString("'Ασφάλιση'"));
-
-                String tbData[] = {onoma , eponimo, meikta, kathara, asfalisi};
-          
-                tblModel.addRow(tbData); 
-            }
+           {
+            txt_onoma_epixeirisis.setText(rs.getString("onoma_epixeirisis"));
+           txt_poli.setText(rs.getString("poli"));
+           txt_dieuyhinsi.setText(rs.getString("dieuthinsi"));
+           txt_afm_epixeirisis.setText(rs.getString("afm_epixeirisis"));
+           txt_username_epixeirisis.setText(rs.getString("username_epixeirisi"));
+           txt_password_epixeirisis.setText(rs.getString("password_epixeirisis"));
+           txt_email_epixeirisis.setText(rs.getString("email_epixeirisis"));
+           txt_portofoli_epixeirisis.setText(rs.getString("portofoli_epixeirisis"));
+           txt_esoda.setText(rs.getString("esoda"));
+           txt_exoda.setText(rs.getString("exoda"));
+           }
+  }
+         
+                 
+            
+        
+        
+           
+               
+         catch (ClassNotFoundException ex) {
+            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
         }
-        catch (SQLException e) 
-        {
-            JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        }                
-}
+        
+        catch (SQLException ex) {
+            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
+         } 
+           
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,13 +92,13 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Όνομα", "Επώνυμο", "Μεικτά Κέδη", "Καθαρά Κέρδη", "Ασφάλιση"
+                "Ον/επώνυμο", "Μεικτά Κέδη", "Καθαρά Κέρδη", "Ασφάλεια"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -122,14 +137,14 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 104, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(146, 146, 146)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(185, 185, 185)
                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -141,11 +156,11 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
