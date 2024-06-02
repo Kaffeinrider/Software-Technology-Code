@@ -4,6 +4,8 @@
  */
 package myaccountant;
 
+import static myaccountant.Login.user_type;
+
 /**
  *
  * @author antsa
@@ -62,6 +64,11 @@ public class Provoli_Ofeilon extends javax.swing.JFrame {
 
         jButton9.setBackground(new java.awt.Color(255, 0, 0));
         jButton9.setText("Επιστροφή");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,6 +112,29 @@ public class Provoli_Ofeilon extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+                if(user_type.equals("epixeirisi"))
+        {
+            this.dispose();
+            
+            Epixeirisi epixeirisi = new Epixeirisi();
+            //center the window
+            epixeirisi.setLocationRelativeTo(null);
+            // Show the login window
+            epixeirisi.setVisible(true);
+        }
+        else
+        {
+            this.dispose();
+            
+            Idiotis idiotis = new Idiotis();
+            //center the window
+            idiotis.setLocationRelativeTo(null);
+            // Show the login window
+            idiotis.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
