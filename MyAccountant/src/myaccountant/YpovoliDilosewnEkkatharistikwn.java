@@ -14,6 +14,7 @@ import java.io.*;
 public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame 
 {
     private Blob arxeio_forologikis;
+    private String onoma_arxeiou_forologikis;
             
     public YpovoliDilosewnEkkatharistikwn() 
     {
@@ -245,6 +246,8 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
             // Get the selected file
             File selectedFile = fileChooser.getSelectedFile();
             
+            onoma_arxeiou_forologikis = selectedFile.getName();
+            
             // Read the file into a byte array
             byte[] fileContent;
             
@@ -272,7 +275,7 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
                 JOptionPane.showMessageDialog(this, "Σφάλμα ανάθεσης αρχείου: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
 
-            jButton1.setText(selectedFile.getName());
+            jButton1.setText(onoma_arxeiou_forologikis);
         } 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -375,14 +378,15 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
             return;
         }
 
-        String insertSQL = "INSERT INTO forologiki_dilosi (forologiki_dilosi, for_dil_username_idioti) VALUES (?, ?)";
+        String insertSQL = "INSERT INTO forologiki_dilosi (for_onoma_arxeiou, forologiki_dilosi, for_dil_username_idioti) VALUES (?, ?, ?)";
         
         try 
         {
             PreparedStatement pstmt = conn.prepareStatement(insertSQL); 
             
-            pstmt.setBlob(1, arxeio_forologikis);
-            pstmt.setString(2, username);
+            pstmt.setString(1, onoma_arxeiou_forologikis);
+            pstmt.setBlob(2, arxeio_forologikis);
+            pstmt.setString(3, username);
             
             pstmt.executeUpdate();
             
