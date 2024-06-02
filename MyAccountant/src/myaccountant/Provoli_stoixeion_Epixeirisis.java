@@ -30,8 +30,7 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
     {
         String query = "";
 
-        query = "SELECT yp_onoma AS 'Όνομα', yp_eponimo AS 'Επώνυμο', meikta AS 'Μεικτά Κέρδη', (meikta - asfalisi) AS 'Καθαρά Κέρδη', asfalisi AS 'Ασφάλιση', "
-           + "FROM ypallilos INNER JOIN epixeirisi ON username_epixeirisis = yp_username_epixeirisis AND yp_afm = ? WHERE yp_afm IS NULL";
+        query = "SELECT yp_onoma AS 'Όνομα', yp_eponimo AS 'Επώνυμο', meikta AS 'Μεικτά Κέρδη', (meikta - asfalisi) AS 'Καθαρά Κέρδη', asfalisi AS 'Ασφάλιση' FROM ypallilos INNER JOIN epixeirisi ON epixeirisi.username_epixeirisis = ypallilos.yp_username_epixeirisis WHERE epixeirisi.username_epixeirisis = ?;";
         
 
         try 
@@ -219,6 +218,7 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
             epixeirisi.setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */

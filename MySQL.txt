@@ -74,7 +74,7 @@ CREATE TABLE oxima (
 ox_onoma VARCHAR(30) NOT NULL,
 pinakida CHAR(7) NOT NULL,
 kostos_telon INT(20) DEFAULT 0,
-katastasi ENUM('ENERGO' ,'AKINISIA'),
+katastasi ENUM('ΕΝΕΡΓΟ' ,'ΑΚΙΝΗΣΙΑ'),
 ox_username_pelati VARCHAR(30) NOT NULL,
 PRIMARY KEY (pinakida),
 CONSTRAINT Ox_Username_Pelati FOREIGN KEY (ox_username_pelati) REFERENCES user(username) ON DELETE CASCADE ON UPDATE CASCADE
@@ -84,10 +84,10 @@ DROP TABLE IF EXISTS aitima;
 CREATE TABLE aitima (  
 ait_id INT(20) NOT NULL AUTO_INCREMENT,
 ait_username_pelati VARCHAR(30) NOT NULL,
-eidos ENUM('AITIMA FOROLOGIKIS DILOSIS' ,'AITIMA EKKATHARISTIKOU' ,'AITIMA ENIMEROSIS EPIXEIRISIS' ,'AITIMA ENIMEROSIS OFEILIS' ,'AITIMA ENIMEROSIS OXIMATON' 
-,'AITIMA ALLAGIS KATASTASIS' ,'AITIMA BEBAIOSIS MI OFEILIS TELON' ,'AITIMA LOGISTI'),
+eidos ENUM('ΑΙΤΗΜΑ ΦΟΡΟΛΟΓΙΚΗΣ ΔΗΛΩΣΗΣ' ,'ΑΙΤΗΜΑ ΕΚΚΑΘΑΡΙΣΤΙΚΟΥ' ,'ΑΙΤΗΜΑ ΕΝΗΜΕΡΩΣΗΣ ΕΠΙΧΕΙΡΙΣΗΣ' ,'ΑΙΤΗΜΑ ΕΝΗΜΕΡΩΣΗΣ ΟΦΕΙΛΗΣ' ,'ΑΙΤΗΜΑ ΕΝΗΜΕΡΩΣΗΣ ΟΧΗΜΑΤΩΝ' 
+,'ΑΙΤΗΜΑ ΑΛΛΑΓΗΣ ΚΑΤΑΣΤΑΣΗΣ' ,'ΑΙΤΗΜΑ ΒΕΒΑΙΩΣΗΣ ΜΗ ΟΦΕΙΛΗΣ ΤΕΛΩΝ' ,'ΑΙΤΗΜΑ ΛΟΓΙΣΤΗ'),
 poso_pliromis INT(20) DEFAULT 0,
-ait_pinakida CHAR(7),
+ait_pinakida CHAR(7) DEFAULT 'empty',
 ait_username_logisti VARCHAR(30) NOT NULL,
 PRIMARY KEY (ait_id),
 CONSTRAINT Ait_Username_Pelati FOREIGN KEY (ait_username_pelati) REFERENCES user(username) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -135,7 +135,7 @@ CONSTRAINT Bebaiosi_Username_Pelati FOREIGN KEY (bebaiosi_username_pelati) REFER
 
 INSERT INTO user VALUES 
 ('kappaXD'),
-('SuperMan61'),
+('SuperMan69'),
 ('XXXgamerXXX'),
 ('Giota103'),
 ('Sony'),
@@ -143,16 +143,15 @@ INSERT INTO user VALUES
 
 INSERT INTO logistis VALUES
 ('Andreas', 'Nikolaou', '10923949501', 'kappaXD', 'yooo', 'kappas@gmail.com'),
-('Nikos', 'Aggelopoulos', '10823931001', 'SuperMan61', 'drakos_fotia', 'pagman@hotmail.com');
+('Nikos', 'Aggelopoulos', '10823931001', 'SuperMan69', 'drakos_fotia', 'pagman@hotmail.com');
 
 INSERT INTO idiotis VALUES
 ('Giorgos', 'Georgiadou', '10123929501', 'XXXgamerXXX', 'yo21', 'theos@gmail.com', DEFAULT, NULL),
-('Giota', 'Pistolidou', '97143926501', 'Giota103', 'hihihi', 'giota@gmail.com', DEFAULT, 'SuperMan61');
+('Giota', 'Pistolidou', '97143926501', 'Giota103', 'hihihi', 'giota@gmail.com', DEFAULT, NULL);
 
 INSERT INTO epixeirisi VALUES
-('Sony Interactive', 'Athens', 'Aristotelous 65', '10823931185', 'Sony', 'sony1234', 'sony@sony.net', DEFAULT, 'kappaXD', DEFAULT, DEFAULT),
+('Sony Interactive', 'Athens', 'Aristotelous 65', '10823931185', 'Sony', 'sony1234', 'sony@sony.net', DEFAULT, NULL, DEFAULT, DEFAULT),
 ('Papageorgiou Lastixa', 'Patra', 'Maizonos 5', '10223931185', 'Papageorgiou Lastixa', '5235', 'lastixapapageorgiou@gmail.gr', DEFAULT, NULL, DEFAULT, DEFAULT);
 
-INSERT INTO aitima VALUES
-(NULL, 'Sony', 'AITIMA ENIMEROSIS EPIXEIRISIS', 40, NULL, 'kappaXD'),
-(NULL, 'Giota103', 'AITIMA ENIMEROSIS OXIMATON', 60, NULL, 'SuperMan61');
+INSERT INTO ypallilos VALUES
+('10123929501', 'Nikolaos', 'Antonopoulos', '850', '100', 'Sony');
