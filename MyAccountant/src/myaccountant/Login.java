@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -13,6 +14,7 @@ public class Login extends javax.swing.JFrame
     public static String username;
     public static String password;
     public static String user_type;
+    public static int portofoli;
     private final String DB_URL = "jdbc:mysql://localhost:3306/myaccountant?allowPublicKeyRetrieval=true&useUnicode=yes&characterEncoding=UTF-8";
     private final String DB_USER = "accountant";
     private final String DB_PASSWORD = "money";
@@ -51,10 +53,10 @@ public class Login extends javax.swing.JFrame
                 query = "SELECT username_logisti,password_logisti FROM user INNER JOIN logistis ON username_logisti=username WHERE username_logisti = ? AND password_logisti = ?";
                 break;
             case "epixeirisi":
-                query = "SELECT username_epixeirisis,password_epixeirisis FROM user INNER JOIN epixeirisi ON username_epixeirisis=username WHERE username_epixeirisis = ? AND password_epixeirisis = ?";
+                query = "SELECT username_epixeirisis,password_epixeirisis,portofoli_epixeirisis FROM user INNER JOIN epixeirisi ON username_epixeirisis=username WHERE username_epixeirisis = ? AND password_epixeirisis = ?";
                 break;
             case "idiotis":
-                query = "SELECT username_idioti,password_idioti FROM user INNER JOIN idiotis ON username_idioti=username WHERE username_idioti = ? AND password_idioti = ?";
+                query = "SELECT username_idioti,password_idioti,portofoli_idioti FROM user INNER JOIN idiotis ON username_idioti=username WHERE username_idioti = ? AND password_idioti = ?";
                 break;
             default:
                 break;
@@ -69,10 +71,30 @@ public class Login extends javax.swing.JFrame
        
             ResultSet rs = pst.executeQuery();
             
+            ResultSetMetaData rsMetaData = rs.getMetaData();
+            
+            int columnCount = rsMetaData.getColumnCount();
+            
             if(rs.next())
             {
-                String uname = rs.getString(1);
-                String pass = rs.getString(2);
+                String uname;
+                String pass;
+                
+                if(columnCount == 2) 
+                {
+                    uname = rs.getString(1);
+                    pass = rs.getString(2);
+                }
+                else if(columnCount == 3) 
+                {
+                    uname = rs.getString(1);
+                    pass = rs.getString(2);
+                    portofoli = rs.getInt(3);
+                }
+                else
+                {
+                    return false;
+                }
                 
                 if (username.equals(uname) && password.equals(pass)) 
                 {
