@@ -3,6 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package myaccountant;
+import static myaccountant.Login.conn;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
+import javax.swing.JTable;
+import static myaccountant.Login.*;
 
 /**
  *
@@ -15,6 +26,62 @@ public class EnimerosiEsodwnEksodwn extends javax.swing.JFrame {
      */
     public EnimerosiEsodwnEksodwn() {
         initComponents();
+        loadEpixeiriseis();
+    }
+private void loadEpixeiriseis() {
+        String query = "SELECT onoma_epixeirisis, poli, afm_epixeirisis FROM epixeirisi";
+
+        try (
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+      DefaultTableModel tmodel1 = (DefaultTableModel)jTable2.getModel();
+            while (rs.next()) {
+                String onoma = rs.getString("onoma_epixeirisis");
+                String poli = rs.getString("poli");
+                String afm = rs.getString("afm_epixeirisis");
+                
+                tmodel1.addRow(new Object[]{onoma, poli, afm});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την φόρτωση δεδομένων: " + e.getMessage());
+        }
+    }
+    private String getSelectedEpixeirisi() {
+    int selectedRowIndex = jTable2.getSelectedRow();
+    if (selectedRowIndex == -1) {
+        return null;
+    }
+    DefaultTableModel tmodel1 = (DefaultTableModel) jTable2.getModel();
+    return tmodel1.getValueAt(selectedRowIndex, 0).toString();
+}
+    private void ypovoliStoixeion() {
+        // Παίρνουμε τις τιμές από τα πεδία κειμένου
+      
+        String esodaStr = jTextField3.getText();
+        String exodaStr = jTextField2.getText();
+       
+
+    
+        int esoda = Integer.parseInt(esodaStr);
+        int exoda = Integer.parseInt(exodaStr);
+
+        String insertQuery = "UPDATE INTO epixeirisi (esoda, exoda, username_epixeirisis) VALUES (?, ?, ?)";
+
+        try (
+             PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+
+           
+            pstmt.setInt(1, esoda);
+            pstmt.setInt(2, exoda);
+         pstmt.setString(3, username);
+
+            pstmt.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Η εισαγωγή ήταν επιτυχής!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage());
+        }
     }
 
     /**
@@ -35,8 +102,6 @@ public class EnimerosiEsodwnEksodwn extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,10 +113,7 @@ public class EnimerosiEsodwnEksodwn extends javax.swing.JFrame {
         jTable2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
                 "Επιχειρήσεις"
@@ -91,14 +153,6 @@ public class EnimerosiEsodwnEksodwn extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("ΑΦΜ:");
-
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,13 +168,11 @@ public class EnimerosiEsodwnEksodwn extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel6))
+                                    .addComponent(jLabel4))
                                 .addGap(37, 37, 37)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -149,11 +201,7 @@ public class EnimerosiEsodwnEksodwn extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(34, 34, 34)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,15 +222,12 @@ public class EnimerosiEsodwnEksodwn extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        ypovoliStoixeion();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
@@ -229,11 +274,9 @@ public class EnimerosiEsodwnEksodwn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }
