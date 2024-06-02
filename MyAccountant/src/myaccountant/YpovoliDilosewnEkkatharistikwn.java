@@ -354,11 +354,41 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
         
         if(response == JOptionPane.YES_OPTION) 
         {
-            String username_logisti = tmodel1.getValueAt(selectedRowIndex, 2).toString();
+            String getlogisti = "SELECT idiotis_username_logisti FROM idiotis WHERE username_idioti = ?";
+            
+            String uname_logisti = "";
+        
+            try 
+            {
+                PreparedStatement checkStmt = conn.prepareStatement(getlogisti);
+            
+                checkStmt.setString(1, username);
+            
+                ResultSet rs = checkStmt.executeQuery();
+            
+                if (rs.next()) 
+                {
+                    uname_logisti = rs.getString("idiotis_username_logisti");
+                }
+            } 
+            catch (SQLException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ανάκτηση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        
             String username_pelati = username;
-            String eidos_aitimatos = "AITIMA LOGISTI";
+            String eidos_aitimatos = "AITIMA FOLOROGIKIS DILOSIS";
+            int poso = 30;
+            
+            if(portofoli < poso)
+            {
+                JOptionPane.showMessageDialog(this, "Δεν έχετε αρκετό χρηματικό υπόλοιπο για την αποστολή αιτήματος!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-            String query = "INSERT INTO aitima VALUES (NULL, ?, ?, DEFAULT, NULL, ?)";
+            String query = "INSERT INTO aitima VALUES (NULL, ?, ?, ?, NULL, ?)";
  
             try 
             {
@@ -366,7 +396,8 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
             
                 pstmt.setString(1, username_pelati);
                 pstmt.setString(2, eidos_aitimatos);
-                pstmt.setString(3, username_logisti);
+                pstmt.setInt(3, poso);
+                pstmt.setString(4, uname_logisti);
             
                 pstmt.executeUpdate();
             
@@ -378,14 +409,68 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
                 JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } 
-        else 
-        {
-            return;
-        } 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        int response = JOptionPane.showConfirmDialog(this, "Θέλετε σίγουρα να στείλετε αίτημα εκκαθαριστικού?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if(response == JOptionPane.YES_OPTION) 
+        {
+            String getlogisti = "SELECT idiotis_username_logisti FROM idiotis WHERE username_idioti = ?";
+            
+            String uname_logisti = "";
+        
+            try 
+            {
+                PreparedStatement checkStmt = conn.prepareStatement(getlogisti);
+            
+                checkStmt.setString(1, username);
+            
+                ResultSet rs = checkStmt.executeQuery();
+            
+                if (rs.next()) 
+                {
+                    uname_logisti = rs.getString("idiotis_username_logisti");
+                }
+            } 
+            catch (SQLException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ανάκτηση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        
+            String username_pelati = username;
+            String eidos_aitimatos = "AITIMA FOLOROGIKIS DILOSIS";
+            int poso = 30;
+            
+            if(portofoli < poso)
+            {
+                JOptionPane.showMessageDialog(this, "Δεν έχετε αρκετό χρηματικό υπόλοιπο για την αποστολή αιτήματος!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            String query = "INSERT INTO aitima VALUES (NULL, ?, ?, ?, NULL, ?)";
+ 
+            try 
+            {
+                PreparedStatement pstmt = conn.prepareStatement(query);
+            
+                pstmt.setString(1, username_pelati);
+                pstmt.setString(2, eidos_aitimatos);
+                pstmt.setInt(3, poso);
+                pstmt.setString(4, uname_logisti);
+            
+                pstmt.executeUpdate();
+            
+                JOptionPane.showMessageDialog(this, "Το αίτημα στάλθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            catch (SQLException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } 
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
