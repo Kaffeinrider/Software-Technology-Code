@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package myaccountant;
 
 import static myaccountant.Login.*;
@@ -9,18 +5,11 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
-/**
- *
- * @author antsa
- */
-public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Provoli_stoixeion_Epixeirisis
-     */
-    public Provoli_stoixeion_Epixeirisis() {
+public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame 
+{
+    public Provoli_stoixeion_Epixeirisis() 
+    {
         initComponents();
-        
     }
     
     private void Stoixeia_Epixeirisis()
@@ -60,9 +49,7 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        } 
-         
-                     
+        }                
 }
     /**
      * This method is called from within the constructor to initialize the form.
