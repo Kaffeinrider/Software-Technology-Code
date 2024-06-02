@@ -207,9 +207,9 @@ public class Portofoli extends javax.swing.JFrame
             
             pst.executeUpdate(); 
             
-            JOptionPane.showMessageDialog(this, "Wallet was updated!", "Update", JOptionPane.INFORMATION_MESSAGE);
-            
             load_ypoloipo();
+            
+            JOptionPane.showMessageDialog(this, "Wallet was updated!", "Update", JOptionPane.INFORMATION_MESSAGE);
         }
         catch (SQLException e) 
         {

@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import static myaccountant.Login.*;
+import javax.swing.table.DefaultTableModel;
 
 public class Epilogi_Logisti extends javax.swing.JFrame {
     public Epilogi_Logisti() 
@@ -39,7 +40,16 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
             
             if(rs.next())
             {
-                jLabel4.setText(rs.getString(1));
+                String onoma_torinou = rs.getString(1);
+                String eponimo_torinou = rs.getString(2);
+                
+                String onomateponimo_torinou = onoma_torinou + " " + eponimo_torinou;
+                
+                jLabel4.setText(onomateponimo_torinou);
+            }
+            else
+            {
+                jLabel4.setText("");
             }
         }
         catch (SQLException e) 
@@ -55,7 +65,7 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
         switch (user_type) 
         {
             case "epixeirisi":
-                query = "SELECT onoma_logisti,eponimo_logisti FROM epixeirisi INNER JOIN logistis ON epix_username_logisti = username_logisti WHERE username_epixeirisis = ?";
+                query = "SELECT onoma_logisti,eponimo_logisti,username_logisti,email_logisti FROM epixeirisi INNER JOIN logistis ON epix_username_logisti != username_logisti WHERE username_epixeirisis = ?";
                 break;
             case "idiotis":
                 query = "SELECT onoma_logisti,eponimo_logisti FROM idiotis INNER JOIN logistis ON idiotis_username_logisti = username_logisti WHERE username_idioti = ?";
@@ -72,9 +82,17 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
             
             ResultSet rs = pst.executeQuery();
             
-            if(rs.next())
+            while(rs.next())
             {
-                jLabel4.setText(rs.getString(1));
+                String onoma = rs.getString("onoma_logisti");
+                String eponimo = rs.getString("eponimo_logisti");
+                String uname_logisti = rs.getString("username_logisti");
+                String email = String.valueOf(rs.getFloat("email_logisti"));
+          
+                String tbData[] = {onoma , eponimo, uname_logisti, email};
+          
+                DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
+                tblModel.addRow(tbData); 
             }
         }
         catch (SQLException e) 
@@ -82,7 +100,7 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } 
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -158,16 +176,12 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
                 .addGap(205, 205, 205)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
             .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
+                        .addGap(65, 65, 65)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
@@ -180,8 +194,13 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
                         .addGap(0, 65, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton9)
-                        .addGap(111, 111, 111))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton9)
+                                .addGap(111, 111, 111))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,9 +208,6 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -202,9 +218,13 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
                         .addGap(77, 77, 77)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18))
         );
 
@@ -234,9 +254,9 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
             
             pst.executeUpdate(); 
             
-            JOptionPane.showMessageDialog(this, "Accountant was terminated!", "Update", JOptionPane.INFORMATION_MESSAGE);
-            
             load_Torino_Logisti();
+            
+            JOptionPane.showMessageDialog(this, "Accountant was terminated!", "Update", JOptionPane.INFORMATION_MESSAGE);
         }
         catch (SQLException e) 
         {
