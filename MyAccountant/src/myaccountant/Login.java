@@ -28,12 +28,12 @@ public class Login extends javax.swing.JFrame
     {
         try
         {
-            //connect to the database 
             conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);  
         }
         catch(SQLException e)
         {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά της σύνδεσης στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             
             return false;
         }

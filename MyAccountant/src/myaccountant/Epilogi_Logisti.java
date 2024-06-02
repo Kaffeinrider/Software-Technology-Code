@@ -268,41 +268,62 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         int selectedRowIndex = jTable1.getSelectedRow();
-       
+        
+        if (selectedRowIndex == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Δεν έχετε επιλέξει λογιστή!", "Error", JOptionPane.ERROR_MESSAGE);
+            
+            return;
+        }
+
         DefaultTableModel tmodel1 = (DefaultTableModel) jTable1.getModel();
               
         String username_logisti = tmodel1.getValueAt(selectedRowIndex, 2).toString();
         String username_pelati = username;
-        String eidos_aitimatos = "ΑΙΤΗΜΑ ΛΟΓΙΣΤΗ";
-        int poso = 20;
- 
-        if (selectedRowIndex == -1) 
+        String eidos_aitimatos = "AITIMA LOGISTI";
+        
+        String checkQuery = "SELECT ait_username_logisti FROM aitima WHERE ait_username_pelati = ? AND eidos = ?";
+        
+        try 
         {
-            JOptionPane.showMessageDialog(this, "You must select an accountant", "Error", JOptionPane.ERROR_MESSAGE);
+            PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
             
+            checkStmt.setString(1, username_pelati);
+            checkStmt.setString(2, eidos_aitimatos);
+            
+            ResultSet rs = checkStmt.executeQuery();
+            
+            if (rs.next()) 
+            {
+                JOptionPane.showMessageDialog(this, "Έχετε ήδη κάνει αίτημα για λογιστή!", "Error", JOptionPane.ERROR_MESSAGE);
+                return; 
+            }
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά τον έλεγχο των αιτημάτων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        //PROSOXI AKOMA TO DOULEO AUTO
-        
-        String insertQuery = "INSERT INTO ypallilos (yp_afm, yp_onoma, yp_eponimo, meikta, asfalisi, yp_username_epixeirisis) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (
-             PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+        String query = "INSERT INTO aitima VALUES (NULL, ?, ?, DEFAULT, NULL, ?)";
+ 
+        try 
+        {
+            PreparedStatement pstmt = conn.prepareStatement(query);
             
-            //PROSOXI AKOMA TO DOULEO AUTO
-            pstmt.setInt(1, afm);
-            pstmt.setString(2, yp_onoma);
-            pstmt.setString(3, yp_eponimo);
-            pstmt.setInt(4, meikta);
-            pstmt.setInt(5, asfalisi);
-         pstmt.setString(6, yp_username_epixeirisis);
-
+            pstmt.setString(1, username_pelati);
+            pstmt.setString(2, eidos_aitimatos);
+            pstmt.setString(3, username_logisti);
+            
             pstmt.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Η εισαγωγή ήταν επιτυχής!");
-        } catch (SQLException e) {
+            
+            JOptionPane.showMessageDialog(this, "Το αίτημα στάλθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+        } 
+        catch (SQLException e) 
+        {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
