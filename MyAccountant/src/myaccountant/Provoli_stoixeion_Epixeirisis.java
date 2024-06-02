@@ -47,11 +47,11 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
             
             while(rs.next())
             {
-                String onoma = rs.getString("'Όνομα'");
-                String eponimo = rs.getString("'Επώνυμο'");
-                String meikta = rs.getString("'Μεικτά Κέρδη'");
-                String kathara = String.valueOf(rs.getString("'Καθαρά Κέρδη'"));
-                String asfalisi = String.valueOf(rs.getString("'Ασφάλιση'"));
+                String onoma = rs.getString("Όνομα");
+                String eponimo = rs.getString("Επώνυμο");
+                String meikta = rs.getString("Μεικτά Κέρδη");
+                String kathara = String.valueOf(rs.getString("Καθαρά Κέρδη"));
+                String asfalisi = String.valueOf(rs.getString("Ασφάλιση"));
 
                 String tbData[] = {onoma , eponimo, meikta, kathara, asfalisi};
           
