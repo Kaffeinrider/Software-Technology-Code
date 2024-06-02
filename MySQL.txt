@@ -107,9 +107,10 @@ CONSTRAINT Ofeili_Username_Pelati FOREIGN KEY (ofeili_username_pelati) REFERENCE
 DROP TABLE IF EXISTS forologiki_dilosi;
 CREATE TABLE forologiki_dilosi (  
 for_dil_id INT(20) NOT NULL AUTO_INCREMENT,
+for_onoma_arxeiou VARCHAR(100) NOT NULL,
 forologiki_dilosi BLOB NOT NULL,
 for_dil_username_idioti VARCHAR(30) NOT NULL,
-PRIMARY KEY (for_dil_id),
+PRIMARY KEY (for_dil_id,for_onoma_arxeiou),
 CONSTRAINT For_Dil_Username_Idioti FOREIGN KEY (for_dil_username_idioti) REFERENCES idiotis(username_idioti) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 

@@ -284,6 +284,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&#x3a5;&#x3c0;&#x3bf;&#x3b2;&#x3bf;&#x3bb;&#x3ae;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton10">
       <Properties>

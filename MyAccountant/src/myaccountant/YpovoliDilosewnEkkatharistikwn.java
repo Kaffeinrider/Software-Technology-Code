@@ -8,7 +8,8 @@ import static myaccountant.Login.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Blob;
 import javax.swing.JFileChooser;
-import java.io.File;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.*;
 
 public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame 
 {
@@ -126,6 +127,11 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
 
         jButton9.setBackground(new java.awt.Color(0, 255, 102));
         jButton9.setText("Υποβολή");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jButton10.setBackground(new java.awt.Color(255, 0, 0));
         jButton10.setText("Επιστροφή");
@@ -238,7 +244,34 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
         {
             // Get the selected file
             File selectedFile = fileChooser.getSelectedFile();
-        
+            
+            // Read the file into a byte array
+            byte[] fileContent;
+            
+            try
+            {
+                FileInputStream fis = new FileInputStream(selectedFile);
+                fileContent = new byte[(int) selectedFile.length()];
+                fis.read(fileContent);
+            } 
+            catch (IOException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα διαβάσματος αρχείου: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Convert byte array to Blob
+            try 
+            {
+                arxeio_forologikis = new javax.sql.rowset.serial.SerialBlob(fileContent);
+            } 
+            catch(SQLException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα ανάθεσης αρχείου: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
             jButton1.setText(selectedFile.getName());
         } 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -334,6 +367,33 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
         
         idiotis.setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        if (arxeio_forologikis == null) 
+        {
+            JOptionPane.showMessageDialog(this, "Δεν διαλέξατε αρχείο!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String insertSQL = "INSERT INTO forologiki_dilosi (forologiki_dilosi, for_dil_username_idioti) VALUES (?, ?)";
+        
+        try 
+        {
+            PreparedStatement pstmt = conn.prepareStatement(insertSQL); 
+            
+            pstmt.setBlob(1, arxeio_forologikis);
+            pstmt.setString(2, username);
+            
+            pstmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(this, "Το αρχείο ανέβηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);  
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error inserting record: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
