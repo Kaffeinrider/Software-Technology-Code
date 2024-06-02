@@ -65,15 +65,15 @@ public class Epilogi_Logisti extends javax.swing.JFrame {
         switch (user_type) 
         {
             case "epixeirisi":
-                query = "SELECT onoma_logisti,eponimo_logisti,username_logisti,email_logisti FROM epixeirisi INNER JOIN logistis ON epix_username_logisti != username_logisti WHERE username_epixeirisis = ?";
+                query = "SELECT onoma_logisti,eponimo_logisti,username_logisti,email_logisti FROM logistis LEFT JOIN epixeirisi ON username_logisti = epix_username_logisti AND username_epixeirisis = ? WHERE username_epixeirisis IS NULL";
                 break;
             case "idiotis":
-                query = "SELECT onoma_logisti,eponimo_logisti FROM idiotis INNER JOIN logistis ON idiotis_username_logisti = username_logisti WHERE username_idioti = ?";
+                query = "SELECT onoma_logisti,eponimo_logisti,username_logisti,email_logisti FROM logistis LEFT JOIN epixeirisi ON username_logisti = epix_username_logisti AND username_epixeirisis = ? WHERE username_epixeirisis IS NULL";
                 break;
             default:
                 break;
         }
-        
+
         try 
         {
             PreparedStatement pst = conn.prepareStatement(query);
