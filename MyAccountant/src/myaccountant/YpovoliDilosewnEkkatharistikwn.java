@@ -4,12 +4,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import static myaccountant.Login.*;
 import javax.swing.table.DefaultTableModel;
-import static myaccountant.Login.conn;
-import static myaccountant.Login.username;
+import java.sql.Blob;
+import javax.swing.JFileChooser;
+import java.io.File;
 
 public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame 
 {
+    private Blob arxeio_forologikis;
+            
     public YpovoliDilosewnEkkatharistikwn() 
     {
         initComponents();
@@ -38,6 +42,7 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,13 +54,10 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
         jTable2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
-                "Αρχεία"
+                "Id", "Αρχεία"
             }
         ));
         jScrollPane4.setViewportView(jTable2);
@@ -133,6 +135,8 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,9 +146,11 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
                 .addComponent(jLabel1)
                 .addGap(75, 75, 75))
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
@@ -172,7 +178,7 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
                                         .addGap(27, 27, 27)
                                         .addComponent(jButton7))
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
                                 .addComponent(jButton4)))
                         .addGap(53, 53, 53))))
         );
@@ -183,50 +189,89 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton2)
-                                    .addComponent(jButton6)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(48, 48, 48)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(48, 48, 48)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton7))
-                                .addGap(40, 40, 40)
-                                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton7))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton8)
-                                .addGap(94, 94, 94))))))
+                                .addGap(18, 18, 18)))
+                        .addGap(40, 40, 40)
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jButton6)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Create a file chooser
+        JFileChooser fileChooser = new JFileChooser();
+
+        // Show the file chooser dialog
+        int result = fileChooser.showOpenDialog(this);
+
+        // If the user selects a file
+        if (result == JFileChooser.APPROVE_OPTION) 
+        {
+            // Get the selected file
+            File selectedFile = fileChooser.getSelectedFile();
+        
+            jButton1.setText(selectedFile.getName());
+        } 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        String query = "SELECT for_dil_id,forologiki_dilosi FROM forologiki_dilosi WHERE for_dil_username_idioti = ?";
+   
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
+            
+            pst.setString(1, username); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            DefaultTableModel tblModel = (DefaultTableModel) jTable2.getModel();
+            
+            tblModel.setRowCount(0); 
+            
+            while(rs.next())
+            {
+                String id = rs.getString("for_dil_id");
+                Blob file_forologiki = rs.getBlob("forologiki_dilosi");
+          
+                String tbData[] = {id, blob};
+          
+                tblModel.addRow(tbData); 
+            }
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -235,59 +280,33 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
         if(response == JOptionPane.YES_OPTION) 
         {
             String username_logisti = tmodel1.getValueAt(selectedRowIndex, 2).toString();
-        String username_pelati = username;
-        String eidos_aitimatos = "AITIMA LOGISTI";
-        
-        String checkQuery = "SELECT ait_username_logisti FROM aitima WHERE ait_username_pelati = ? AND eidos = ?";
-        
-        try 
-        {
-            PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
-            
-            checkStmt.setString(1, username_pelati);
-            checkStmt.setString(2, eidos_aitimatos);
-            
-            ResultSet rs = checkStmt.executeQuery();
-            
-            if (rs.next()) 
-            {
-                JOptionPane.showMessageDialog(this, "Έχετε ήδη κάνει αίτημα για λογιστή!", "Error", JOptionPane.ERROR_MESSAGE);
-                return; 
-            }
-        } 
-        catch (SQLException e) 
-        {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Σφάλμα κατά τον έλεγχο των αιτημάτων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+            String username_pelati = username;
+            String eidos_aitimatos = "AITIMA LOGISTI";
 
-        String query = "INSERT INTO aitima VALUES (NULL, ?, ?, DEFAULT, NULL, ?)";
+            String query = "INSERT INTO aitima VALUES (NULL, ?, ?, DEFAULT, NULL, ?)";
  
-        try 
-        {
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            try 
+            {
+                PreparedStatement pstmt = conn.prepareStatement(query);
             
-            pstmt.setString(1, username_pelati);
-            pstmt.setString(2, eidos_aitimatos);
-            pstmt.setString(3, username_logisti);
+                pstmt.setString(1, username_pelati);
+                pstmt.setString(2, eidos_aitimatos);
+                pstmt.setString(3, username_logisti);
             
-            pstmt.executeUpdate();
+                pstmt.executeUpdate();
             
-            JOptionPane.showMessageDialog(this, "Το αίτημα στάλθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
-        } 
-        catch (SQLException e) 
-        {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+                JOptionPane.showMessageDialog(this, "Το αίτημα στάλθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            catch (SQLException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } 
         else 
         {
             return;
-        }
-
-        
+        } 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -364,6 +383,7 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
