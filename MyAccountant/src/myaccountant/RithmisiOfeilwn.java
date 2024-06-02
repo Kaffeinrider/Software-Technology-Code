@@ -4,6 +4,17 @@
  */
 package myaccountant;
 
+import static myaccountant.Login.conn;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
+import javax.swing.JTable;
+
 /**
  *
  * @author vasil
@@ -15,84 +26,68 @@ public class RithmisiOfeilwn extends javax.swing.JFrame {
      */
     public RithmisiOfeilwn() {
         initComponents();
+       loadEpixeiriseis();
+       loadOfeiles();
     }
-private void getOfeiliPelati()
-    {
+
+
+private void loadEpixeiriseis() {
+        String query = "SELECT onoma_epixeirisis, poli, afm_epixeirisis FROM epixeirisi";
+
+        try (
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+      DefaultTableModel tmodel2 = (DefaultTableModel)jTable3.getModel();
+            while (rs.next()) {
+                String onoma = rs.getString("onoma_epixeirisis");
+                String poli = rs.getString("poli");
+                String afm = rs.getString("afm_epixeirisis");
+                
+                tmodel1.addRow(new Object[]{onoma, poli, afm});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την φόρτωση δεδομένων: " + e.getMessage());
+        }
+    }
+
+private void loadOfeiles() {
+        String query = "SELECT ofeili_poso, ofeili_username FROM ofeili";
+
+        try (
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+      DefaultTableModel tmodel1 = (DefaultTableModel)jTable2.getModel();
+            while (rs.next()) {
+                String poso = rs.getString("ofeili_poso");
+                String username = rs.getString("ofeili_username");
+                
+                tmodel1.addRow(new Object[]{poso, username});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την φόρτωση δεδομένων: " + e.getMessage());
+        }
+    }
+
+private void EnimerosiOfeilis() {
        
-         String ar_ptr=ofeili.getText();
-           try {
-           /** Class.forName("java.sql.Driver");
-            con1 = DriverManager.getConnection("jdbc:mysql://localhost/e_lawyer?useUnicode=yes&characterEncoding=UTF-8","root","");
-            pst = con1.prepareStatement("select * from ypothesi where ar_prwtokollou =? ");
-            pst.setString(1, ar_ptr); 1*/
-            
-            
-            rs = pst.executeQuery();
-              
-            while(rs.next())
-           {
-           txt_ofeili_id.setText(rs.getString("ofeili_id"));
-           txt_ofeili_poso.setText(rs.getString("ofeili_poso"));
-          txt_ofeili_username_pelati.setText(rs.getString("ofeili_username_pelati"));
-         
-           }
-  }
-         
+    }
                  
             
         
         
            
                
-         catch (ClassNotFoundException ex) {
-            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        catch (SQLException ex) {
-            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
-         } 
+       
            
-    }
    
            
-    }
-   private void getProvoliOfeilon()
-    {
-       
-         String ar_ptr=ofeili.getText();
-           try {
-           /** Class.forName("java.sql.Driver");
-            con1 = DriverManager.getConnection("jdbc:mysql://localhost/e_lawyer?useUnicode=yes&characterEncoding=UTF-8","root","");
-            pst = con1.prepareStatement("select * from ypothesi where ar_prwtokollou =? ");
-            pst.setString(1, ar_ptr); */
-            
-            
-            rs = pst.executeQuery();
-              
-            while(rs.next())
-           {
-            txt_ofeili_id.setText(rs.getString("ofeili_id"));
-           txt_ofeili_poso.setText(rs.getString("ofeili_poso"));
-          txt_ofeili_username_pelati.setText(rs.getString("ofeili_username_pelati"));
-         
-           }
-  }
-         
-                 
-            
         
         
            
                
-         catch (ClassNotFoundException ex) {
-            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
-        catch (SQLException ex) {
-            Logger.getLogger(PliroforiesYp.class.getName()).log(Level.SEVERE, null, ex);
-         } 
-           
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -124,6 +119,11 @@ private void getOfeiliPelati()
 
         jButton1.setBackground(new java.awt.Color(0, 255, 102));
         jButton1.setText("Ενημέρωση Οφειλής");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton8.setBackground(new java.awt.Color(255, 0, 0));
         jButton8.setText("Επιστροφή");
@@ -136,10 +136,7 @@ private void getOfeiliPelati()
         jTable2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
                 "Οφειλές"
@@ -150,10 +147,7 @@ private void getOfeiliPelati()
         jTable3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
                 "Πελάτες"
@@ -224,6 +218,10 @@ private void getOfeiliPelati()
             // Show the login window
             logistis.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
