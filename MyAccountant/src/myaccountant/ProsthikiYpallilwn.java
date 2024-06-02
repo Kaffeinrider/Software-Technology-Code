@@ -14,7 +14,7 @@ public class ProsthikiYpallilwn extends javax.swing.JFrame {
         loadEpixeiriseis();
     }
     
-    private javax.swing.JTextField BranchField;
+
     
     private void ypovoliStoixeion() {
         // Παίρνουμε τις τιμές από τα πεδία κειμένου

@@ -56,7 +56,7 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame {
         String kostos_telon = jTextField6.getText();
 
        
-        int pinakida_ox = Integer.parseInt(pinakida);
+       
         int teli = Integer.parseInt(kostos_telon);
 
         String insertQuery = "INSERT INTO oxima (ox_onoma, pinakida, ox_username_pelati, katastasi, kostos_telon) VALUES (?, ?, ?, ?, ?)";
@@ -65,7 +65,7 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame {
              PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
           
             pstmt.setString(1, ox_onoma);
-            pstmt.setInt(2, pinakida_ox);
+            pstmt.setString(2, pinakida);
             pstmt.setString(3, ox_username_pelati);
             pstmt.setString(4, katastasi);
             pstmt.setInt(5, teli);
@@ -108,13 +108,10 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
-
+                "null", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
