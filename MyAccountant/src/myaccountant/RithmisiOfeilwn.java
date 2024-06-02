@@ -26,24 +26,23 @@ public class RithmisiOfeilwn extends javax.swing.JFrame {
      */
     public RithmisiOfeilwn() {
         initComponents();
-       loadEpixeiriseis();
+       loadUsernames();
        loadOfeiles();
     }
 
 
-private void loadEpixeiriseis() {
-        String query = "SELECT onoma_epixeirisis, poli, afm_epixeirisis FROM epixeirisi";
-
+private void loadUsernames() {
+        String query = "SELECT username_idioti AS username FROM idiotis UNION SELECT username_epixeirisis AS username FROM epixeirisi";
+        
         try (
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
       DefaultTableModel tmodel2 = (DefaultTableModel)jTable3.getModel();
             while (rs.next()) {
-                String onoma = rs.getString("onoma_epixeirisis");
-                String poli = rs.getString("poli");
-                String afm = rs.getString("afm_epixeirisis");
+                String usernames = rs.getString("username");
                 
-                tmodel1.addRow(new Object[]{onoma, poli, afm});
+                
+                tmodel2.addRow(new Object[]{usernames});
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,7 +51,7 @@ private void loadEpixeiriseis() {
     }
 
 private void loadOfeiles() {
-        String query = "SELECT ofeili_poso, ofeili_username FROM ofeili";
+        String query = "SELECT ofeili_poso, username_idioti AS username FROM ofeili LEFT JOIN idiotis  ON ofeili_username_pelati = username_idioti UNION SELECT ofeili_poso, username_epixeirisis AS username FROM ofeili LEFT JOIN epixeirisi  ON ofeili_username_pelati = username_epixeirisis";
 
         try (
              PreparedStatement pstmt = conn.prepareStatement(query);
@@ -71,7 +70,24 @@ private void loadOfeiles() {
     }
 
 private void EnimerosiOfeilis() {
+       String ofeili_poso = jTextField2.getText();
        
+       int poso = Integer.parseInt(ofeili_poso);
+       
+     String insertQuery = "INSERT INTO Ofeili (ofeili_poso) VALUES (?)";
+
+       try (
+             PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+
+            pstmt.setInt(1, poso);
+            
+
+            pstmt.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Η εισαγωγή ήταν επιτυχής!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage());
+        }
     }
                  
             
@@ -220,7 +236,8 @@ private void EnimerosiOfeilis() {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+       EnimerosiOfeilis();
+       // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
