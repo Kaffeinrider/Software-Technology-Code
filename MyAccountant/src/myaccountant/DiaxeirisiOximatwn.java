@@ -113,7 +113,7 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame {
 
             },
             new String [] {
-                "null", "Title 2", "Title 3", "Title 4", "Title 5"
+                "Όνομα Οχήματος", "Πινακίδα", "Ονοματεπώνυμο", "Κατάσταση", "Τέλη"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

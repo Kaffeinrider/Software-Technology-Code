@@ -207,7 +207,7 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         String username_pelati = username;  // Αυτός είναι ο username του χρήστη που κάνει το αίτημα
-    String eidos_aitimatos = "ΑΙΤΗΜΑ ΕΝΗΜΕΡΩΣΗΣ ΕΠΙΧΕΙΡΙΣΗΣ";  // Ορίζουμε το είδος του αιτήματος ως ενημέρωση
+    String eidos_aitimatos = "AITIMA ENIMEROSIS EPIXEIRISIS";  // Ορίζουμε το είδος του αιτήματος ως ενημέρωση
 
     // Αναζητούμε τον λογιστή της επιχείρησης
     String username_logisti = null;
