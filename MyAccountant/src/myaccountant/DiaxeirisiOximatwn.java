@@ -4,6 +4,13 @@
  */
 package myaccountant;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static myaccountant.Login.conn;
+
 /**
  *
  * @author vasil
@@ -15,8 +22,62 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame {
      */
     public DiaxeirisiOximatwn() {
         initComponents();
+        loadOximata();
+    }
+    
+    private void loadOximata() {
+        String query = "SELECT * FROM oxima";
+
+        try (
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+      DefaultTableModel tmodel1 = (DefaultTableModel)jTable1.getModel();
+            while (rs.next()) {
+                String onoma_ox = rs.getString("ox_onoma");
+                String pinakida = rs.getString("pinakida");
+                String kostos_telon = rs.getString("kostos_telon");
+                String katastasi = rs.getString("katastasi");
+                String ox_username_pelati = rs.getString("ox_username_pelati");
+                
+                tmodel1.addRow(new Object[]{onoma_ox, pinakida, kostos_telon,katastasi,ox_username_pelati});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την φόρτωση δεδομένων: " + e.getMessage());
+        }
     }
 
+    private void ProsthikiOximatos() {
+        // Παίρνουμε τις τιμές από τα πεδία κειμένου
+        String ox_onoma = jTextField2.getText();
+        String pinakida = jTextField3.getText();
+        String ox_username_pelati = jTextField4.getText();
+        String katastasi = jTextField5.getText();
+        String kostos_telon = jTextField6.getText();
+
+       
+        int pinakida_ox = Integer.parseInt(pinakida);
+        int teli = Integer.parseInt(kostos_telon);
+
+        String insertQuery = "INSERT INTO oxima (ox_onoma, pinakida, ox_username_pelati, katastasi, kostos_telon) VALUES (?, ?, ?, ?, ?)";
+
+        try (
+             PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+          
+            pstmt.setString(1, ox_onoma);
+            pstmt.setInt(2, pinakida_ox);
+            pstmt.setString(3, ox_username_pelati);
+            pstmt.setString(4, katastasi);
+            pstmt.setInt(5, teli);
+        
+
+            pstmt.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Η εισαγωγή ήταν επιτυχής!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,13 +108,13 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Όνομα Οχήματος", "Πινακίδα", "Ον/επώνυμο", "Κατάσταση Οχήματος", "Τέλη"
+
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -78,6 +139,11 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(0, 255, 102));
         jButton2.setText("Προσθήκη οχήματος");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Πινακίδα");
 
@@ -181,6 +247,11 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame {
             // Show the login window
             logistis.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       ProsthikiOximatos();
+       // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

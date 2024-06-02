@@ -70,14 +70,14 @@ public class ProsthikiYpallilwn extends javax.swing.JFrame {
     }
     
     private String getSelectedEpixeirisi() {
-        int selectedRowIndex = jTable2.getSelectedRow();
-        DefaultTableModel tmodel1 = (DefaultTableModel)jTable2.getModel();
-        BranchField.setText(tmodel1.getValueAt(selectedRowIndex ,0 ).toString());
-        if (selectedRowIndex == -1) {
-            return null;
-        }
-        return (String) tmodel1.getValueAt(selectedRowIndex, 0);
+    int selectedRowIndex = jTable2.getSelectedRow();
+    if (selectedRowIndex == -1) {
+        return null;
     }
+    DefaultTableModel tmodel1 = (DefaultTableModel) jTable2.getModel();
+    return tmodel1.getValueAt(selectedRowIndex, 0).toString();
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
