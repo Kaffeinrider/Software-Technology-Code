@@ -67,17 +67,17 @@ public class RithmisiOfeilwn extends javax.swing.JFrame {
 
     private void EnimerosiOfeilis() {
         String ofeili_poso = jTextField2.getText();
-        String username = getSelectedUsername();
+        String ofeili_username_pelati = getSelectedUsername();
 
         int poso = Integer.parseInt(ofeili_poso);
-
-        String insertQuery = "INSERT INTO Ofeili (ofeili_poso, username) VALUES (?,?)";
+               
+        String insertQuery = "INSERT INTO Ofeili (ofeili_poso, ofeili_username_pelati) VALUES (?,?)";
 
         try (
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
 
             pstmt.setInt(1, poso);
-            pstmt.setString(2, username);
+            pstmt.setString(2, ofeili_username_pelati);
 
             pstmt.executeUpdate();
             JOptionPane.showMessageDialog(this, "Η εισαγωγή ήταν επιτυχής!");
