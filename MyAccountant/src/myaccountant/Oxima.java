@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static myaccountant.Login.conn;
+import static myaccountant.Login.user_type;
+import static myaccountant.Login.username;
 
 /**
  *
@@ -22,31 +24,54 @@ public class Oxima extends javax.swing.JFrame {
      */
     public Oxima() {
         initComponents();
-        loadOximata();
-    }    
-    private void loadOximata() {
-        String query = "SELECT * FROM oxima";
+        load_Ox();
+    }  
 
-        try (
-             PreparedStatement pstmt = conn.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()) {
-      DefaultTableModel tmodel1 = (DefaultTableModel)jTable3.getModel();
-            while (rs.next()) {
-                String onoma_ox = rs.getString("ox_onoma");
-                String pinakida = rs.getString("pinakida");
-                String kostos_telon = rs.getString("kostos_telon");
-                String katastasi = rs.getString("katastasi");
-                String ox_username_pelati = rs.getString("ox_username_pelati");
-                
-                tmodel1.addRow(new Object[]{onoma_ox, pinakida, kostos_telon,katastasi,ox_username_pelati});
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την φόρτωση δεδομένων: " + e.getMessage());
+     private void load_Ox()
+    {
+        String query = "";
+        
+        switch (user_type) 
+        {
+            case "epixeirisi":
+                query = "SELECT oxima.ox_onoma, oxima.pinakida, oxima.kostos_telon, oxima.katastasi FROM oxima LEFT JOIN epixeirisi ON oxima.ox_username_pelati = epixeirisi.username_epixeirisis WHERE epixeirisi.username_epixeirisis IS NULL";
+                break;
+            case "idiotis":
+                query = "SELECT oxima.ox_onoma, oxima.pinakida, oxima.kostos_telon, oxima.katastasi FROM oxima LEFT JOIN idiotis ON oxima.ox_username_pelati = idiotis.username_idioti WHERE idiotis.username_idioti IS NULL";
+                break;
+            default:
+                break;
         }
-    }
 
-    
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
+            
+            
+            
+            ResultSet rs = pst.executeQuery();
+            
+            DefaultTableModel tblModel = (DefaultTableModel) jTable3.getModel();
+            
+            tblModel.setRowCount(0); 
+            
+            while(rs.next())
+            {
+                String onoma = rs.getString("ox_onoma");
+                String eponimo = rs.getString("pinakida");
+                String kostos = rs.getString("kostos_telon");
+                String katastasi = String.valueOf(rs.getString("katstasi"));
+          
+                String tbData[] = {onoma , eponimo, kostos, katastasi};
+          
+                tblModel.addRow(tbData); 
+            }
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+    }
      
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,15 +99,35 @@ public class Oxima extends javax.swing.JFrame {
 
         jButton8.setBackground(new java.awt.Color(255, 0, 0));
         jButton8.setText("Επιστροφή");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setBackground(new java.awt.Color(0, 204, 255));
         jButton9.setText("Αίτημα Αλλαγής Κατάστασης Οχήματος");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jButton10.setBackground(new java.awt.Color(0, 204, 255));
         jButton10.setText("Αίτημα Ενημέρωσης Οχήματος");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jButton11.setBackground(new java.awt.Color(0, 204, 255));
         jButton11.setText("Αίτημα Βεβαίωσης μη Οφειλής Τελών");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         jTable3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -90,7 +135,7 @@ public class Oxima extends javax.swing.JFrame {
 
             },
             new String [] {
-
+                "Όνομα Οχήματος", "Πινακίδα", "Ονοματεπώνυμο", "Κατάσταση Οχήματος", "Τέλη"
             }
         ));
         jScrollPane5.setViewportView(jTable3);
@@ -100,9 +145,9 @@ public class Oxima extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(138, 138, 138)
+                .addGap(9, 9, 9)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -139,6 +184,213 @@ public class Oxima extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+      if(user_type.equals("epixeirisi"))
+        {
+            this.dispose();
+            
+            Epixeirisi epixeirisi = new Epixeirisi();
+            //center the window
+            epixeirisi.setLocationRelativeTo(null);
+            // Show the login window
+            epixeirisi.setVisible(true);
+        }
+        else
+        {
+            this.dispose();
+            
+            Idiotis idiotis = new Idiotis();
+            //center the window
+            idiotis.setLocationRelativeTo(null);
+            // Show the login window
+            idiotis.setVisible(true);
+}
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+       int selectedRowIndex = jTable3.getSelectedRow();
+        
+        if (selectedRowIndex == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Δεν έχετε επιλέξει Όχημα!", "Error", JOptionPane.ERROR_MESSAGE);
+            
+            return;
+        }
+
+        DefaultTableModel tmodel1 = (DefaultTableModel) jTable3.getModel();
+              
+        String pinakida = tmodel1.getValueAt(selectedRowIndex, 2).toString();
+        String username_pelati = username;
+        String eidos_aitimatos = "AITIMA ALLAGIS KATASTASIS";
+        
+        String checkQuery = "SELECT username_pelati FROM aitima WHERE ait_username_pelati = ? AND eidos = ?";
+        
+        try 
+        {
+            PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
+            
+            checkStmt.setString(1, pinakida);
+            checkStmt.setString(2, eidos_aitimatos);
+            
+            ResultSet rs = checkStmt.executeQuery();
+            
+            if (rs.next()) 
+            {
+                JOptionPane.showMessageDialog(this, "Έχετε ήδη κάνει αίτημα για λογιστή!", "Error", JOptionPane.ERROR_MESSAGE);
+                return; 
+            }
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά τον έλεγχο των αιτημάτων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String query = "INSERT INTO aitima VALUES (NULL, ?, ?, DEFAULT, NULL, ?)";
+ 
+        try 
+        {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            
+            pstmt.setString(1, username_pelati);
+            pstmt.setString(2, eidos_aitimatos);
+            pstmt.setString(3, pinakida);
+            
+            pstmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(this, "Το αίτημα στάλθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+                                         
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+ int selectedRowIndex = jTable3.getSelectedRow();
+        
+        if (selectedRowIndex == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Δεν έχετε επιλέξει Όχημα!", "Error", JOptionPane.ERROR_MESSAGE);
+            
+            return;
+        }
+
+        DefaultTableModel tmodel1 = (DefaultTableModel) jTable3.getModel();
+              
+        String pinakida = tmodel1.getValueAt(selectedRowIndex, 2).toString();
+        String username_pelati = username;
+        String eidos_aitimatos = "AITIMA ENIMEROSIS OXIMATON";
+        
+        String checkQuery = "SELECT username_pelati FROM aitima WHERE ait_username_pelati = ? AND eidos = ?";
+        
+        try 
+        {
+            PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
+            
+            checkStmt.setString(1, pinakida);
+            checkStmt.setString(2, eidos_aitimatos);
+            
+            ResultSet rs = checkStmt.executeQuery();
+            
+            if (rs.next()) 
+            {
+                JOptionPane.showMessageDialog(this, "Έχετε ήδη κάνει αίτημα για λογιστή!", "Error", JOptionPane.ERROR_MESSAGE);
+                return; 
+            }
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά τον έλεγχο των αιτημάτων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String query = "INSERT INTO aitima VALUES (NULL, ?, ?, DEFAULT, NULL, ?)";
+ 
+        try 
+        {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            
+            pstmt.setString(1, username_pelati);
+            pstmt.setString(2, eidos_aitimatos);
+            pstmt.setString(3, pinakida);
+            
+            pstmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(this, "Το αίτημα στάλθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+                                              }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+int selectedRowIndex = jTable3.getSelectedRow();
+        
+        if (selectedRowIndex == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Δεν έχετε επιλέξει Όχημα!", "Error", JOptionPane.ERROR_MESSAGE);
+            
+            return;
+        }
+
+        DefaultTableModel tmodel1 = (DefaultTableModel) jTable3.getModel();
+              
+        String pinakida = tmodel1.getValueAt(selectedRowIndex, 2).toString();
+        String username_pelati = username;
+        String eidos_aitimatos = "AITIMA BEBAIOSIS MI OFEILIS TELON";
+        
+        String checkQuery = "SELECT username_pelati FROM aitima WHERE ait_username_pelati = ? AND eidos = ?";
+        
+        try 
+        {
+            PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
+            
+            checkStmt.setString(1, pinakida);
+            checkStmt.setString(2, eidos_aitimatos);
+            
+            ResultSet rs = checkStmt.executeQuery();
+            
+            if (rs.next()) 
+            {
+                JOptionPane.showMessageDialog(this, "Έχετε ήδη κάνει αίτημα για λογιστή!", "Error", JOptionPane.ERROR_MESSAGE);
+                return; 
+            }
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά τον έλεγχο των αιτημάτων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String query = "INSERT INTO aitima VALUES (NULL, ?, ?, DEFAULT, NULL, ?)";
+ 
+        try 
+        {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            
+            pstmt.setString(1, username_pelati);
+            pstmt.setString(2, eidos_aitimatos);
+            pstmt.setString(3, pinakida);
+            
+            pstmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(this, "Το αίτημα στάλθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+                                                }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
      * @param args the command line arguments

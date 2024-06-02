@@ -15,10 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import javax.swing.JTable;
 
-*
- * @author vasil
 
-*/
 public class RithmisiOfeilwn extends javax.swing.JFrame {
 
     /**
@@ -71,10 +68,9 @@ public class RithmisiOfeilwn extends javax.swing.JFrame {
 
         int poso = Integer.parseInt(ofeili_poso);
                
-        String insertQuery = "INSERT INTO Ofeili (ofeili_poso, ofeili_username_pelati) VALUES (?,?)";
-
+        String updateQuery = "UPDATE ofeili SET ofeili_poso=ofeili_poso-poso WHERE username_epixeirisis = ?";
         try (
-                PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+                PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
 
             pstmt.setInt(1, poso);
             pstmt.setString(2, ofeili_username_pelati);
