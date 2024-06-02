@@ -206,7 +206,69 @@ public class Provoli_stoixeion_Epixeirisis extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+        String username_pelati = username;  // Αυτός είναι ο username του χρήστη που κάνει το αίτημα
+    String eidos_aitimatos = "ΑΙΤΗΜΑ ΕΝΗΜΕΡΩΣΗΣ ΕΠΙΧΕΙΡΙΣΗΣ";  // Ορίζουμε το είδος του αιτήματος ως ενημέρωση
+
+    // Αναζητούμε τον λογιστή της επιχείρησης
+    String username_logisti = null;
+    try {
+        String logistiQuery = "SELECT epix_username_logisti FROM epixeirisi WHERE username_epixeirisis = ?";
+        PreparedStatement logistiStmt = conn.prepareStatement(logistiQuery);
+        logistiStmt.setString(1, username_pelati);
+        ResultSet logistiRs = logistiStmt.executeQuery();
+
+        if (logistiRs.next()) {
+            username_logisti = logistiRs.getString("epix_username_logisti");
+        } else {
+            JOptionPane.showMessageDialog(this, "Δεν βρέθηκε λογιστής για την επιχείρηση!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Σφάλμα κατά την αναζήτηση του λογιστή: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Ελέγχουμε αν υπάρχει ήδη αίτημα ενημέρωσης
+    String checkQuery = "SELECT ait_username_logisti FROM aitima WHERE ait_username_pelati = ? AND eidos = ?";
+    try {
+        PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
+        checkStmt.setString(1, username_pelati);
+        checkStmt.setString(2, eidos_aitimatos);
+
+        ResultSet rs = checkStmt.executeQuery();
+
+        if (rs.next()) {
+            JOptionPane.showMessageDialog(this, "Έχετε ήδη κάνει αίτημα για ενημέρωση!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Σφάλμα κατά τον έλεγχο των αιτημάτων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Έλεγχος αν το username_logisti είναι null πριν την εισαγωγή
+    if (username_logisti == null) {
+        JOptionPane.showMessageDialog(this, "Δεν βρέθηκε λογιστής για την επιχείρηση!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Δημιουργούμε το αίτημα ενημέρωσης με το username του λογιστή
+    String query = "INSERT INTO aitima (ait_id, ait_username_pelati, eidos, ait_username_logisti) VALUES (NULL, ?, ?, ?)";
+    try {
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, username_pelati);
+        pstmt.setString(2, eidos_aitimatos);
+        pstmt.setString(3, username_logisti);
+
+        pstmt.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Το αίτημα στάλθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
