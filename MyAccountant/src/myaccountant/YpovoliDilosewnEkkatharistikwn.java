@@ -126,7 +126,7 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
 
             },
             new String [] {
-                "Id", "Αρχεία"
+                "Id", "Όνομα αρχείου"
             }
         ));
         jScrollPane4.setViewportView(jTable2);
@@ -222,7 +222,7 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,7 +379,7 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
             }
         
             String username_pelati = username;
-            String eidos_aitimatos = "AITIMA FOLOROGIKIS DILOSIS";
+            String eidos_aitimatos = "AITIMA FOROLOGIKIS DILOSIS";
             int poso = 30;
             
             if(portofoli < poso)
@@ -444,8 +444,11 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
             String eidos_aitimatos = "AITIMA FOLOROGIKIS DILOSIS";
             int poso = 30;
             
+            System.out.println(portofoli);
+            System.out.println(poso);
             if(portofoli < poso)
             {
+                System.out.println("Condition met: portofoli < poso");
                 JOptionPane.showMessageDialog(this, "Δεν έχετε αρκετό χρηματικό υπόλοιπο για την αποστολή αιτήματος!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -496,8 +499,10 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
         // Execute a query to retrieve the Blob data based on the selected ID
         String query = "SELECT forologiki_dilosi FROM forologiki_dilosi WHERE for_dil_id = ?";
         
-        try (PreparedStatement pstmt = conn.prepareStatement(query)) 
+        try 
         {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            
             pstmt.setString(1, id);
             
             ResultSet rs = pstmt.executeQuery();
@@ -542,7 +547,7 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
             } 
             else 
             {
-                JOptionPane.showMessageDialog(this, "Δεν βρέθηκε αρχείο με το συγκεκριμένο ID.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Δεν βρέθηκε αρχείο με το συγκεκριμένο ID!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } 
         catch(SQLException e) 
@@ -574,8 +579,10 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
         // Execute a query to retrieve the Blob data based on the selected ID
         String query = "SELECT ekkatharistiko FROM ekkatharistiko WHERE ek_id = ?";
         
-        try (PreparedStatement pstmt = conn.prepareStatement(query)) 
+        try
         {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            
             pstmt.setString(1, id);
             
             ResultSet rs = pstmt.executeQuery();
@@ -620,7 +627,7 @@ public class YpovoliDilosewnEkkatharistikwn extends javax.swing.JFrame
             } 
             else 
             {
-                JOptionPane.showMessageDialog(this, "Δεν βρέθηκε αρχείο με το συγκεκριμένο ID.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Δεν βρέθηκε αρχείο με το συγκεκριμένο ID!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } 
         catch(SQLException e) 
