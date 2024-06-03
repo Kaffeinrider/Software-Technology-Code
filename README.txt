@@ -27,7 +27,7 @@ FLUSH PRIVILEGES;
 Τώρα αν έχουν πάει όλα καλά μπορούμε να τρέξουμε το project.
 
 7.
-Έχουμε κάνει ένα μέρος των λειτουργειών που είχαμε σχεδιάσει. Επομένως θα αναφέρουμε ποιες κλάσεις είναι έτοιμες.
+Aναφέρουμε ποιες κλάσεις είναι έτοιμες.
 
 Για τον user:
 MyAccountant (Status: Finished)
@@ -38,13 +38,20 @@ Idiotis (Status: Finished)
 Epilogi_Logisti (Status: Finished)
 Portofoli (Status: Finished)
 Oxima (Status: semi-Finished)
-YpovoliDiloseonEkkatharistikwn (Status: semi-Finished)
+YpovoliDiloseonEkkatharistikwn (Status: Finished)
+Provoli_Ofeilon (Status: Finished)
 
 Για τον Λογιστή:
 Logistis (Status: Finished)
 EnimerosiEsodwnEksodwn (Status: Finished)
 ProsthikiYpallilwn (Status: Finished)
 RithmisiOfeilwn (Status: Finished)
+Ipovoli_diloseon (Status: Finished)
+DiaxeirisiAitimatwn (Status: Finished)
+DiaxeirisiOximaton (Status: Finished)
+EkdosiVevaiosisMiOfeilis (Status: Finished)
+EpeksergasiaYpallilwn (Status: Finished)
+
 
 Για την Επιχείρηση:
 Epixeirisi (Status: Finished)
@@ -52,11 +59,8 @@ Epilogi_Logisti (Status: Finished)
 Portofoli (Status: Finished)
 Oxima (Status: semi-Finished)
 Provoli_stoixeion_Epixeirisis (Status: Finished)
+Provoli_Ofeilon (Status: Finished)
 
-Unfinished classes:
-DiaxeirisiAitimatwn
-DiaxeirisiOximaton
-EkdosiVevaiosisMiOfeilis
-EpeksergasiaYpallilwn
-Ipovoli_diloseon
-Provoli_Ofeilon
+
+
+
