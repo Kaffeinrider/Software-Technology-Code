@@ -1,20 +1,85 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package myaccountant;
 
-/**
- *
- * @author vasil
- */
-public class DiaxeirisiAitimatwn extends javax.swing.JFrame {
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static myaccountant.Login.conn;
+import static myaccountant.Login.user_type;
+import static myaccountant.Login.username;
 
-    /**
-     * Creates new form DiaxeirisiAitimatwn
-     */
-    public DiaxeirisiAitimatwn() {
+public class DiaxeirisiAitimatwn extends javax.swing.JFrame 
+{
+    public DiaxeirisiAitimatwn() 
+    {
         initComponents();
+        load_aitimata();
+    }
+    
+    private void load_aitimata()
+    {
+        String id_query = "SELECT ait_id,ait_username_pelati,eidos,poso_pliromis,afm_idioti FROM aitima INNER JOIN idiotis ON username_idioti = ait_username_pelati WHERE ait_username_logisti = ?";
+            
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(id_query);
+            
+            pst.setString(1, username); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
+            
+            tblModel.setRowCount(0); 
+            
+            while(rs.next())
+            {
+                String ait_id_idioti = rs.getString("ait_id");
+                String ait_username_idioti = rs.getString("ait_username_pelati");
+                String id_eidos = rs.getString("eidos");
+                String id_poso_pliromis = String.valueOf(rs.getString("poso_pliromis"));
+                String id_afm = String.valueOf(rs.getString("afm_idioti"));
+          
+                String tbData[] = {ait_id_idioti , ait_username_idioti, id_eidos, id_poso_pliromis, id_afm};
+          
+                tblModel.addRow(tbData); 
+            }
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+        
+        String epix_query = "SELECT ait_id,ait_username_pelati,eidos,poso_pliromis,afm_epixeirisis FROM aitima INNER JOIN epixeirisi ON username_epixeirisis = ait_username_pelati WHERE ait_username_logisti = ?";
+            
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(epix_query);
+            
+            pst.setString(1, username); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
+            
+            while(rs.next())
+            {
+                String ait_id_epixeirisis = rs.getString("ait_id");
+                String ait_username_epixeirisis = rs.getString("ait_username_pelati");
+                String epix_eidos = rs.getString("eidos");
+                String epix_poso_pliromis = String.valueOf(rs.getString("poso_pliromis"));
+                String epix_afm = String.valueOf(rs.getString("afm_epixeirisis"));
+          
+                String tbData[] = {ait_id_epixeirisis , ait_username_epixeirisis, epix_eidos, epix_poso_pliromis, epix_afm};
+          
+                tblModel.addRow(tbData);  
+            }
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
     }
 
     /**
@@ -42,19 +107,21 @@ public class DiaxeirisiAitimatwn extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Id", "Ον/επώνυμο", "Είδος", "Ποσό Πληρωμής"
+                "Id", "Username", "Είδος αιτήματος", "Ποσό πληρωμής", "ΑΦΜ"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setBackground(new java.awt.Color(0, 255, 102));
         jButton1.setText("Αποδοχή");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton8.setBackground(new java.awt.Color(255, 0, 0));
         jButton8.setText("Επιστροφή");
@@ -66,47 +133,52 @@ public class DiaxeirisiAitimatwn extends javax.swing.JFrame {
 
         jButton9.setBackground(new java.awt.Color(255, 0, 0));
         jButton9.setText("Απόρριψη");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(205, 205, 205)
-                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9)))
+                        .addGap(39, 39, 39))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(281, 281, 281))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(81, 81, 81)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(43, 43, 43)
-                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -114,12 +186,219 @@ public class DiaxeirisiAitimatwn extends javax.swing.JFrame {
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         this.dispose();
-            Logistis logistis = new Logistis();
-            //center the window
-            logistis.setLocationRelativeTo(null);
-            // Show the login window
-            logistis.setVisible(true);
+        
+        Logistis logistis = new Logistis();
+        
+        logistis.setLocationRelativeTo(null);
+        
+        logistis.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+
+        if (selectedRow == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Παρακαλώ επιλέξτε ένα αίτημα από τον πίνακα!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        int id = Integer.parseInt(jTable1.getValueAt(selectedRow, 0).toString());
+        String username_pelati = jTable1.getValueAt(selectedRow, 1).toString();
+        String eidos = jTable1.getValueAt(selectedRow, 2).toString();
+        int poso = Integer.parseInt(jTable1.getValueAt(selectedRow, 3).toString());
+        int portofoli_pelati = 0;
+        String utype = null;
+        
+        String query = "SELECT username_idioti FROM idiotis WHERE username_idioti = ?";
+        
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
+            
+            pst.setString(1, username_pelati); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next())
+            {
+                utype = "idiotis";
+            }
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        query = "SELECT username_epixeirisis FROM epixeirisi WHERE username_epixeirisis = ?";
+        
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
+            
+            pst.setString(1, username_pelati); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next())
+            {
+                utype = "epixeirisi";
+            }
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+        
+        if(utype.equals("idiotis"))
+        {
+            String portofoli_query = "SELECT portofoli_idioti FROM idiotis WHERE username_idioti = ?";
+            
+            try 
+            {
+                PreparedStatement pst = conn.prepareStatement(portofoli_query);
+                
+                pst.setString(1, username_pelati); 
+                
+                ResultSet rs = pst.executeQuery();
+                
+                if(rs.next())
+                {
+                    portofoli_pelati = Integer.parseInt(rs.getString("portofoli_idioti"));
+                }
+            }
+            catch (SQLException e) 
+            {
+                JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+        }
+        else if(utype.equals("epixeirisi"))
+        {
+            String portofoli_query = "SELECT portofoli_epixeirisis  FROM epixeirisi WHERE username_epixeirisis = ?";
+            
+            try 
+            {
+                PreparedStatement pst = conn.prepareStatement(portofoli_query);
+                
+                pst.setString(1, username_pelati); 
+                
+                ResultSet rs = pst.executeQuery();
+                
+                if(rs.next())
+                {
+                    portofoli_pelati = Integer.parseInt(rs.getString("portofoli_epixeirisis"));
+                }
+            }
+            catch (SQLException e) 
+            {
+                JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+        }
+        
+        switch (eidos) 
+        {
+            case "AITIMA FOROLOGIKIS DILOSIS":
+            case "AITIMA EKKATHARISTIKOU":
+            case "AITIMA ENIMEROSIS EPIXEIRISIS":
+            case "AITIMA ENIMEROSIS OFEILIS":
+            case "AITIMA ENIMEROSIS OXIMATON":
+            case "AITIMA ALLAGIS KATASTASIS":
+            case "AITIMA BEBAIOSIS MI OFEILIS TELON":
+                if(portofoli_pelati < poso)
+                {
+                    JOptionPane.showMessageDialog(this, "Το υπόλοιπο του πελάτη δεν είναι αρκετό ώστε να ολοκληρωθεί η υπηρεσία!", "Error", JOptionPane.ERROR_MESSAGE);
+                    break;
+                }
+                else
+                {
+                    portofoli_pelati = portofoli_pelati - poso;
+                    
+                    String update_query = null;
+                    
+                    switch(utype) 
+                    {
+                        case "epixeirisi":
+                            update_query = "UPDATE epixeirisi SET portofoli_epixeirisis  = ? WHERE username_epixeirisis = ?";
+                            break;
+                        case "idiotis":
+                            update_query = "UPDATE idiotis SET portofoli_idioti = ? WHERE username_idioti = ?";
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                    try 
+                    {
+                        PreparedStatement pst = conn.prepareStatement(update_query);
+            
+                        pst.setInt(1, portofoli_pelati); 
+                        pst.setString(2, username_pelati);
+            
+                        pst.executeUpdate(); 
+                    }
+                    catch (SQLException e) 
+                    {
+                        JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ενημέρωση του πορτοφολιού: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }  
+                }
+                
+                break;
+            case "AITIMA LOGISTI":
+                    String logistis_query = null;
+                    
+                    switch(utype) 
+                    {
+                        case "epixeirisi":
+                            logistis_query = "UPDATE epixeirisi SET epix_username_logisti = ? WHERE username_epixeirisis = ?";
+                            break;
+                        case "idiotis":
+                            logistis_query = "UPDATE idiotis SET idiotis_username_logisti = ? WHERE username_idioti = ?";
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                    try 
+                    {
+                        PreparedStatement pst = conn.prepareStatement(logistis_query);
+            
+                        pst.setString(1, username); 
+                        pst.setString(2, username_pelati);
+            
+                        pst.executeUpdate(); 
+                    }
+                    catch (SQLException e) 
+                    {
+                        JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ενημέρωση του λογιστή του πελάτη: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                break;
+            default:
+                break;
+        }
+        
+        String delete_query = "DELETE FROM aitima WHERE ait_id = ?";
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(delete_query);
+            
+            pst.setInt(1, id); 
+            
+            pst.executeUpdate(); 
+            
+            load_aitimata();
+            
+            JOptionPane.showMessageDialog(this, "Το αίτημα αποδέχθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την διαγραφή αιτήματος: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
