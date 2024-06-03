@@ -183,7 +183,7 @@ public class Provoli_Ofeilon extends javax.swing.JFrame {
                 String eidos_aitimatos_epix = "AITIMA ENIMEROSIS OFEILIS";
                 int poso_epix = 30;
                 
-                String query = "INSERT INTO aitima VALUES (NULL, ?, ?, ?, NULL, ?)";
+                String query = "INSERT INTO aitima VALUES (NULL, ?, ?, ?, DEFAULT, ?)";
  
             try 
             {
@@ -236,7 +236,7 @@ public class Provoli_Ofeilon extends javax.swing.JFrame {
                 String eidos_aitimatos_id = "AITIMA ENIMEROSIS OFEILIS";
                 int poso_idioti = 30;
                 
-                String query1 = "INSERT INTO aitima VALUES (NULL, ?, ?, ?, NULL, ?)";
+                String query1 = "INSERT INTO aitima VALUES (NULL, ?, ?, ?, DEFAULT, ?)";
  
             try 
             {
