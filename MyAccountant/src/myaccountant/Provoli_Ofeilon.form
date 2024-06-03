@@ -25,8 +25,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="jButton8" min="-2" pref="204" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
+              <Component id="jButton8" min="-2" pref="217" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
               <Component id="jButton9" min="-2" pref="124" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
           </Group>
@@ -87,12 +87,18 @@
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="1" rowCount="4">
-                <Column editable="true" title="&#x39f;&#x3c6;&#x3b5;&#x3b9;&#x3bb;&#x3ad;&#x3c2; &#x3c0;&#x3c1;&#x3bf;&#x3c2; &#x394;.&#x39f;.&#x3a5;" type="java.lang.Object"/>
+              <Table columnCount="2" rowCount="0">
+                <Column editable="true" title="id &#x39f;&#x3c6;&#x3b5;&#x3b9;&#x3bb;&#x3ae;&#x3c2;" type="java.lang.Object"/>
+                <Column editable="true" title="&#x3a0;&#x3bf;&#x3c3;&#x3cc; &#x39f;&#x3c6;&#x3b5;&#x3b9;&#x3bb;&#x3ae;&#x3c2;" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>

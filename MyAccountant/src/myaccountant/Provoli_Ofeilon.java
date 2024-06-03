@@ -4,7 +4,13 @@
  */
 package myaccountant;
 
-import static myaccountant.Login.user_type;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static myaccountant.Login.*;
+
 
 /**
  *
@@ -17,7 +23,43 @@ public class Provoli_Ofeilon extends javax.swing.JFrame {
      */
     public Provoli_Ofeilon() {
         initComponents();
+        load_Ofeiles();
     }
+    
+    private void load_Ofeiles()
+    {
+        String query = "";
+        query = "SELECT ofeili_id, ofeili_poso FROM ofeili WHERE ofeili_username_pelati = ?";
+
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(query);
+            
+            pst.setString(1, username); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
+            
+            tblModel.setRowCount(0); 
+            
+            while(rs.next())
+            {
+                String id = rs.getString("ofeili_id");
+                String poso = rs.getString("ofeili_poso");
+          
+                String tbData[] = {id , poso};
+          
+                tblModel.addRow(tbData); 
+            }
+        }
+        
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,13 +85,10 @@ public class Provoli_Ofeilon extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
-                "Οφειλές προς Δ.Ο.Υ"
+                "id Οφειλής", "Ποσό Οφειλής"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -76,8 +115,8 @@ public class Provoli_Ofeilon extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(133, 133, 133)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(120, 120, 120)
                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
             .addGroup(layout.createSequentialGroup()
@@ -110,7 +149,119 @@ public class Provoli_Ofeilon extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        int response = JOptionPane.showConfirmDialog(this, "Θέλετε σίγουρα να στείλετε Αίτημα Ενημέρωσης Οφειλών?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(response == JOptionPane.YES_OPTION) {
+            switch (user_type) 
+            {
+                case "epixeirisi":
+                String getlogistiEp = "SELECT epix_username_logisti FROM epixeirisi WHERE username_epixeirisis = ?";
+            
+                String uname_logistiEp = null;
+        
+                try 
+                {
+                    PreparedStatement checkStmt = conn.prepareStatement(getlogistiEp);
+            
+                    checkStmt.setString(1, username);
+            
+                    ResultSet rs = checkStmt.executeQuery();
+            
+                    if (rs.next()) 
+                    {
+                        uname_logistiEp = rs.getString("epix_username_logisti");
+                    }
+                } 
+            
+                catch (SQLException e) 
+                {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ανάκτηση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                String username_epix = username;
+                String eidos_aitimatos_epix = "AITIMA ENIMEROSIS OFEILIS";
+                int poso_epix = 30;
+                
+                String query = "INSERT INTO aitima VALUES (NULL, ?, ?, ?, NULL, ?)";
+ 
+            try 
+            {
+                PreparedStatement pstmt = conn.prepareStatement(query);
+            
+                pstmt.setString(1, username_epix);
+                pstmt.setString(2, eidos_aitimatos_epix);
+                pstmt.setInt(3, poso_epix);
+                pstmt.setString(4, uname_logistiEp);
+            
+                pstmt.executeUpdate();
+            
+                JOptionPane.showMessageDialog(this, "Το αίτημα στάλθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            catch (SQLException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+                break;
+                
+                case "idiotis":
+                    
+                String getlogistiIdioti = "SELECT idiotis_username_logisti FROM idiotis WHERE username_idioti = ?";
+            
+                String uname_logistiIdioti = null;
+        
+                try 
+                {
+                    PreparedStatement checkStmt = conn.prepareStatement(getlogistiIdioti);
+            
+                    checkStmt.setString(1, username);
+            
+                    ResultSet rs = checkStmt.executeQuery();
+            
+                    if (rs.next()) 
+                    {
+                        uname_logistiIdioti = rs.getString("idiotis_username_logisti");
+                    }
+                } 
+            
+                catch (SQLException e) 
+                {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ανάκτηση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                String username_id = username;
+                String eidos_aitimatos_id = "AITIMA ENIMEROSIS OFEILIS";
+                int poso_idioti = 30;
+                
+                String query1 = "INSERT INTO aitima VALUES (NULL, ?, ?, ?, NULL, ?)";
+ 
+            try 
+            {
+                PreparedStatement pstmt = conn.prepareStatement(query1);
+            
+                pstmt.setString(1, username_id);
+                pstmt.setString(2, eidos_aitimatos_id);
+                pstmt.setInt(3, poso_idioti);
+                pstmt.setString(4, uname_logistiIdioti);
+            
+                pstmt.executeUpdate();
+            
+                JOptionPane.showMessageDialog(this, "Το αίτημα στάλθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            catch (SQLException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+                
+                break;
+                default:
+                break;
+            }
+        }
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
