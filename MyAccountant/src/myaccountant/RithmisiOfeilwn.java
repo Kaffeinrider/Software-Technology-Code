@@ -26,7 +26,9 @@ public class RithmisiOfeilwn extends javax.swing.JFrame {
         loadUsernames();
         loadOfeiles();
     }
-
+     /**
+     * Creates new form RithmisiOfeilwn
+     */
     private void loadUsernames() {
         String query = "SELECT username_idioti AS username FROM idiotis UNION SELECT username_epixeirisis AS username FROM epixeirisi";
 
