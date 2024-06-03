@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static myaccountant.Login.conn;
 import static myaccountant.Login.user_type;
+import static myaccountant.Login.username;
 
 /**
  *
@@ -83,12 +84,27 @@ public class Oxima extends javax.swing.JFrame {
 
         jButton9.setBackground(new java.awt.Color(0, 204, 255));
         jButton9.setText("Αίτημα Αλλαγής Κατάστασης Οχήματος");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jButton10.setBackground(new java.awt.Color(0, 204, 255));
         jButton10.setText("Αίτημα Ενημέρωσης Οχήματος");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jButton11.setBackground(new java.awt.Color(0, 204, 255));
         jButton11.setText("Αίτημα Βεβαίωσης μη Οφειλής Τελών");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         jTable3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -96,7 +112,7 @@ public class Oxima extends javax.swing.JFrame {
 
             },
             new String [] {
-
+                "Όχημα", "Πινακίδα", "Όνομα", "Επώνυμο", "Κατάσταση", "Τέλη"
             }
         ));
         jScrollPane5.setViewportView(jTable3);
@@ -106,9 +122,9 @@ public class Oxima extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(138, 138, 138)
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -168,6 +184,190 @@ public class Oxima extends javax.swing.JFrame {
             idiotis.setVisible(true);
         }
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+            int selectedRowIndex = jTable3.getSelectedRow();
+        
+        if (selectedRowIndex == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Δεν έχετε επιλέξει όχημα!", "Error", JOptionPane.ERROR_MESSAGE);
+            
+            return;
+        }
+
+        DefaultTableModel tmodel1 = (DefaultTableModel) jTable3.getModel();
+              
+        String pinakida = tmodel1.getValueAt(selectedRowIndex, 2).toString();
+        String username_pelati = username;
+        String eidos_aitimatos = "AITIMA ALLAGIS KATASTASIS";
+        
+        String checkQuery = "SELECT oxima FROM aitima WHERE ait_pinakida = ? AND eidos = ?";
+        
+        try 
+        {
+            PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
+            
+            checkStmt.setString(1, pinakida);
+            checkStmt.setString(2, eidos_aitimatos);
+            
+            ResultSet rs = checkStmt.executeQuery();
+            
+            if (rs.next()) 
+            {
+                JOptionPane.showMessageDialog(this, "Έχετε ήδη κάνει αίτημα για λογιστή!", "Error", JOptionPane.ERROR_MESSAGE);
+                return; 
+            }
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά τον έλεγχο των αιτημάτων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String query = "INSERT INTO aitima VALUES (NULL, ?, ?, DEFAULT, NULL, ?)";
+ 
+        try 
+        {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            
+            pstmt.setString(1, username_pelati);
+            pstmt.setString(2, eidos_aitimatos);
+            pstmt.setString(3, pinakida);
+            
+            pstmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(this, "Το αίτημα στάλθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+               
+        int selectedRowIndex = jTable3.getSelectedRow();
+        
+        if (selectedRowIndex == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Δεν έχετε επιλέξει όχημα!", "Error", JOptionPane.ERROR_MESSAGE);
+            
+            return;
+        }
+
+        DefaultTableModel tmodel1 = (DefaultTableModel) jTable3.getModel();
+              
+        String pinakida = tmodel1.getValueAt(selectedRowIndex, 2).toString();
+        String username_pelati = username;
+        String eidos_aitimatos = "AITIMA ENIMEROSIS OXIMATON";
+        
+        String checkQuery = "SELECT oxima FROM aitima WHERE ait_pinakida = ? AND eidos = ?";
+        
+        try 
+        {
+            PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
+            
+            checkStmt.setString(1, pinakida);
+            checkStmt.setString(2, eidos_aitimatos);
+            
+            ResultSet rs = checkStmt.executeQuery();
+            
+            if (rs.next()) 
+            {
+                JOptionPane.showMessageDialog(this, "Έχετε ήδη κάνει αίτημα για λογιστή!", "Error", JOptionPane.ERROR_MESSAGE);
+                return; 
+            }
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά τον έλεγχο των αιτημάτων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String query = "INSERT INTO aitima VALUES (NULL, ?, ?, DEFAULT, NULL, ?)";
+ 
+        try 
+        {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            
+            pstmt.setString(1, username_pelati);
+            pstmt.setString(2, eidos_aitimatos);
+            pstmt.setString(3, pinakida);
+            
+            pstmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(this, "Το αίτημα στάλθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+       int selectedRowIndex = jTable3.getSelectedRow();
+        
+        if (selectedRowIndex == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Δεν έχετε επιλέξει όχημα!", "Error", JOptionPane.ERROR_MESSAGE);
+            
+            return;
+        }
+
+        DefaultTableModel tmodel1 = (DefaultTableModel) jTable3.getModel();
+              
+        String pinakida = tmodel1.getValueAt(selectedRowIndex, 2).toString();
+        String username_pelati = username;
+        String eidos_aitimatos = "AITIMA BEBAIOSIS MI OFEILIS TELON";
+        
+        String checkQuery = "SELECT oxima FROM aitima WHERE ait_pinakida = ? AND eidos = ?";
+        
+        try 
+        {
+            PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
+            
+            checkStmt.setString(1, username_pelati);
+            checkStmt.setString(2, eidos_aitimatos);
+            
+            ResultSet rs = checkStmt.executeQuery();
+            
+            if (rs.next()) 
+            {
+                JOptionPane.showMessageDialog(this, "Έχετε ήδη κάνει αίτημα για λογιστή!", "Error", JOptionPane.ERROR_MESSAGE);
+                return; 
+            }
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά τον έλεγχο των αιτημάτων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String query = "INSERT INTO aitima VALUES (NULL, ?, ?, DEFAULT, NULL, ?)";
+ 
+        try 
+        {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            
+            pstmt.setString(1, username_pelati);
+            pstmt.setString(2, eidos_aitimatos);
+            pstmt.setString(3, pinakida);
+            
+            pstmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(this, "Το αίτημα στάλθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
      * @param args the command line arguments
