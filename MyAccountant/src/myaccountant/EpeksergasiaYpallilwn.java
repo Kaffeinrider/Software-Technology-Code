@@ -24,6 +24,7 @@ public class EpeksergasiaYpallilwn extends javax.swing.JFrame {
     
     private String selectedEpixeirisi;
     private String selectedEmployee;
+    private String selectedEmployeeAfm;
     /**
      * Creates new form EpeksergasiaYpallilwn
      */
@@ -55,6 +56,7 @@ jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener()
             if (selectedRow != -1) {
                 // Όταν ο χρήστης επιλέξει έναν υπάλληλο
                 selectedEmployee = jTable1.getValueAt(selectedRow, 0).toString();
+                selectedEmployeeAfm = getYpallilosAfm(selectedEmployee);
                 
             }
         }
@@ -108,7 +110,31 @@ jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener()
         catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Σφάλμα κατά τη φόρτωση των υπαλλήλων");
         }
-    }    
+    }
+
+    private String getYpallilosAfm(String fullname) {
+        String afm = null;
+        try {
+            String[] parts = fullname.split(" ");
+            if (parts.length >= 2) {
+                String onoma = parts[0];
+                String eponimo = parts[1];
+
+                String query = "SELECT yp_afm FROM ypallilos WHERE yp_onoma = ? AND yp_eponimo = ?";
+                PreparedStatement pst = conn.prepareStatement(query);
+                pst.setString(1, onoma);
+                pst.setString(2, eponimo);
+                ResultSet rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    afm = rs.getString("yp_afm");
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Σφάλμα κατά τη λήψη του AFM του υπαλλήλου: " + e.getMessage());
+        }
+        return afm;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -279,31 +305,21 @@ jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener()
     String meikta = jTextField5.getText();
     String asfaleia = jTextField3.getText();
     
-    // Assuming the full name format is "First Last"
-String[] nameParts = selectedEmployee.split(" ");
-if (nameParts.length != 2) {
-    JOptionPane.showMessageDialog(this, "Σφάλμα: Το όνομα υπαλλήλου πρέπει να περιέχει όνομα και επώνυμο.", "Error", JOptionPane.ERROR_MESSAGE);
-    return;
-}
 
-String firstName = nameParts[0];
-String lastName = nameParts[1];
 
 // Εμφάνιση της τιμής του selectedEmployee για έλεγχο
 System.out.println("Selected Employee: " + selectedEmployee);
-System.out.println("First Name: " + firstName);
-System.out.println("Last Name: " + lastName);
+
 
 // Ενημέρωση των στοιχείων του υπαλλήλου στη βάση δεδομένων
 try {
-    String query = "UPDATE ypallilos SET yp_onoma = ?, yp_eponimo = ?, meikta = ?, asfalisi = ? WHERE yp_onoma = ? AND yp_eponimo = ?";
+    String query = "UPDATE ypallilos SET yp_onoma = ?, yp_eponimo = ?, meikta = ?, asfalisi = ? WHERE yp_afm = ?";
     PreparedStatement pst = conn.prepareStatement(query);
     pst.setString(1, name);
     pst.setString(2, surname);
     pst.setString(3, meikta);
     pst.setString(4, asfaleia);
-    pst.setString(5, firstName);
-    pst.setString(6, lastName);
+    pst.setString(5, selectedEmployeeAfm);
     pst.executeUpdate();
     
     JOptionPane.showMessageDialog(this, "Τα στοιχεία του υπαλλήλου ενημερώθηκαν επιτυχώς.");
