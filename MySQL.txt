@@ -74,7 +74,7 @@ CREATE TABLE oxima (
 ox_onoma VARCHAR(30) NOT NULL,
 pinakida CHAR(7) NOT NULL,
 kostos_telon INT(20) DEFAULT 0,
-katastasi ENUM('ΕΝΕΡΓΟ' ,'ΑΚΙΝΗΣΙΑ'),
+katastasi ENUM('ENERGO' ,'AKINISIA'),
 ox_username_pelati VARCHAR(30) NOT NULL,
 PRIMARY KEY (pinakida),
 CONSTRAINT Ox_Username_Pelati FOREIGN KEY (ox_username_pelati) REFERENCES user(username) ON DELETE CASCADE ON UPDATE CASCADE
