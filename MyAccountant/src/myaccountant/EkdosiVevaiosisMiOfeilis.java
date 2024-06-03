@@ -1,20 +1,90 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package myaccountant;
 
-/**
- *
- * @author vasil
- */
-public class EkdosiVevaiosisMiOfeilis extends javax.swing.JFrame {
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static myaccountant.Login.conn;
+import static myaccountant.Login.username;
 
-    /**
-     * Creates new form EkdosiVevaiosisMiOfeilis
-     */
-    public EkdosiVevaiosisMiOfeilis() {
+public class EkdosiVevaiosisMiOfeilis extends javax.swing.JFrame 
+{
+    private Blob arxeio_bebaiosis;
+    private String onoma_epilegmenou_arxeiou_bebaiosis;
+    
+    public EkdosiVevaiosisMiOfeilis() 
+    {
         initComponents();
+        load_pelates();
+    }
+    
+    private void load_pelates()
+    {
+        String id_query = "SELECT onoma_idioti,afm_idioti,username_idioti,email_idioti FROM idiotis INNER JOIN logistis ON username_logisti = idiotis_username_logisti WHERE idiotis_username_logisti = ?";
+            
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(id_query);
+            
+            pst.setString(1, username); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            DefaultTableModel tblModel = (DefaultTableModel) jTable2.getModel();
+            
+            tblModel.setRowCount(0); 
+            
+            while(rs.next())
+            {
+                String id_onoma = rs.getString("onoma_idioti");
+                String id_afm = rs.getString("afm_idioti");
+                String uname_idioti = rs.getString("username_idioti");
+                String id_email = String.valueOf(rs.getString("email_idioti"));
+          
+                String tbData[] = {id_onoma , id_afm, uname_idioti, id_email};
+          
+                tblModel.addRow(tbData); 
+            }
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+        
+        String epix_query = "SELECT onoma_epixeirisis,afm_epixeirisis,username_epixeirisis,email_epixeirisis FROM epixeirisi INNER JOIN logistis ON username_logisti = epix_username_logisti WHERE epix_username_logisti = ?";
+            
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(epix_query);
+            
+            pst.setString(1, username); 
+            
+            ResultSet rs = pst.executeQuery();
+            
+            DefaultTableModel tblModel = (DefaultTableModel) jTable2.getModel();
+            
+            while(rs.next())
+            {
+                String epix_onoma = rs.getString("onoma_epixeirisis");
+                String epix_afm = rs.getString("afm_epixeirisis");
+                String uname_epixeirisis = rs.getString("username_epixeirisis");
+                String epix_email = String.valueOf(rs.getString("email_epixeirisis"));
+          
+                String tbData[] = {epix_onoma , epix_afm, uname_epixeirisis, epix_email};
+          
+                tblModel.addRow(tbData); 
+            }
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
     }
 
     /**
@@ -32,6 +102,7 @@ public class EkdosiVevaiosisMiOfeilis extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,17 +114,15 @@ public class EkdosiVevaiosisMiOfeilis extends javax.swing.JFrame {
         jTable2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
-                "Πελάτες"
+                "Όνομα", "ΑΦΜ", "Username", "Email"
             }
         ));
         jScrollPane4.setViewportView(jTable2);
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setText("Επιλέξτε Αρχείο");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,7 +131,13 @@ public class EkdosiVevaiosisMiOfeilis extends javax.swing.JFrame {
         });
 
         jButton2.setBackground(new java.awt.Color(0, 255, 102));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setText("Υποβολή");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton8.setBackground(new java.awt.Color(255, 0, 0));
         jButton8.setText("Ακύρωση");
@@ -72,64 +147,155 @@ public class EkdosiVevaiosisMiOfeilis extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setText("Πελάτες");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(105, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(79, 79, 79))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(57, 57, 57))))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(220, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(102, 102, 102))
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(128, 128, 128)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(230, 230, 230)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(26, 26, 26)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 43, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(119, 119, 119)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Create a file chooser
+        JFileChooser fileChooser = new JFileChooser();
+
+        // Show the file chooser dialog
+        int result = fileChooser.showOpenDialog(this);
+
+        // If the user selects a file
+        if (result == JFileChooser.APPROVE_OPTION) 
+        {
+            // Get the selected file
+            File selectedFile = fileChooser.getSelectedFile();
+            
+            onoma_epilegmenou_arxeiou_bebaiosis = selectedFile.getName();
+            
+            // Read the file into a byte array
+            byte[] fileContent;
+            
+            try
+            {
+                FileInputStream fis = new FileInputStream(selectedFile);
+                fileContent = new byte[(int) selectedFile.length()];
+                fis.read(fileContent);
+            } 
+            catch (IOException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα διαβάσματος αρχείου: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Convert byte array to Blob
+            try 
+            {
+                arxeio_bebaiosis = new javax.sql.rowset.serial.SerialBlob(fileContent);
+            } 
+            catch(SQLException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα ανάθεσης αρχείου: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            jButton1.setText(onoma_epilegmenou_arxeiou_bebaiosis);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         this.dispose();
-            Logistis logistis = new Logistis();
-            //center the window
-            logistis.setLocationRelativeTo(null);
-            // Show the login window
-            logistis.setVisible(true);
+        
+        Logistis logistis = new Logistis();
+        
+        logistis.setLocationRelativeTo(null);
+        
+        logistis.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (arxeio_bebaiosis == null) 
+        {
+            JOptionPane.showMessageDialog(this, "Δεν διαλέξατε αρχείο!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        int selectedRow = jTable2.getSelectedRow();
+
+        if (selectedRow == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Παρακαλώ επιλέξτε ένα ιδιώτη από τον πίνακα!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String username_pelati = jTable2.getValueAt(selectedRow, 2).toString();
+
+        String insertSQL = "INSERT INTO bebaiosi_mi_ofeilis_telon (bebaiosi_onoma_arxeiou, bebaiosi_mi_ofeilis_telon, bebaiosi_username_pelati) VALUES (?, ?, ?)";
+        
+        try 
+        {
+            PreparedStatement pstmt = conn.prepareStatement(insertSQL); 
+            
+            pstmt.setString(1, onoma_epilegmenou_arxeiou_bebaiosis);
+            pstmt.setBlob(2, arxeio_bebaiosis);
+            pstmt.setString(3, username_pelati);
+            
+            pstmt.executeUpdate();
+            
+            jButton1.setText("Επιλέξτε Αρχείο");
+            
+            JOptionPane.showMessageDialog(this, "Το αρχείο ανέβηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);  
+        }
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,6 +337,7 @@ public class EkdosiVevaiosisMiOfeilis extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
