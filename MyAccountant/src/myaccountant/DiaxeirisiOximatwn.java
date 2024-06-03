@@ -83,38 +83,72 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame
         }
     }
 
-    private void ProsthikiOximatos() 
+    private void EnimerosiOximatos() 
     {
-        // Παίρνουμε τις τιμές από τα πεδία κειμένου
-        String ox_onoma = jTextField2.getText();
-        String pinakida = jTextField3.getText();
-        String Ox_username_pelati = jTextField4.getText();
-        String katastasi = jTextField5.getText();
-        String kostos_telon = jTextField6.getText();
+        int selectedRow = jTable1.getSelectedRow();
 
-       
-       
-        int teli = Integer.parseInt(kostos_telon);
- if (!katastasi.equals("ENERGO") && !katastasi.equals("AKINISIA")) {
-            throw new IllegalArgumentException("Invalid value for katastasi: " + katastasi);
+        if (selectedRow == -1) 
+        {
+            String oxima_onoma = jTextField2.getText();
+            String ox_pinakida = jTextField3.getText();
+            String username_pelati = jTextField4.getText();
+            int ox_teli = Integer.parseInt(jTextField6.getText());
+            
+            String insertSQL = "INSERT INTO oxima VALUES (?, ?, ?, DEFAULT, ?)";
+        
+            try 
+            {
+                PreparedStatement pstmt = conn.prepareStatement(insertSQL); 
+            
+                pstmt.setString(1, oxima_onoma);
+                pstmt.setString(2, ox_pinakida);
+                pstmt.setInt(3, ox_teli);
+                pstmt.setString(4, username_pelati);
+            
+                pstmt.executeUpdate();
+                
+                loadOximata();
+            
+                JOptionPane.showMessageDialog(this, "Το όχημα προσθέθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);  
+            }
+            catch (SQLException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }            
+            
+            return;
         }
-        String insertQuery = "INSERT INTO oxima (ox_onoma, pinakida, Ox_username_pelati, katastasi, kostos_telon) VALUES (?, ?, ?, ?, ?)";
+        
+        String old_ox_pinakida = jTable1.getValueAt(selectedRow, 1).toString();
+        
+        String ox_onoma = jTextField2.getText();
+        String ox_pinakida = jTextField3.getText();
+        String ox_username_pelati = jTextField4.getText();
+        int ox_kostos_telon = Integer.parseInt(jTextField6.getText());
+         
+        String update_query = "UPDATE oxima SET ox_onoma  = ?, pinakida = ?, kostos_telon = ?, ox_username_pelati = ? WHERE pinakida = ?";
 
-        try (
-             PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+        try
+        {
+             PreparedStatement pstmt = conn.prepareStatement(update_query);
           
             pstmt.setString(1, ox_onoma);
-            pstmt.setString(2, pinakida);
-            pstmt.setString(3, Ox_username_pelati);
-            pstmt.setString(4, katastasi);
-            pstmt.setInt(5, teli);
+            pstmt.setString(2, ox_pinakida);
+            pstmt.setInt(3, ox_kostos_telon);
+            pstmt.setString(4, ox_username_pelati);
+            pstmt.setString(5, old_ox_pinakida);
         
-
             pstmt.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Η εισαγωγή ήταν επιτυχής!");
-        } catch (SQLException e) {
+            
+            loadOximata();
+            
+            JOptionPane.showMessageDialog(this, "Οι αλλαγές ήταν επιτυχής!");
+        } 
+        catch (SQLException e) 
+        {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ενημέρωση της βάσης δεδομένων: " + e.getMessage());
         }
     }
     
@@ -141,8 +175,6 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame
         jLabel6 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -180,7 +212,7 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame
         jLabel2.setText("Όνομα Οχήματος:");
 
         jButton2.setBackground(new java.awt.Color(0, 255, 102));
-        jButton2.setText("Προσθήκη οχήματος");
+        jButton2.setText("Ενημέρωση οχήματος");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -193,8 +225,6 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame
 
         jLabel8.setText("Τέλη:");
 
-        jLabel9.setText("Τέλη:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -202,44 +232,40 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(225, 225, 225)
+                        .addComponent(jButton10))
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(199, 199, 199)
-                        .addComponent(jButton10)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(29, 29, 29))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel6))
-                                    .addGap(29, 29, 29))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(18, 18, 18)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(9, 9, 9))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel8)
-                            .addGap(44, 44, 44)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel9)
-                            .addGap(44, 44, 44)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(28, 28, 28))
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(44, 44, 44)
+                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(25, 25, 25))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(221, 221, 221)
                 .addComponent(jLabel1)
@@ -265,25 +291,18 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
-                        .addGap(18, 18, 18)
+                        .addGap(32, 32, 32)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -300,11 +319,11 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       ProsthikiOximatos();
+       EnimerosiOximatos();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
@@ -351,13 +370,11 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
 }
