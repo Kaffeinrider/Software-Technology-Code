@@ -307,7 +307,7 @@ public class DiaxeirisiAitimatwn extends javax.swing.JFrame
                 if(portofoli_pelati < poso)
                 {
                     JOptionPane.showMessageDialog(this, "Το υπόλοιπο του πελάτη δεν είναι αρκετό ώστε να ολοκληρωθεί η υπηρεσία!", "Error", JOptionPane.ERROR_MESSAGE);
-                    break;
+                    return;
                 }
                 else
                 {
@@ -388,7 +388,7 @@ public class DiaxeirisiAitimatwn extends javax.swing.JFrame
             
             load_aitimata();
             
-            JOptionPane.showMessageDialog(this, "Το αίτημα αποδέχθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Έγινε αποδοχή αιτήματος!", "Update", JOptionPane.INFORMATION_MESSAGE);
         }
         catch (SQLException e) 
         {
@@ -397,7 +397,34 @@ public class DiaxeirisiAitimatwn extends javax.swing.JFrame
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+
+        if (selectedRow == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Παρακαλώ επιλέξτε ένα αίτημα από τον πίνακα!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        int id = Integer.parseInt(jTable1.getValueAt(selectedRow, 0).toString());
+
+        String delete_query = "DELETE FROM aitima WHERE ait_id = ?";
+        
+        try 
+        {
+            PreparedStatement pst = conn.prepareStatement(delete_query);
+            
+            pst.setInt(1, id); 
+            
+            pst.executeUpdate(); 
+            
+            load_aitimata();
+            
+            JOptionPane.showMessageDialog(this, "Έγινε απόρριψη αιτήματος!", "Update", JOptionPane.INFORMATION_MESSAGE);
+        }
+        catch (SQLException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την διαγραφή αιτήματος: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }        
     }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
