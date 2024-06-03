@@ -4,19 +4,111 @@
  */
 package myaccountant;
 
+import static myaccountant.Login.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
+import javax.swing.JTable;
 /**
  *
  * @author vasil
  */
 public class EpeksergasiaYpallilwn extends javax.swing.JFrame {
-
+    
+    private String selectedEpixeirisi;
+    private String selectedEmployee;
     /**
      * Creates new form EpeksergasiaYpallilwn
      */
     public EpeksergasiaYpallilwn() {
         initComponents();
-        //
+        loadEpixeiriseis();
+        
+            jTable2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            
+                @Override
+                 public void valueChanged(ListSelectionEvent event) {
+                    if (!event.getValueIsAdjusting()) {
+                     // Όταν ο χρήστης επιλέξει μια επιχείρηση
+                          int selectedRow = jTable2.getSelectedRow();
+                           if (selectedRow != -1) {
+                                selectedEpixeirisi = jTable2.getValueAt(selectedRow, 0).toString();
+                                loadYpalliloi();
+                           }
+                    }
+                 }
+            });
+            
+            // Προσθήκη ακροατή για τον πίνακα jTable1 για την επιλογή υπαλλήλου
+jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+    @Override
+    public void valueChanged(ListSelectionEvent event) {
+        if (!event.getValueIsAdjusting()) {
+            int selectedRow = jTable1.getSelectedRow();
+            if (selectedRow != -1) {
+                // Όταν ο χρήστης επιλέξει έναν υπάλληλο
+                selectedEmployee = jTable1.getValueAt(selectedRow, 0).toString();
+                
+            }
+        }
     }
+});
+    }
+    
+    
+  
+    private void loadEpixeiriseis() {
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0); // Καθαρισμός του πίνακα
+
+        try {
+            // Εκτέλεση ερωτήματος στη βάση δεδομένων για να φορτωθούν οι επιχειρήσεις
+            String query = "SELECT onoma_epixeirisis FROM epixeirisi WHERE epix_username_logisti = ?";
+            PreparedStatement pst = conn.prepareStatement(query);
+            pst.setString(1, username);
+            ResultSet rs = pst.executeQuery();
+
+            // Προσθήκη κάθε επιχείρησης στον πίνακα jTable2
+            while (rs.next()) {
+                String epixeirisi = rs.getString("onoma_epixeirisis"); // Υποθέτουμε ότι το όνομα της επιχείρησης είναι στη στήλη "Name"
+                model.addRow(new Object[]{epixeirisi});
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Σφάλμα κατά τη φόρτωση των επιχειρήσεων: " + e.getMessage());
+        }
+    }
+    
+    // Ορίζουμε τη μέθοδο loadYpalliloi για τη φόρτωση των υπαλλήλων της επιλεγμένης επιχείρησης
+    private void loadYpalliloi() {
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Καθαρίζουμε τον πίνακα
+
+        try {
+            // Εκτέλεση ερωτήματος στη βάση δεδομένων για να φορτωθούν οι υπάλληλοι της επιλεγμένης επιχείρησης
+            String query = "SELECT CONCAT(yp_onoma, ' ', yp_eponimo) AS fullname FROM ypallilos INNER JOIN epixeirisi ON ypallilos.yp_username_epixeirisis = epixeirisi.username_epixeirisis WHERE epixeirisi.onoma_epixeirisis = ?";
+            PreparedStatement pst = conn.prepareStatement(query);
+            pst.setString(1, selectedEpixeirisi);
+            ResultSet rs = pst.executeQuery();
+
+            // Προσθήκη κάθε υπαλλήλου στον πίνακα jTable1
+            while (rs.next()) {
+                String fullname = rs.getString("fullname");
+                model.addRow(new Object[]{fullname});
+            }
+        } 
+        
+        catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Σφάλμα κατά τη φόρτωση των υπαλλήλων");
+        }
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,6 +152,11 @@ public class EpeksergasiaYpallilwn extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(0, 255, 102));
         jButton2.setText("Υποβολή");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton8.setBackground(new java.awt.Color(255, 0, 0));
         jButton8.setText("Ακύρωση");
@@ -71,10 +168,7 @@ public class EpeksergasiaYpallilwn extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
                 "Υπάλληλοι"
@@ -85,10 +179,7 @@ public class EpeksergasiaYpallilwn extends javax.swing.JFrame {
         jTable2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
                 "Επιχειρήσεις"
@@ -182,6 +273,45 @@ public class EpeksergasiaYpallilwn extends javax.swing.JFrame {
             logistis.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String name = jTextField2.getText();
+    String surname = jTextField4.getText();
+    String meikta = jTextField5.getText();
+    String asfaleia = jTextField3.getText();
+    
+    // Assuming the full name format is "First Last"
+String[] nameParts = selectedEmployee.split(" ");
+if (nameParts.length != 2) {
+    JOptionPane.showMessageDialog(this, "Σφάλμα: Το όνομα υπαλλήλου πρέπει να περιέχει όνομα και επώνυμο.", "Error", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
+String firstName = nameParts[0];
+String lastName = nameParts[1];
+
+// Εμφάνιση της τιμής του selectedEmployee για έλεγχο
+System.out.println("Selected Employee: " + selectedEmployee);
+System.out.println("First Name: " + firstName);
+System.out.println("Last Name: " + lastName);
+
+// Ενημέρωση των στοιχείων του υπαλλήλου στη βάση δεδομένων
+try {
+    String query = "UPDATE ypallilos SET yp_onoma = ?, yp_eponimo = ?, meikta = ?, asfalisi = ? WHERE yp_onoma = ? AND yp_eponimo = ?";
+    PreparedStatement pst = conn.prepareStatement(query);
+    pst.setString(1, name);
+    pst.setString(2, surname);
+    pst.setString(3, meikta);
+    pst.setString(4, asfaleia);
+    pst.setString(5, firstName);
+    pst.setString(6, lastName);
+    pst.executeUpdate();
+    
+    JOptionPane.showMessageDialog(this, "Τα στοιχεία του υπαλλήλου ενημερώθηκαν επιτυχώς.");
+} catch (SQLException e) {
+    JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ενημέρωση των στοιχείων του υπαλλήλου: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+}
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -211,6 +341,7 @@ public class EpeksergasiaYpallilwn extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new EpeksergasiaYpallilwn().setVisible(true);
             }
