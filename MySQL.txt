@@ -138,7 +138,7 @@ CONSTRAINT Bebaiosi_Username_Pelati FOREIGN KEY (bebaiosi_username_pelati) REFER
 
 INSERT INTO user VALUES 
 ('kappaXD'),
-('SuperMan69'),
+('SuperMan61'),
 ('XXXgamerXXX'),
 ('Giota103'),
 ('Sony'),
@@ -146,7 +146,7 @@ INSERT INTO user VALUES
 
 INSERT INTO logistis VALUES
 ('Andreas', 'Nikolaou', '10923949501', 'kappaXD', 'yooo', 'kappas@gmail.com'),
-('Nikos', 'Aggelopoulos', '10823931001', 'SuperMan69', 'drakos_fotia', 'pagman@hotmail.com');
+('Nikos', 'Aggelopoulos', '10823931001', 'SuperMan61', 'drakos_fotia', 'pagman@hotmail.com');
 
 INSERT INTO idiotis VALUES
 ('Giorgos', 'Georgiadou', '10123929501', 'XXXgamerXXX', 'yo21', 'theos@gmail.com', DEFAULT, NULL),

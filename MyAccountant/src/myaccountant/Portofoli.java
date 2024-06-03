@@ -40,6 +40,8 @@ public class Portofoli extends javax.swing.JFrame
             
             if(rs.next())
             {
+                portofoli = rs.getInt(1);
+                
                 jLabel4.setText(rs.getString(1));
             }
         }
