@@ -15,6 +15,7 @@ public class EpeksergasiaYpallilwn extends javax.swing.JFrame {
      */
     public EpeksergasiaYpallilwn() {
         initComponents();
+        
     }
 
     /**
