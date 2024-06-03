@@ -47,21 +47,24 @@ public class RithmisiOfeilwn extends javax.swing.JFrame {
     }
 
     private void loadOfeiles() {
-        String query = "SELECT ofeili_poso, username_idioti AS username FROM ofeili LEFT JOIN idiotis  ON ofeili_username_pelati = username_idioti UNION SELECT ofeili_poso, username_epixeirisis AS username FROM ofeili LEFT JOIN epixeirisi  ON ofeili_username_pelati = username_epixeirisis";
+       String query = "SELECT ofeili_poso, username_idioti AS username FROM ofeili LEFT JOIN idiotis ON ofeili_username_pelati = username_idioti UNION SELECT ofeili_poso, username_epixeirisis AS username FROM ofeili LEFT JOIN epixeirisi ON ofeili_username_pelati = username_epixeirisis";
 
-        try (
-                PreparedStatement pstmt = conn.prepareStatement(query); ResultSet rs = pstmt.executeQuery()) {
-            DefaultTableModel tmodel1 = (DefaultTableModel) jTable2.getModel();
-            while (rs.next()) {
-                String poso = rs.getString("ofeili_poso");
-                String username = rs.getString("ofeili_username");
+try (
+    PreparedStatement pstmt = conn.prepareStatement(query);
+    ResultSet rs = pstmt.executeQuery()
+) {
+    DefaultTableModel tmodel1 = (DefaultTableModel) jTable2.getModel();
+    while (rs.next()) {
+        String poso = rs.getString("ofeili_poso");
+        String username = rs.getString("username");  // Changed to "username"
 
-                tmodel1.addRow(new Object[]{poso, username});
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την φόρτωση δεδομένων: " + e.getMessage());
-        }
+        tmodel1.addRow(new Object[]{poso, username});
+    }
+} catch (SQLException e) {
+    e.printStackTrace();
+    JOptionPane.showMessageDialog(this, "Σφάλμα κατά την φόρτωση δεδομένων: " + e.getMessage());
+}
+
     }
 
     private void EnimerosiOfeilis() {
