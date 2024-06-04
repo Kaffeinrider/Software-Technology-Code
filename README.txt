@@ -37,7 +37,7 @@ Login (Status: Finished)
 Idiotis (Status: Finished)
 Epilogi_Logisti (Status: Finished)
 Portofoli (Status: Finished)
-Oxima (Status: semi-Finished)
+Oxima (Status: Finished)
 YpovoliDiloseonEkkatharistikwn (Status: Finished)
 Provoli_Ofeilon (Status: Finished)
 
@@ -52,15 +52,34 @@ DiaxeirisiOximaton (Status: Finished)
 EkdosiVevaiosisMiOfeilis (Status: Finished)
 EpeksergasiaYpallilwn (Status: Finished)
 
-
 Για την Επιχείρηση:
 Epixeirisi (Status: Finished)
 Epilogi_Logisti (Status: Finished)
 Portofoli (Status: Finished)
-Oxima (Status: semi-Finished)
+Oxima (Status: Finished)
 Provoli_stoixeion_Epixeirisis (Status: Finished)
 Provoli_Ofeilon (Status: Finished)
 
+8.
+Μπορούμε να δούμε τους κωδικούς και τα ονόματα των χρηστών από τα Insert που κάνουμε στο MySQL.txt.
 
+Λογιστές:
+Username: kappaXD
+Password: yooo
 
+Username: SuperMan61
+Password: drakos_fotia
 
+Ιδιώτες:
+Username: XXXgamerXXX
+Password: yo21
+
+Username: Giota103
+Password: hihihi
+
+Επιχειρήσεις:
+Username: Sony
+Password: sony1234
+
+Username: Papageorgiou Lastixa
+Password: 5235
