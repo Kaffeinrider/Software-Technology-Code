@@ -82,75 +82,6 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame
             JOptionPane.showMessageDialog(this, "Σφάλμα ανάκτησης δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    private void EnimerosiOximatos() 
-    {
-        int selectedRow = jTable1.getSelectedRow();
-
-        if (selectedRow == -1) 
-        {
-            String oxima_onoma = jTextField2.getText();
-            String ox_pinakida = jTextField3.getText();
-            String username_pelati = jTextField4.getText();
-            int ox_teli = Integer.parseInt(jTextField6.getText());
-            
-            String insertSQL = "INSERT INTO oxima VALUES (?, ?, ?, DEFAULT, ?)";
-        
-            try 
-            {
-                PreparedStatement pstmt = conn.prepareStatement(insertSQL); 
-            
-                pstmt.setString(1, oxima_onoma);
-                pstmt.setString(2, ox_pinakida);
-                pstmt.setInt(3, ox_teli);
-                pstmt.setString(4, username_pelati);
-            
-                pstmt.executeUpdate();
-                
-                loadOximata();
-            
-                JOptionPane.showMessageDialog(this, "Το όχημα προσθέθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);  
-            }
-            catch (SQLException e) 
-            {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }            
-            
-            return;
-        }
-        
-        String old_ox_pinakida = jTable1.getValueAt(selectedRow, 1).toString();
-        
-        String ox_onoma = jTextField2.getText();
-        String ox_pinakida = jTextField3.getText();
-        String ox_username_pelati = jTextField4.getText();
-        int ox_kostos_telon = Integer.parseInt(jTextField6.getText());
-         
-        String update_query = "UPDATE oxima SET ox_onoma  = ?, pinakida = ?, kostos_telon = ?, ox_username_pelati = ? WHERE pinakida = ?";
-
-        try
-        {
-             PreparedStatement pstmt = conn.prepareStatement(update_query);
-          
-            pstmt.setString(1, ox_onoma);
-            pstmt.setString(2, ox_pinakida);
-            pstmt.setInt(3, ox_kostos_telon);
-            pstmt.setString(4, ox_username_pelati);
-            pstmt.setString(5, old_ox_pinakida);
-        
-            pstmt.executeUpdate();
-            
-            loadOximata();
-            
-            JOptionPane.showMessageDialog(this, "Οι αλλαγές ήταν επιτυχής!");
-        } 
-        catch (SQLException e) 
-        {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ενημέρωση της βάσης δεδομένων: " + e.getMessage());
-        }
-    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -186,6 +117,11 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame
                 "Όχημα", "Πινακίδα", "ΑΦΜ", "Username", "Κατάσταση", "Τέλη"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton8.setBackground(new java.awt.Color(255, 0, 0));
@@ -319,12 +255,155 @@ public class DiaxeirisiOximatwn extends javax.swing.JFrame
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       EnimerosiOximatos();
+        int selectedRow = jTable1.getSelectedRow();
+
+        if (selectedRow == -1) 
+        {
+            String oxima_onoma = jTextField2.getText();
+            String ox_pinakida = jTextField3.getText();
+            String username_pelati = jTextField4.getText();
+            int ox_teli = Integer.parseInt(jTextField6.getText());
+            
+            String insertSQL = "INSERT INTO oxima VALUES (?, ?, ?, DEFAULT, ?)";
+        
+            try 
+            {
+                PreparedStatement pstmt = conn.prepareStatement(insertSQL); 
+            
+                pstmt.setString(1, oxima_onoma);
+                pstmt.setString(2, ox_pinakida);
+                pstmt.setInt(3, ox_teli);
+                pstmt.setString(4, username_pelati);
+            
+                pstmt.executeUpdate();
+                
+                loadOximata();
+                
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jTextField4.setText("");
+                jTextField6.setText("");
+            
+                JOptionPane.showMessageDialog(this, "Το όχημα προσθέθηκε!", "Update", JOptionPane.INFORMATION_MESSAGE);  
+            }
+            catch (SQLException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα κατά την εισαγωγή στη βάση δεδομένων: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }            
+            
+            return;
+        }
+        
+        String old_ox_pinakida = jTable1.getValueAt(selectedRow, 1).toString();
+        
+        String ox_onoma = jTextField2.getText();
+        String ox_pinakida = jTextField3.getText();
+        String ox_username_pelati = jTextField4.getText();
+        int ox_kostos_telon = Integer.parseInt(jTextField6.getText());
+         
+        String update_query = "UPDATE oxima SET ox_onoma  = ?, pinakida = ?, kostos_telon = ?, ox_username_pelati = ? WHERE pinakida = ?";
+
+        try
+        {
+             PreparedStatement pstmt = conn.prepareStatement(update_query);
+          
+            pstmt.setString(1, ox_onoma);
+            pstmt.setString(2, ox_pinakida);
+            pstmt.setInt(3, ox_kostos_telon);
+            pstmt.setString(4, ox_username_pelati);
+            pstmt.setString(5, old_ox_pinakida);
+        
+            pstmt.executeUpdate();
+            
+            loadOximata();
+            
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+            jTextField6.setText("");
+            
+            JOptionPane.showMessageDialog(this, "Οι αλλαγές ήταν επιτυχής!");
+        } 
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ενημέρωση της βάσης δεδομένων: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
 
+        if (selectedRow == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Δεν έχετε επιλέξει όχημα", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        String old_katastasi = jTable1.getValueAt(selectedRow, 4).toString();
+        
+        String ox_pinakida = jTable1.getValueAt(selectedRow, 1).toString();
+        
+        if(old_katastasi.equals("AKINISIA"))
+        {
+            String update_query = "UPDATE oxima SET katastasi = 'ENERGO' WHERE pinakida = ?";
+
+            try
+            {
+                PreparedStatement pstmt = conn.prepareStatement(update_query);
+          
+                pstmt.setString(1, ox_pinakida);
+        
+                pstmt.executeUpdate();
+            
+                loadOximata();
+            
+                JOptionPane.showMessageDialog(this, "Η αλλαγή ήταν επιτυχής!");
+            } 
+            catch (SQLException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ενημέρωση της βάσης δεδομένων: " + e.getMessage());
+            }        
+        }
+        else
+        {
+            String update_query = "UPDATE oxima SET katastasi = 'AKINISIA' WHERE pinakida = ?";
+
+            try
+            {
+                PreparedStatement pstmt = conn.prepareStatement(update_query);
+          
+                pstmt.setString(1, ox_pinakida);
+        
+                pstmt.executeUpdate();
+            
+                loadOximata();
+            
+                JOptionPane.showMessageDialog(this, "Η αλλαγή ήταν επιτυχής!");
+            } 
+            catch (SQLException e) 
+            {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Σφάλμα κατά την ενημέρωση της βάσης δεδομένων: " + e.getMessage());
+            }  
+        }
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int selectedRow = jTable1.getSelectedRow();
+        
+        String ox_onoma = jTable1.getValueAt(selectedRow, 0).toString();
+        String ox_pinakida = jTable1.getValueAt(selectedRow, 1).toString();
+        String ox_username_pelati = jTable1.getValueAt(selectedRow, 3).toString();
+        String ox_teli = jTable1.getValueAt(selectedRow, 5).toString();
+        
+        jTextField2.setText(ox_onoma);
+        jTextField3.setText(ox_pinakida);
+        jTextField4.setText(ox_username_pelati);
+        jTextField6.setText(ox_teli);        
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
